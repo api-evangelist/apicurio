@@ -1,0 +1,38 @@
+aid: apicurio
+name: Apicurio
+description: >-
+  Apicurio provides open source API and schema design tools including a visual API designer, schema registry, and data modeling capabilities for OpenAPI, AsyncAPI, and Avro.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - API Design
+  - Visual Designer
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/apicurio/refs/heads/main/apis.yml
+created: '2026-03-25'
+modified: '2026-03-25'
+specificationVersion: '0.19'
+apis:
+  - aid: apicurio:apicurio
+    name: Apicurio
+    description: >-
+      Apicurio provides open source API and schema design tools including a visual API designer, schema registry, and data modeling capabilities for OpenAPI, AsyncAPI, and Avro.
+    humanURL: https://www.apicur.io
+    tags:
+      - API Design
+      - Visual Designer
+    properties:
+      - type: Documentation
+        url: https://www.apicur.io/studio/docs/
+      - type: GitHub Repository
+        url: https://github.com/Apicurio
+common:
+  - type: Website
+    url: https://www.apicur.io
+  - type: Documentation
+    url: https://www.apicur.io/studio/docs/
+  - type: GitHub Organization
+    url: https://github.com/Apicurio
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
