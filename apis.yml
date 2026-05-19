@@ -22,7 +22,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/apicurio/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-04-19'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
   - aid: apicurio:apicurio-registry
@@ -132,6 +132,9 @@ common:
         description: Store and version API specifications as the system of record for API contracts across teams.
       - name: Java Code Scaffolding
         description: Generate JAX-RS server stubs from OpenAPI specs to accelerate Java API implementation.
+  - name: MCP Server
+    url: https://github.com/Apicurio/apicurio-data-models-mcp
+    type: MCPServer
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
