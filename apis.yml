@@ -140,3 +140,9 @@ common:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+
+common:
+  - type: OAuthScopes
+    url: scopes/apicurio-scopes.yml
+  - url: https://www.apicur.io/blog/feed.xml
+    type: Blog

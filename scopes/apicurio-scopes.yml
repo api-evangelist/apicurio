@@ -1,0 +1,28 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apicurio-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/apicurio-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+scopes:
+- scope: admin
+  description: Admin access
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/apicurio-openapi.yml
+- scope: read
+  description: Read access
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/apicurio-openapi.yml
+- scope: write
+  description: Write access
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/apicurio-openapi.yml
