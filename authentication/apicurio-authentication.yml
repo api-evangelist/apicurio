@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apicurio-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - clientCredentials
+schemes:
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/apicurio-openapi.yml
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+    scopes: 3
+  sources:
+  - openapi/apicurio-openapi.yml
