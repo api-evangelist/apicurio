@@ -142,6 +142,8 @@ maintainers:
   email: kin@apievangelist.com
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/apicurio-agentic-access.yml
   - type: DomainSecurity
     url: security/apicurio-domain-security.yml
   - type: Authentication
