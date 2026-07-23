@@ -1,0 +1,554 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin Metadata API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Metadata
+paths:
+  /groups/{groupId}/artifacts/{artifactId}/versions/{versionExpression}:
+    summary: Manage a single version of a single artifact in the registry.
+    parameters:
+    - name: groupId
+      description: The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the ".{1,512}" pattern.
+      schema:
+        $ref: '#/components/schemas/GroupId'
+      in: path
+      required: true
+    - name: artifactId
+      description: The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the ".{1,512}" pattern.
+      schema:
+        $ref: '#/components/schemas/ArtifactId'
+      in: path
+      required: true
+    - name: versionExpression
+      description: "An expression resolvable to a specific version ID within the given group and artifact. The following rules apply:\n\n - If the expression is in the form \"branch={branchId}\", and artifact branch {branchId} exists: The expression is resolved to a version that the branch points to.\n - Otherwise: The expression is resolved to a version with the same ID, which must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+      schema:
+        type: string
+      in: path
+      required: true
+    get:
+      tags:
+      - Metadata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionMetaData'
+          description: The artifact version's metadata.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getArtifactVersionMetaData
+      summary: Get artifact version metadata
+      description: "Retrieves the metadata for a single version of the artifact.  The version metadata is \na subset of the artifact metadata and only includes the metadata that is specific to\nthe version (for example, this doesn't include `modifiedOn`).\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No version with this `version` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditableVersionMetaData'
+        required: true
+      tags:
+      - Metadata
+      responses:
+        '204':
+          description: The artifact version's metadata was successfully updated.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateArtifactVersionMetaData
+      summary: Update artifact version metadata
+      description: "Updates the user-editable portion of the artifact version's metadata.  Only some of \nthe metadata fields are editable by the user.  For example, `description` is editable, \nbut `createdOn` is not.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No version with this `version` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+  /groups/{groupId}/artifacts/{artifactId}:
+    summary: Manage a single artifact.
+    parameters:
+    - name: groupId
+      description: The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the ".{1,512}" pattern.
+      schema:
+        $ref: '#/components/schemas/GroupId'
+      in: path
+      required: true
+    - name: artifactId
+      description: The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the ".{1,512}" pattern.
+      schema:
+        $ref: '#/components/schemas/ArtifactId'
+      in: path
+      required: true
+    get:
+      tags:
+      - Metadata
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactMetaData'
+          description: The artifact's metadata.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getArtifactMetaData
+      summary: Get artifact metadata
+      description: 'Gets the metadata for an artifact in the registry, based on the latest version. If the latest version of the artifact is marked as `DISABLED`, the next available non-disabled version will be used. The returned metadata includes
+
+        both generated (read-only) and editable metadata (such as name and description).
+
+
+        This operation can fail for the following reasons:
+
+
+        * No artifact with this `artifactId` exists  or all versions are `DISABLED` (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)'
+    put:
+      requestBody:
+        description: Updated artifact metadata.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditableArtifactMetaData'
+        required: true
+      tags:
+      - Metadata
+      responses:
+        '204':
+          description: The artifact's metadata was updated.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateArtifactMetaData
+      summary: Update artifact metadata
+      description: 'Updates the editable parts of the artifact''s metadata.  Not all metadata fields can
+
+        be updated.  Note that only the properties included will be updated.  You can update
+
+        only the name by including only the `name` property in the payload of the request.
+
+        Properties that are allowed but not present will result in the artifact''s metadata
+
+        not being changed.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No artifact with the `artifactId` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)'
+components:
+  schemas:
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    EditableVersionMetaData:
+      title: Root Type for EditableArtifactMetaData
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        name: Artifact Name
+        description: The description of the artifact.
+        labels:
+          custom-1: foo
+          custom-2: bar
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+    ContractMetadata:
+      title: ContractMetadata
+      description: Contract metadata for an artifact.
+      type: object
+      properties:
+        status:
+          description: The contract lifecycle status.
+          type: string
+          enum:
+          - DRAFT
+          - STABLE
+          - DEPRECATED
+        ownerTeam:
+          description: The team that owns the contract.
+          type: string
+        ownerDomain:
+          description: The domain the contract belongs to.
+          type: string
+        supportContact:
+          description: Support contact email.
+          type: string
+        classification:
+          description: Data classification level.
+          type: string
+          enum:
+          - PUBLIC
+          - INTERNAL
+          - CONFIDENTIAL
+          - RESTRICTED
+        stage:
+          description: Promotion stage.
+          type: string
+          enum:
+          - DEV
+          - STAGE
+          - PROD
+        stableDate:
+          description: ISO-8601 date when contract became stable.
+          type: string
+        deprecatedDate:
+          description: ISO-8601 date when contract was deprecated.
+          type: string
+        deprecationReason:
+          description: Reason for deprecation.
+          type: string
+        compatibilityGroup:
+          description: Compatibility group for schema evolution scoping.
+          type: string
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    EditableArtifactMetaData:
+      title: Root Type for EditableArtifactMetaData
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        owner:
+          description: ''
+          type: string
+      example:
+        name: Artifact Name
+        description: The description of the artifact.
+        owner: user-1
+        labels:
+          custom-1: foo
+          custom-2: bar
+    Version:
+      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
+
+        or it can be server-generated.  The value can be any string unique to the artifact, but it is
+
+        recommended to use a simple integer or a semver value.'
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"3.1.6"'
+    ArtifactMetaData:
+      title: Root Type for ArtifactMetaData
+      description: ''
+      required:
+      - artifactId
+      - owner
+      - createdOn
+      - modifiedBy
+      - modifiedOn
+      - artifactType
+      - groupId
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        modifiedBy:
+          type: string
+        modifiedOn:
+          format: date-time
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        contractMetadata:
+          $ref: '#/components/schemas/ContractMetadata'
+          description: Contract metadata projected from the artifact labels. Only present when data contracts are enabled and contract labels exist.
+      example:
+        groupId: My-Group
+        artifactId: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        artifactType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-07-19T15:09:00Z'
+        labels:
+          custom-1: foo
+          custom-2: bar
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    VersionMetaData:
+      title: Root Type for ArtifactVersionMetaData
+      description: ''
+      required:
+      - createdOn
+      - owner
+      - version
+      - artifactType
+      - globalId
+      - artifactId
+      - contentId
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/Version'
+        name:
+          type: string
+        description:
+          type: string
+        owner:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
+        globalId:
+          format: int64
+          description: ''
+          type: integer
+        state:
+          $ref: '#/components/schemas/VersionState'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        contentId:
+          format: int64
+          description: ''
+          type: integer
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        modifiedBy:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+      example:
+        groupId: My-Group
+        artifactId: my-artifact-id
+        version: 1221432
+        artifactType: PROTOBUF
+        name: Artifact Name
+        description: The description of the artifact
+        owner: user1
+        createdOn: '2019-05-17T12:00:00Z'
+        globalId: 183282932983
+        contentId: 12347
+        labels:
+          custom-1: foo
+          custom-2: bar
+    VersionState:
+      description: 'Describes the state of an artifact or artifact version.
+
+
+        * ENABLED
+
+        * DISABLED
+
+        * DEPRECATED
+
+        * DRAFT
+
+        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
+
+        '
+      enum:
+      - ENABLED
+      - DISABLED
+      - DEPRECATED
+      - DRAFT
+      - SUNSET
+      type: string
+      x-codegen-package: io.apicurio.registry.types
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

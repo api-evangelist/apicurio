@@ -1,0 +1,1485 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Admin
+paths:
+  /admin/rules:
+    summary: Manage the global rules that apply to all artifacts if not otherwise configured.
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RuleType'
+          description: The list of names of the globally configured rules.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listGlobalRules
+      summary: List global rules
+      description: 'Gets a list of all the currently configured global rules (if any).
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRule'
+        required: true
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: The global rule was added.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: createGlobalRule
+      summary: Create global rule
+      description: 'Adds a rule to the list of globally configured rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * The rule type is unknown (HTTP error `400`)
+
+        * The rule already exists (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: All global rules have been removed successfully.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteAllGlobalRules
+      summary: Delete all global rules
+      description: 'Deletes all globally configured rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/rules/{ruleType}:
+    summary: Manage the configuration of a single global artifact rule.
+    parameters:
+    - name: ruleType
+      description: The unique name/type of a rule.
+      schema:
+        $ref: '#/components/schemas/RuleType'
+      in: path
+      required: true
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: The global rule's configuration.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getGlobalRuleConfig
+      summary: Get global rule configuration
+      description: 'Returns information about the named globally configured rule.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rule'
+        required: true
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: The global rule's configuration was successfully updated.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateGlobalRuleConfig
+      summary: Update global rule configuration
+      description: 'Updates the configuration for a globally configured rule.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: The global rule was successfully deleted.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteGlobalRule
+      summary: Delete global rule
+      description: 'Deletes a single global rule.  If this is the only rule configured, this is the same
+
+        as deleting **all** rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * Rule cannot be deleted (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/export:
+    summary: Provides a way to export registry data.
+    get:
+      tags:
+      - Admin
+      parameters:
+      - name: forBrowser
+        description: Indicates if the operation is done for a browser.  If true, the response will be a JSON payload with a property called `href`.  This `href` will be a single-use, naked download link suitable for use by a web browser to download the content.
+        schema:
+          type: boolean
+        in: query
+      - name: groupId
+        description: If specified, only data belonging to this group will be exported. Global rules will be excluded.
+        schema:
+          type: string
+        in: query
+      responses:
+        '200':
+          content:
+            application/zip:
+              schema:
+                $ref: '#/components/schemas/FileContent'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadRef'
+          description: Response when the export is successful.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: exportData
+      summary: Export registry data
+      description: Exports registry data as a ZIP archive.  If a `groupId` query parameter is provided, only data belonging to the specified group will be exported and global rules will be excluded.
+  /admin/import:
+    summary: Provides a way to import data into the registry.
+    post:
+      requestBody:
+        description: The ZIP file representing the previously exported registry data.
+        content:
+          application/zip:
+            schema:
+              $ref: '#/components/schemas/FileContent'
+        required: true
+      tags:
+      - Admin
+      parameters:
+      - name: X-Registry-Preserve-GlobalId
+        description: If this header is set to false, global ids of imported data will be ignored and replaced by next id in global id sequence. This allows to import any data even thought the global ids would cause a conflict.
+        schema:
+          type: boolean
+        in: header
+      - name: X-Registry-Preserve-ContentId
+        description: If this header is set to false, content ids of imported data will be ignored and replaced by next id in content id sequence. The mapping between content and artifacts will be preserved. This allows to import any data even thought the content ids would cause a conflict.
+        schema:
+          type: boolean
+        in: header
+        required: false
+      - name: requireEmptyRegistry
+        description: 'Query parameter indicating whether the registry must be empty before allowing
+
+          data to be imported.  Defaults to `true` if omitted.'
+        schema:
+          type: boolean
+        in: query
+        required: false
+      responses:
+        '201':
+          description: Indicates that the import was successful.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: importData
+      summary: Import registry data
+      description: Imports registry data that was previously exported using the `/admin/export` operation.
+  /admin/roleMappings/{principalId}:
+    summary: Manage the configuration of a single role mapping.
+    parameters:
+    - name: principalId
+      description: Unique id of a principal (typically either a user or service account).
+      schema:
+        type: string
+      in: path
+      required: true
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMapping'
+          description: When successful, returns the details of a role mapping.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getRoleMapping
+      summary: Return a single role mapping
+      description: 'Gets the details of a single role mapping (by `principalId`).
+
+
+        This operation can fail for the following reasons:
+
+
+        * No role mapping for the `principalId` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRole'
+        required: true
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: Response when the update is successful.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateRoleMapping
+      summary: Update a role mapping
+      description: 'Updates a single role mapping for one user/principal.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No role mapping for the principalId exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: Response returned when the delete was successful.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteRoleMapping
+      summary: Delete a role mapping
+      description: 'Deletes a single role mapping, effectively denying access to a user/principal.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No role mapping for the principalId exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/config/properties:
+    summary: Manage configuration properties.
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigurationProperty'
+          description: On a successful response, returns a list of configuration properties.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listConfigProperties
+      summary: List all configuration properties
+      description: 'Returns a list of all configuration properties that have been set.  The list is not paged.
+
+
+        This operation may fail for one of the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/config/properties/{propertyName}:
+    summary: Manage a single configuration property (by name).
+    parameters:
+    - name: propertyName
+      description: The name of a configuration property.
+      schema:
+        type: string
+      in: path
+      required: true
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationProperty'
+          description: The configuration property value.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getConfigProperty
+      summary: Get configuration property value
+      description: 'Returns the value of a single configuration property.
+
+
+        This operation may fail for one of the following reasons:
+
+
+        * Property not found or not configured (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConfigurationProperty'
+        required: true
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: The configuration property was updated.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateConfigProperty
+      summary: Update a configuration property
+      description: 'Updates the value of a single configuration property.
+
+
+        This operation may fail for one of the following reasons:
+
+
+        * Property not found or not configured (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: The configuration property was deleted.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: resetConfigProperty
+      summary: Reset a configuration property
+      description: 'Resets the value of a single configuration property.  This will return the property to
+
+        its default value (see external documentation for supported properties and their default
+
+        values).
+
+
+        This operation may fail for one of the following reasons:
+
+
+        * Property not found or not configured (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/roleMappings:
+    summary: Collection to manage role mappings for authenticated principals
+    get:
+      tags:
+      - Admin
+      parameters:
+      - name: limit
+        description: The number of role mappings to return.  Defaults to 20.
+        schema:
+          type: integer
+        in: query
+      - name: offset
+        description: The number of role mappings to skip before starting the result set.  Defaults to 0.
+        schema:
+          type: integer
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoleMappingSearchResults'
+          description: A successful response will return the list of role mappings.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listRoleMappings
+      summary: List all role mappings
+      description: 'Gets a list of all role mappings configured in the registry (if any).
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleMapping'
+        required: true
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: Returned when the role mapping was successfully created.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: createRoleMapping
+      summary: Create a new role mapping
+      description: 'Creates a new mapping between a user/principal and a role.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+
+        '
+  /admin/config/artifactTypes:
+    summary: The list of artifact types supported by this instance of Registry.
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArtifactTypeInfo'
+          description: The list of available artifact types.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listArtifactTypes
+      summary: List artifact types
+      description: 'Gets a list of all the configured artifact types.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/contracts/ruleset:
+    summary: Manage the global contract ruleset.
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRuleSet'
+          description: The global contract ruleset.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: getGlobalContractRuleset
+      summary: Get global contract ruleset
+      description: Returns the global contract ruleset that applies to all artifacts.
+    put:
+      tags:
+      - Admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractRuleSet'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractRuleSet'
+          description: The global contract ruleset was set.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: setGlobalContractRuleset
+      summary: Set global contract ruleset
+      description: Sets the global contract ruleset that applies to all artifacts.
+    delete:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: The global contract ruleset was deleted.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: deleteGlobalContractRuleset
+      summary: Delete global contract ruleset
+      description: Deletes the global contract ruleset.
+  /admin/snapshots:
+    summary: Triggers a snapshot of the Registry storage. Only supported in KafkaSQL storage
+    post:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SnapshotMetaData'
+          description: The snapshot has been successfully triggered.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: triggerSnapshot
+      summary: Trigger storage snapshot
+      description: 'Triggers the creation of a snapshot of the internal database for compatible storages.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/gitops/status:
+    summary: Get the current GitOps synchronization status.
+    get:
+      tags:
+      - Admin
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitOpsStatus'
+          description: The current GitOps synchronization status.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getGitOpsStatus
+      summary: Get GitOps synchronization status
+      description: '**Experimental.** Returns the current synchronization status of the GitOps storage, including the current commit SHA, sync state, load statistics, and any errors from the last sync attempt.
+
+
+        This endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.
+
+
+        This operation can fail for the following reasons:
+
+
+        * GitOps storage is not enabled (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/gitops/sync:
+    summary: Trigger an immediate GitOps synchronization.
+    post:
+      tags:
+      - Admin
+      responses:
+        '204':
+          description: Synchronization has been requested. The sync will happen asynchronously on the next scheduler cycle.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: triggerGitOpsSync
+      summary: Trigger GitOps synchronization
+      description: '**Experimental.** Requests an immediate synchronization of the GitOps storage. This resets the poll timer so the next scheduler cycle will poll the Git repository without waiting for the configured poll period.
+
+
+        The synchronization happens asynchronously — this endpoint returns immediately and the actual sync occurs on the next scheduler cycle.
+
+
+        This endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.
+
+
+        This operation can fail for the following reasons:
+
+
+        * GitOps storage is not enabled (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/usage/summary:
+    summary: Get global usage summary counts.
+    get:
+      tags:
+      - Admin
+      operationId: getUsageSummary
+      summary: Get usage summary
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageSummary'
+          description: The global usage summary.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /admin/usage/artifacts/{groupId}/{artifactId}:
+    summary: Get usage metrics for an artifact.
+    get:
+      tags:
+      - Admin
+      operationId: getArtifactUsageMetrics
+      summary: Get artifact usage metrics
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: artifactId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactUsageMetrics'
+          description: The artifact usage metrics.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /admin/usage/artifacts/{groupId}/{artifactId}/heatmap:
+    summary: Get consumer version heatmap.
+    get:
+      tags:
+      - Admin
+      operationId: getConsumerVersionHeatmap
+      summary: Get consumer version heatmap
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: artifactId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerVersionHeatmap'
+          description: The consumer version heatmap.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /admin/usage/artifacts/{groupId}/{artifactId}/versions/{version}/deprecation-readiness:
+    summary: Get deprecation readiness.
+    get:
+      tags:
+      - Admin
+      operationId: getDeprecationReadiness
+      summary: Get deprecation readiness report
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: artifactId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeprecationReadiness'
+          description: The deprecation readiness report.
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    GitOpsError:
+      title: Root Type for GitOpsError
+      description: Describes an error that occurred during a GitOps sync attempt.
+      type: object
+      properties:
+        detail:
+          description: A human-readable description of the error.
+          type: string
+        source:
+          description: The source ID (e.g., repository ID) where the error occurred. Absent for global errors not tied to a specific source.
+          type: string
+        context:
+          description: The file path or location where the error occurred. Absent if the error is not file-specific.
+          type: string
+      required:
+      - detail
+    ConsumerVersionHeatmap:
+      title: ConsumerVersionHeatmap
+      required:
+      - groupId
+      - artifactId
+      - versions
+      - consumers
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        versions:
+          type: array
+          items:
+            type: string
+        consumers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerVersionEntry'
+    ContractRuleSet:
+      title: ContractRuleSet
+      description: A set of contract rules, divided into domain and migration categories.
+      type: object
+      properties:
+        domainRules:
+          description: Rules for domain validation.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
+        migrationRules:
+          description: Rules for version migration.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
+    FileContent:
+      format: binary
+      type: string
+      x-codegen-inline: true
+    DownloadRef:
+      title: Root Type for Download
+      description: Models a download "link".  Useful for browser use-cases.
+      required:
+      - downloadId
+      type: object
+      properties:
+        downloadId:
+          type: string
+        href:
+          type: string
+      example:
+        downloadId: 247-4987490-297845
+        href: https://54321.registry.examples.org/apis/registry/v3/downloads/247-4987490-297845
+    GitOpsStatus:
+      title: Root Type for GitOpsStatus
+      description: Describes the current synchronization status of the GitOps storage backend. This includes the current sync state, the Git commit marker, load statistics, and any errors from the last sync attempt.
+      type: object
+      properties:
+        syncState:
+          description: 'The current synchronization state of the GitOps storage. Possible values: INITIALIZING (first load not yet completed), IDLE (serving latest data), LOADING (sync in progress), SWITCHING (data loaded, waiting for write lock to publish), ERROR (last sync or switch failed, serving previous data).'
+          type: string
+        lastSuccessfulSync:
+          description: ISO 8601 timestamp of the last successful synchronization.
+          format: date-time
+          type: string
+        lastSyncAttempt:
+          description: ISO 8601 timestamp of the last synchronization attempt (successful or not).
+          format: date-time
+          type: string
+        groupCount:
+          description: Number of groups loaded in the last successful sync.
+          format: int32
+          type: integer
+        artifactCount:
+          description: Number of artifacts loaded in the last successful sync.
+          format: int32
+          type: integer
+        versionCount:
+          description: Number of artifact versions loaded in the last successful sync.
+          format: int32
+          type: integer
+        errors:
+          description: Errors from the last failed load attempt. Empty if the last load was successful.
+          type: array
+          items:
+            $ref: '#/components/schemas/GitOpsError'
+        sources:
+          description: Per-source identifiers. Maps source ID (e.g., repository ID, Kubernetes server/namespace) to its current marker (e.g., abbreviated commit SHA, resource version).
+          type: object
+          additionalProperties:
+            type: string
+    RoleMapping:
+      description: The mapping between a user/principal and their role.
+      required:
+      - principalId
+      - role
+      type: object
+      properties:
+        principalId:
+          description: ''
+          type: string
+        role:
+          $ref: '#/components/schemas/RoleType'
+          description: ''
+        principalName:
+          description: A friendly name for the principal.
+          type: string
+      example:
+        principalId: svc_account_84874587_123484
+        principalName: famartin-svc-account
+        role: READ_ONLY
+    DeprecationReadiness:
+      title: DeprecationReadiness
+      required:
+      - groupId
+      - artifactId
+      - version
+      - safeToDeprecate
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        version:
+          type: string
+        globalId:
+          type: integer
+          format: int64
+        activeConsumers:
+          type: array
+          items:
+            type: object
+            properties:
+              clientId:
+                type: string
+              lastFetched:
+                type: integer
+                format: int64
+              fetchCount:
+                type: integer
+                format: int64
+        safeToDeprecate:
+          type: boolean
+    ConfigurationProperty:
+      title: Root Type for ConfigurationProperty
+      description: ''
+      required:
+      - name
+      - value
+      - type
+      - label
+      - description
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        type:
+          description: ''
+          type: string
+        label:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+      example:
+        name: registry.auth.owner-only-authorization
+        value: 'true'
+        type: boolean
+        label: Owner Only Authorization
+        description: When enabled, the registry will allow only the artifact owner (creator) to modify an artifact.
+    RuleType:
+      description: ''
+      enum:
+      - VALIDITY
+      - COMPATIBILITY
+      - INTEGRITY
+      type: string
+      example: VALIDITY
+      x-codegen-package: io.apicurio.registry.types
+    ContractRule:
+      title: ContractRule
+      description: A single contract rule definition.
+      required:
+      - name
+      - kind
+      - type
+      - mode
+      type: object
+      properties:
+        name:
+          description: The rule name.
+          type: string
+        kind:
+          description: The rule kind.
+          type: string
+          enum:
+          - CONDITION
+          - TRANSFORM
+        type:
+          description: Rule executor type (CEL, CEL_FIELD, ENCRYPT, etc.).
+          type: string
+        mode:
+          description: When the rule is applied.
+          type: string
+          enum:
+          - WRITE
+          - READ
+          - WRITEREAD
+          - UPGRADE
+          - DOWNGRADE
+        expr:
+          description: The rule expression.
+          type: string
+        params:
+          description: Rule parameters.
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          description: Tags for categorizing the rule.
+          type: array
+          items:
+            type: string
+        onSuccess:
+          description: Action on rule success.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        onFailure:
+          description: Action on rule failure.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        disabled:
+          description: Whether the rule is disabled.
+          type: boolean
+    ConsumerVersionEntry:
+      title: ConsumerVersionEntry
+      required:
+      - clientId
+      type: object
+      properties:
+        clientId:
+          type: string
+        versions:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        versionsBehind:
+          type: integer
+          format: int32
+        driftAlert:
+          type: boolean
+    ArtifactUsageMetrics:
+      title: ArtifactUsageMetrics
+      required:
+      - groupId
+      - artifactId
+      - versions
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionUsageMetrics'
+    VersionUsageMetrics:
+      title: VersionUsageMetrics
+      description: Usage metrics for a specific artifact version.
+      required:
+      - version
+      - globalId
+      - totalFetches
+      - uniqueClients
+      - firstFetchedOn
+      - lastFetchedOn
+      - classification
+      type: object
+      properties:
+        version:
+          type: string
+        globalId:
+          type: integer
+          format: int64
+        totalFetches:
+          type: integer
+          format: int64
+        uniqueClients:
+          type: integer
+          format: int32
+        firstFetchedOn:
+          type: integer
+          format: int64
+        lastFetchedOn:
+          type: integer
+          format: int64
+        clients:
+          type: array
+          items:
+            type: string
+        classification:
+          $ref: '#/components/schemas/UsageClassification'
+    RoleMappingSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - roleMappings
+      type: object
+      properties:
+        roleMappings:
+          description: The role mappings returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleMapping'
+        count:
+          description: "The total number of role mappings that matched the query that produced the result set (may be \nmore than the number of role mappings in the result set)."
+          type: integer
+      example:
+      - principalId: user-1
+        principalName: user-1
+        role: ADMIN
+      - principalId: svc_account_84874587_123484
+        principalName: user-svc-account
+        role: READ_ONLY
+    CreateRule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
+    UsageSummary:
+      title: UsageSummary
+      required:
+      - active
+      - stale
+      - dead
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        stale:
+          type: integer
+          format: int32
+        dead:
+          type: integer
+          format: int32
+    ArtifactTypeInfo:
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: AVRO
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    Rule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
+    UsageClassification:
+      description: Classification of schema usage based on last fetch time.
+      type: string
+      enum:
+      - ACTIVE
+      - STALE
+      - DEAD
+    UpdateRole:
+      title: Root Type for UpdateRole
+      description: ''
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/RoleType'
+      example:
+        role: READ_ONLY
+    SnapshotMetaData:
+      title: Root Type for SnapshotMetaData
+      description: ''
+      required:
+      - snapshotId
+      type: object
+      properties:
+        snapshotId:
+          description: ''
+          type: string
+      example:
+        snapshotId: snp-1137292771
+    UpdateConfigurationProperty:
+      title: Root Type for UpdateConfigurationProperty
+      description: ''
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+      example:
+        value: 'true'
+    RoleType:
+      description: ''
+      enum:
+      - READ_ONLY
+      - DEVELOPER
+      - ADMIN
+      type: string
+      x-codegen-package: io.apicurio.registry.types
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

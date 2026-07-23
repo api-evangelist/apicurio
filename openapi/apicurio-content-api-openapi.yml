@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin Content API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Content
+paths:
+  /content/references:
+    summary: Detect external references in artifact content.
+    post:
+      tags:
+      - Content
+      parameters:
+      - name: artifactType
+        description: The type of artifact represented by the content.  If not provided, the server will attempt to auto-detect the type from the content.
+        schema:
+          type: string
+        in: query
+      requestBody:
+        description: The content to analyze for external references.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionContent'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArtifactReference'
+          description: List of references detected in the provided content.  Each reference will have only the `name` field populated.  The `name` value corresponds to the reference string found in the content (e.g. a JSON Schema `$ref` value, a Protobuf import path, or an Avro type name).
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: detectContentReferences
+      summary: Detect references in content
+      description: Analyzes the provided content and returns a list of external references found within it.  The artifact type is used to determine the appropriate reference detection strategy.  If no artifact type is provided, the system will attempt to auto-detect it from the content.
+components:
+  responses:
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+  schemas:
+    ArtifactReference:
+      title: Root Type for ArtifactReference
+      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
+      required:
+      - artifactId
+      - groupId
+      - name
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        version:
+          type: string
+        name:
+          type: string
+      example:
+        groupId: mygroup
+        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
+        version: '2'
+        name: foo.bar.Open
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    VersionContent:
+      description: ''
+      required:
+      - content
+      - contentType
+      type: object
+      properties:
+        content:
+          description: Raw content of the artifact version or a valid (and accessible) URL where the content can be found.
+          type: string
+          example: ''
+        references:
+          description: Collection of references to other artifacts.
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactReference'
+        contentType:
+          description: The content-type, such as `application/json` or `text/xml`.
+          type: string
+        encoding:
+          description: Optional encoding for the content property. When set to 'base64', the content value will be base64-decoded by the server before processing.
+          type: string
+          enum:
+          - base64
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

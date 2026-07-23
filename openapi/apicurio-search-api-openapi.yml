@@ -1,0 +1,1118 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin Search API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Search
+paths:
+  /search/artifacts:
+    summary: Search for artifacts in the registry.
+    get:
+      tags:
+      - Search
+      parameters:
+      - name: name
+        description: Filter by artifact name.
+        schema:
+          type: string
+        in: query
+      - name: offset
+        description: The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of artifacts to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/ArtifactSortBy'
+        in: query
+      - name: labels
+        description: 'Filter by one or more name/value label.  Separate each name/value pair using a colon.  For
+
+          example `labels=foo:bar` will return only artifacts with a label named `foo`
+
+          and value `bar`.'
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+      - name: description
+        description: Filter by description.
+        schema:
+          type: string
+        in: query
+      - name: groupId
+        description: Filter by artifact group.
+        schema:
+          type: string
+        in: query
+      - name: globalId
+        description: Filter by globalId.
+        schema:
+          format: int64
+          type: integer
+        in: query
+      - name: contentId
+        description: Filter by contentId.
+        schema:
+          format: int64
+          type: integer
+        in: query
+        required: false
+      - name: artifactId
+        description: Filter by artifactId.
+        schema:
+          type: string
+        in: query
+      - name: artifactType
+        description: Filter by artifact type (`AVRO`, `JSON`, etc).
+        schema:
+          $ref: '#/components/schemas/ArtifactType'
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactSearchResults'
+          description: 'On a successful response, returns a result set of artifacts - one for each artifact
+
+            in the registry that matches the criteria.'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchArtifacts
+      summary: Search for artifacts
+      description: 'Returns a paginated list of all artifacts that match the provided filter criteria.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    post:
+      requestBody:
+        description: The content to search for.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/FileContent'
+        required: true
+      tags:
+      - Search
+      parameters:
+      - name: canonical
+        description: Parameter that can be set to `true` to indicate that the server should "canonicalize" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter.
+        schema:
+          type: boolean
+        in: query
+      - name: artifactType
+        description: Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts.
+        schema:
+          $ref: '#/components/schemas/ArtifactType'
+        in: query
+      - name: groupId
+        description: Filter by artifact group.
+        schema:
+          type: string
+        in: query
+      - name: offset
+        description: The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of artifacts to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/ArtifactSortBy'
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactSearchResults'
+          description: 'On a successful response, returns a result set of artifacts - one for each artifact
+
+            in the registry that matches the criteria.'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchArtifactsByContent
+      summary: Search for artifacts by content
+      description: 'Returns a paginated list of all artifacts with at least one version that matches the
+
+        posted content.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Provided content (request body) was empty (HTTP error `400`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /search/groups:
+    summary: Search for groups in the registry.
+    get:
+      tags:
+      - Search
+      parameters:
+      - name: offset
+        description: The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of artifacts to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/GroupSortBy'
+        in: query
+      - name: labels
+        description: 'Filter by one or more name/value label.  Separate each name/value pair using a colon.  For
+
+          example `labels=foo:bar` will return only artifacts with a label named `foo`
+
+          and value `bar`.'
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+      - name: description
+        description: Filter by description.
+        schema:
+          type: string
+        in: query
+      - name: groupId
+        description: Filter by group name.
+        schema:
+          type: string
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSearchResults'
+          description: 'On a successful response, returns a result set of groups - one for each group
+
+            in the registry that matches the criteria.'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchGroups
+      summary: Search for groups
+      description: 'Returns a paginated list of all groups that match the provided filter criteria.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /search/versions:
+    summary: Search for versions in the registry.
+    get:
+      tags:
+      - Search
+      parameters:
+      - name: version
+        description: Filter by version number.
+        schema:
+          $ref: '#/components/schemas/Version'
+        in: query
+      - name: offset
+        description: The number of versions to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of versions to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/VersionSortBy'
+        in: query
+      - name: labels
+        description: 'Filter by one or more name/value label.  Separate each name/value pair using a colon.  For
+
+          example `labels=foo:bar` will return only artifacts with a label named `foo`
+
+          and value `bar`.'
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+      - name: description
+        description: Filter by description.
+        schema:
+          type: string
+        in: query
+      - name: groupId
+        description: Filter by artifact group.
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        in: query
+      - name: globalId
+        description: Filter by globalId.
+        schema:
+          format: int64
+          type: integer
+        in: query
+      - name: contentId
+        description: Filter by contentId.
+        schema:
+          format: int64
+          type: integer
+        in: query
+        required: false
+      - name: artifactId
+        description: Filter by artifactId.
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        in: query
+      - name: name
+        description: Filter by name.
+        schema:
+          type: string
+        in: query
+      - name: state
+        description: Filter by version state.
+        schema:
+          $ref: '#/components/schemas/VersionState'
+        in: query
+      - name: artifactType
+        description: Filter by artifact type (`AVRO`, `JSON`, etc).
+        schema:
+          $ref: '#/components/schemas/ArtifactType'
+        in: query
+      - name: content
+        description: Full-text search of artifact content.  Requires the Lucene search index to be enabled.
+        schema:
+          type: string
+        in: query
+      - name: structure
+        description: 'Search by structured content elements (schemas, paths, fields, etc.) using a faceted format. Supports three formats: `type:kind:name` for exact match (e.g. `openapi:schema:Pet`), `kind:name` for cross-type match (e.g. `schema:Pet`), or just `name` for plain text search. Requires the Lucene search index to be enabled.'
+        schema:
+          type: string
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionSearchResults'
+          description: 'On a successful response, returns a result set of versions - one for each version
+
+            in the registry that matches the criteria.'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchVersions
+      summary: Search for versions
+      description: 'Returns a paginated list of all versions that match the provided filter criteria.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    post:
+      requestBody:
+        description: The content to search for.
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/FileContent'
+        required: true
+      tags:
+      - Search
+      parameters:
+      - name: canonical
+        description: Parameter that can be set to `true` to indicate that the server should "canonicalize" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter.
+        schema:
+          type: boolean
+        in: query
+      - name: artifactType
+        description: Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching versions.
+        schema:
+          $ref: '#/components/schemas/ArtifactType'
+        in: query
+      - name: offset
+        description: The number of versions to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of versions to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/VersionSortBy'
+        in: query
+      - name: groupId
+        description: Filter by group Id.
+        schema:
+          $ref: '#/components/schemas/GroupId'
+        in: query
+      - name: artifactId
+        description: Filter by artifact Id.
+        schema:
+          $ref: '#/components/schemas/ArtifactId'
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionSearchResults'
+          description: 'On a successful response, returns a result set of versions - one for each version
+
+            in the registry that matches the criteria.'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchVersionsByContent
+      summary: Search for versions by content
+      description: 'Returns a paginated list of all versions that match the posted content.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Provided content (request body) was empty (HTTP error `400`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /search/contract/rules:
+    summary: Search for contract rules by tag.
+    get:
+      tags:
+      - Search
+      parameters:
+      - name: tag
+        description: The tag value to search for in contract rules.
+        schema:
+          type: string
+        in: query
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContractRuleSearchResult'
+          description: A list of contract rules matching the specified tag, with their artifact coordinates.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: searchContractRulesByTag
+      summary: Search contract rules by tag
+      description: Returns all contract rules across all artifacts that contain the specified tag.
+  /search/contracts:
+    summary: Search for contracts.
+    get:
+      tags:
+      - Search
+      parameters:
+      - name: status
+        description: Filter by contract status (DRAFT, STABLE, DEPRECATED).
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: ownerTeam
+        description: Filter by owner team.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: compatibilityGroup
+        description: Filter by compatibility group.
+        schema:
+          type: string
+        in: query
+        required: false
+      - name: offset
+        description: Number of results to skip.
+        schema:
+          type: integer
+          default: 0
+        in: query
+        required: false
+      - name: limit
+        description: Maximum number of results to return.
+        schema:
+          type: integer
+          default: 20
+        in: query
+        required: false
+      - name: order
+        description: Sort order (asc or desc).
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+        in: query
+        required: false
+      - name: orderby
+        description: Field to sort by.
+        schema:
+          type: string
+          enum:
+          - name
+          - createdOn
+          - modifiedOn
+        in: query
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactSearchResults'
+          description: A paginated list of artifacts that have contract metadata.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: searchContracts
+      summary: Search contracts
+      description: Searches for artifacts that have contract metadata labels. Filters by status, owner team, and compatibility group.
+components:
+  schemas:
+    FileContent:
+      format: binary
+      type: string
+      x-codegen-inline: true
+    SearchedGroup:
+      description: Models a single group from the result set returned when searching for groups.
+      required:
+      - owner
+      - createdOn
+      - groupId
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        name: Group Name
+        description: Description of the group
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user1
+        modifiedOn: '2019-03-22T12:51:19Z'
+    Version:
+      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
+
+        or it can be server-generated.  The value can be any string unique to the artifact, but it is
+
+        recommended to use a simple integer or a semver value.'
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"3.1.6"'
+    ContractRule:
+      title: ContractRule
+      description: A single contract rule definition.
+      required:
+      - name
+      - kind
+      - type
+      - mode
+      type: object
+      properties:
+        name:
+          description: The rule name.
+          type: string
+        kind:
+          description: The rule kind.
+          type: string
+          enum:
+          - CONDITION
+          - TRANSFORM
+        type:
+          description: Rule executor type (CEL, CEL_FIELD, ENCRYPT, etc.).
+          type: string
+        mode:
+          description: When the rule is applied.
+          type: string
+          enum:
+          - WRITE
+          - READ
+          - WRITEREAD
+          - UPGRADE
+          - DOWNGRADE
+        expr:
+          description: The rule expression.
+          type: string
+        params:
+          description: Rule parameters.
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          description: Tags for categorizing the rule.
+          type: array
+          items:
+            type: string
+        onSuccess:
+          description: Action on rule success.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        onFailure:
+          description: Action on rule failure.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        disabled:
+          description: Whether the rule is disabled.
+          type: boolean
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+    VersionSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - versions
+      type: object
+      properties:
+        count:
+          description: 'The total number of versions that matched the query (may be more than the number of versions
+
+            returned in the result set).'
+          type: integer
+        versions:
+          description: The collection of artifact versions returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedVersion'
+    SearchedArtifact:
+      description: Models a single artifact from the result set returned when searching for artifacts.
+      required:
+      - owner
+      - createdOn
+      - artifactId
+      - artifactType
+      - groupId
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        artifactId: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        artifactType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-04-01T12:51:19Z'
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    VersionState:
+      description: 'Describes the state of an artifact or artifact version.
+
+
+        * ENABLED
+
+        * DISABLED
+
+        * DEPRECATED
+
+        * DRAFT
+
+        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
+
+        '
+      enum:
+      - ENABLED
+      - DISABLED
+      - DEPRECATED
+      - DRAFT
+      - SUNSET
+      type: string
+      x-codegen-package: io.apicurio.registry.types
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    VersionSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - version
+      - name
+      - createdOn
+      - modifiedOn
+      - globalId
+      type: string
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
+      type: string
+    ArtifactSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - artifacts
+      type: object
+      properties:
+        artifacts:
+          description: The artifacts returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedArtifact'
+        count:
+          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
+          type: integer
+    GroupSortBy:
+      description: ''
+      enum:
+      - groupId
+      - createdOn
+      - modifiedOn
+      type: string
+    ContractRuleSearchResult:
+      title: ContractRuleSearchResult
+      description: A contract rule with its artifact coordinates, returned by tag search.
+      type: object
+      properties:
+        groupId:
+          description: The group ID of the artifact containing the rule.
+          type: string
+        artifactId:
+          description: The artifact ID containing the rule.
+          type: string
+        globalId:
+          description: The global ID of the version (null for artifact-level rules).
+          type: integer
+          format: int64
+        ruleCategory:
+          description: The rule category (DOMAIN or MIGRATION).
+          type: string
+          enum:
+          - DOMAIN
+          - MIGRATION
+        rule:
+          $ref: '#/components/schemas/ContractRule'
+    SearchedVersion:
+      description: Models a single artifact from the result set returned when searching for artifacts.
+      required:
+      - owner
+      - createdOn
+      - artifactType
+      - state
+      - globalId
+      - version
+      - contentId
+      - artifactId
+      type: object
+      properties:
+        name:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
+        state:
+          $ref: '#/components/schemas/VersionState'
+          description: ''
+        globalId:
+          format: int64
+          description: ''
+          type: integer
+        version:
+          $ref: '#/components/schemas/Version'
+          description: ''
+        contentId:
+          format: int64
+          description: ''
+          type: integer
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        modifiedBy:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: DemoGroup
+        artifactId: demo-artifact-id
+        name: Artifact Version Name
+        description: Description of the artifact version
+        artifactType: AVRO
+        state: ENABLED
+        createdOn: 2018-02-10T09:30Z
+        owner: some text
+        globalId: 37
+        version: 1.0.7
+        contentId: 62
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
+    ArtifactSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - createdOn
+      - modifiedOn
+      - artifactType
+      - name
+      type: string
+  responses:
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

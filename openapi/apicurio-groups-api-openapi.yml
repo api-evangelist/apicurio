@@ -1,0 +1,592 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin Groups API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Groups
+paths:
+  /groups:
+    summary: Collection of the groups in the registry.
+    get:
+      tags:
+      - Groups
+      parameters:
+      - name: limit
+        description: The number of groups to return.  Defaults to 20.
+        schema:
+          type: integer
+        in: query
+      - name: offset
+        description: The number of groups to skip before starting the result set.  Defaults to 0.
+        schema:
+          type: integer
+        in: query
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/GroupSortBy'
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSearchResults'
+          description: On a successful response, returns a bounded set of groups.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listGroups
+      summary: List groups
+      description: Returns a list of all groups.  This list is paged.
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroup'
+        required: true
+      tags:
+      - Groups
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMetaData'
+          description: The group has been successfully created.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: createGroup
+      summary: Create a new group
+      description: 'Creates a new group.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        * The group already exist (HTTP error `409`)
+
+        * Invalid group ID (e.g., reserved name ''default'') (HTTP error `400`)
+
+        '
+  /groups/{groupId}:
+    summary: Collection to manage a single group in the registry.
+    parameters:
+    - name: groupId
+      description: The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the ".{1,512}" pattern.
+      schema:
+        $ref: '#/components/schemas/GroupId'
+      in: path
+      required: true
+    get:
+      tags:
+      - Groups
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupMetaData'
+          description: The group's metadata.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getGroupById
+      summary: Get a group by the specified ID.
+      description: 'Returns a group using the specified id.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No group exists with the specified ID (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)'
+    put:
+      requestBody:
+        description: The new group metadata.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditableGroupMetaData'
+        required: true
+      tags:
+      - Groups
+      responses:
+        '204':
+          description: Empty response when the metadata is successfully updated.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateGroupById
+      summary: Update group metadata
+      description: 'Updates the metadata of a group using the specified id.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No group exists with the specified ID (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)'
+    delete:
+      tags:
+      - Groups
+      responses:
+        '204':
+          description: Empty content indicates a successful deletion.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteGroupById
+      summary: Delete a group by the specified ID.
+      description: 'Deletes a group by identifier.  This operation also deletes all artifacts within
+
+        the group, so should be used very carefully.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        * The group does not exist (HTTP error `404`)
+
+        '
+  /search/groups:
+    summary: Search for groups in the registry.
+    get:
+      tags:
+      - Groups
+      parameters:
+      - name: offset
+        description: The number of artifacts to skip before starting to collect the result set.  Defaults to 0.
+        schema:
+          default: 0
+          type: integer
+        in: query
+        required: false
+      - name: limit
+        description: The number of artifacts to return.  Defaults to 20.
+        schema:
+          default: 20
+          type: integer
+        in: query
+        required: false
+      - name: order
+        description: Sort order, ascending (`asc`) or descending (`desc`).
+        schema:
+          $ref: '#/components/schemas/SortOrder'
+        in: query
+      - name: orderby
+        description: 'The field to sort by.  Can be one of:
+
+
+          * `name`
+
+          * `createdOn`
+
+          '
+        schema:
+          $ref: '#/components/schemas/GroupSortBy'
+        in: query
+      - name: labels
+        description: 'Filter by one or more name/value label.  Separate each name/value pair using a colon.  For
+
+          example `labels=foo:bar` will return only artifacts with a label named `foo`
+
+          and value `bar`.'
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+      - name: description
+        description: Filter by description.
+        schema:
+          type: string
+        in: query
+      - name: groupId
+        description: Filter by group name.
+        schema:
+          type: string
+        in: query
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupSearchResults'
+          description: 'On a successful response, returns a result set of groups - one for each group
+
+            in the registry that matches the criteria.'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: searchGroups
+      summary: Search for groups
+      description: 'Returns a paginated list of all groups that match the provided filter criteria.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+components:
+  schemas:
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
+      type: string
+    EditableGroupMetaData:
+      title: Root Type for EditableGroupMetaData
+      description: ''
+      type: object
+      properties:
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        owner:
+          description: ''
+          type: string
+      example:
+        description: The description of the group.
+        owner: user-1
+        labels:
+          custom-1: foo
+          custom-2: bar
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    GroupMetaData:
+      title: Root Type for GroupMetaData
+      description: ''
+      required:
+      - groupId
+      - owner
+      - createdOn
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          type: string
+        owner:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        modifiedBy:
+          type: string
+        modifiedOn:
+          format: date-time
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+      example:
+        groupId: group-identifier
+        description: Description of the group
+        artifactsType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-07-19T15:09:00Z'
+        properties:
+          custom-1: foo
+          custom-2: bar
+    SearchedGroup:
+      description: Models a single group from the result set returned when searching for groups.
+      required:
+      - owner
+      - createdOn
+      - groupId
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        name: Group Name
+        description: Description of the group
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user1
+        modifiedOn: '2019-03-22T12:51:19Z'
+    GroupSortBy:
+      description: ''
+      enum:
+      - groupId
+      - createdOn
+      - modifiedOn
+      type: string
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    CreateGroup:
+      title: Root Type for CreateGroupMetaData
+      description: ''
+      required:
+      - groupId
+      type: object
+      properties:
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+      example:
+        groupId: group-identifier
+        description: The description of the artifact.
+        labels:
+          custom-1: foo
+          custom-2: bar
+  responses:
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    MethodNotAllowed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            MethodNotAllowedExample:
+              value:
+                error_code: 405
+                message: Method is currently not supported or disabled.
+      description: Common response for all operations that can fail due to method not allowed or disabled.
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

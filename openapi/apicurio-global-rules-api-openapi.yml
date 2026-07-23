@@ -1,0 +1,387 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin Global rules API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: Global rules
+paths:
+  /admin/rules:
+    summary: Manage the global rules that apply to all artifacts if not otherwise configured.
+    get:
+      tags:
+      - Global rules
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RuleType'
+          description: The list of names of the globally configured rules.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: listGlobalRules
+      summary: List global rules
+      description: 'Gets a list of all the currently configured global rules (if any).
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRule'
+        required: true
+      tags:
+      - Global rules
+      responses:
+        '204':
+          description: The global rule was added.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: createGlobalRule
+      summary: Create global rule
+      description: 'Adds a rule to the list of globally configured rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * The rule type is unknown (HTTP error `400`)
+
+        * The rule already exists (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Global rules
+      responses:
+        '204':
+          description: All global rules have been removed successfully.
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteAllGlobalRules
+      summary: Delete all global rules
+      description: 'Deletes all globally configured rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+  /admin/rules/{ruleType}:
+    summary: Manage the configuration of a single global artifact rule.
+    parameters:
+    - name: ruleType
+      description: The unique name/type of a rule.
+      schema:
+        $ref: '#/components/schemas/RuleType'
+      in: path
+      required: true
+    get:
+      tags:
+      - Global rules
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: The global rule's configuration.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: getGlobalRuleConfig
+      summary: Get global rule configuration
+      description: 'Returns information about the named globally configured rule.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rule'
+        required: true
+      tags:
+      - Global rules
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+          description: The global rule's configuration was successfully updated.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: updateGlobalRuleConfig
+      summary: Update global rule configuration
+      description: 'Updates the configuration for a globally configured rule.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+    delete:
+      tags:
+      - Global rules
+      responses:
+        '204':
+          description: The global rule was successfully deleted.
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+      operationId: deleteGlobalRule
+      summary: Delete global rule
+      description: 'Deletes a single global rule.  If this is the only rule configured, this is the same
+
+        as deleting **all** rules.
+
+
+        This operation can fail for the following reasons:
+
+
+        * Invalid rule name/type (HTTP error `400`)
+
+        * No rule with name/type `rule` exists (HTTP error `404`)
+
+        * Rule cannot be deleted (HTTP error `409`)
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+components:
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+  schemas:
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    Rule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
+    RuleType:
+      description: ''
+      enum:
+      - VALIDITY
+      - COMPATIBILITY
+      - INTEGRITY
+      type: string
+      example: VALIDITY
+      x-codegen-package: io.apicurio.registry.types
+    CreateRule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true

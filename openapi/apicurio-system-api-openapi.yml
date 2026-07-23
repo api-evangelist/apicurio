@@ -1,0 +1,316 @@
+openapi: 3.1.0
+info:
+  title: Apicurio Registry Admin System API
+  version: 3.1.x
+  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+  contact:
+    name: Apicurio
+    url: https://www.apicur.io/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: http://localhost:8080/apis/registry/v3
+  description: Local Apicurio Registry
+tags:
+- name: System
+paths:
+  /system/info:
+    summary: Retrieve system information
+    get:
+      tags:
+      - System
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemInfo'
+          description: On success, returns the system information.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: getSystemInfo
+      summary: Get system information
+      description: 'This operation retrieves information about the running registry system, such as the version
+
+        of the software and when it was built.'
+  /system/uiConfig:
+    summary: Get UI configuration
+    description: "This endpoint is used by the user interface to retrieve UI specific configuration\nin a JSON payload.  This allows the UI and the backend to be configured in the \nsame place (the backend process/pod).  When the UI loads, it will make an API call\nto this endpoint to determine what UI features and options are configured."
+    get:
+      tags:
+      - System
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInterfaceConfig'
+          description: The UI config.
+        '500':
+          $ref: '#/components/responses/ServerError'
+      operationId: getUIConfig
+      summary: Get UI config
+      description: 'Returns the UI configuration properties for this server.  The registry UI can be
+
+        connected to a backend using just a URL.  The rest of the UI configuration can then
+
+        be fetched from the backend using this operation.  This allows UI and backend to
+
+        both be configured in the same place.
+
+
+        This operation may fail for one of the following reasons:
+
+
+        * A server error occurred (HTTP error `500`)
+
+        '
+components:
+  schemas:
+    UserInterfaceConfigAuth:
+      title: Root Type for UserInterfaceConfigAuth
+      description: ''
+      required:
+      - obacEnabled
+      - rbacEnabled
+      type: object
+      properties:
+        type:
+          enum:
+          - none
+          - basic
+          - oidc
+          type: string
+        rbacEnabled:
+          type: boolean
+        obacEnabled:
+          type: boolean
+        options:
+          $ref: '#/components/schemas/Labels'
+      example:
+        type: oidc
+        rbacEnabled: true
+        obacEnabled: false
+        options:
+          url: https://auth.apicur.io/realms/apicurio
+          redirectUri: https://registry.apicur.io
+          clientId: registry-ui
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    SystemInfo:
+      title: Root Type for SystemInfo
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        builtOn:
+          format: date-time
+          type: string
+      example:
+        name: Apicurio Registry (SQL)
+        description: The Apicurio Registry application.
+        version: 2.0.0.Final
+        builtOn: '2021-03-19T12:55:00Z'
+    UserInterfaceConfigFeatures:
+      title: Root Type for UserInterfaceConfigFeatures
+      description: ''
+      type: object
+      properties:
+        readOnly:
+          type: boolean
+        breadcrumbs:
+          type: boolean
+        roleManagement:
+          type: boolean
+        settings:
+          type: boolean
+        deleteGroup:
+          description: ''
+          type: boolean
+        deleteArtifact:
+          description: ''
+          type: boolean
+        deleteVersion:
+          description: ''
+          type: boolean
+        draftMutability:
+          description: ''
+          type: boolean
+        agents:
+          description: ''
+          type: boolean
+        searchIndex:
+          description: ''
+          type: boolean
+      example:
+        readOnly: false
+        breadcrumbs: true
+        roleManagement: false
+        settings: true
+    UserInterfaceConfigUi:
+      title: Root Type for UserInterfaceConfigUi
+      description: ''
+      type: object
+      properties:
+        contextPath:
+          type: string
+        navPrefixPath:
+          type: string
+        oaiDocsUrl:
+          type: string
+        editorsUrl:
+          type: string
+      example:
+        contextPath: /
+        navPrefixPath: /
+        oaiDocsUrl: https://registry.apicur.io/docs
+        editorsUrl: https://registry.apicur.io/editors
+    UserInterfaceConfig:
+      title: Root Type for UserInterfaceConfig
+      description: Defines the user interface configuration data type.
+      required:
+      - auth
+      type: object
+      properties:
+        ui:
+          $ref: '#/components/schemas/UserInterfaceConfigUi'
+          properties:
+            contextPath:
+              type: string
+            navPrefixPath:
+              type: string
+            oaiDocsUrl:
+              type: string
+            editorsUrl:
+              type: string
+        auth:
+          $ref: '#/components/schemas/UserInterfaceConfigAuth'
+          properties:
+            type:
+              type: string
+            rbacEnabled:
+              type: boolean
+            obacEnabled:
+              type: boolean
+            options:
+              type: object
+              properties:
+                url:
+                  type: string
+                redirectUri:
+                  type: string
+                clientId:
+                  type: string
+        features:
+          $ref: '#/components/schemas/UserInterfaceConfigFeatures'
+          properties:
+            readOnly:
+              type: boolean
+            breadcrumbs:
+              type: boolean
+            roleManagement:
+              type: boolean
+            settings:
+              type: boolean
+      example:
+        ui:
+          contextPath: /
+          navPrefixPath: /
+          oaiDocsUrl: https://registry.apicur.io/docs
+          editorsUrl: https://registry.apicur.io/editors
+        auth:
+          type: oidc
+          rbacEnabled: true
+          obacEnabled: false
+          options:
+            url: https://auth.apicur.io/realms/apicurio
+            redirectUri: http://registry.apicur.io
+            clientId: apicurio-registry-ui
+        features:
+          readOnly: false
+          breadcrumbs: true
+          roleManagement: false
+          settings: true
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+  responses:
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/realms/apicurio/protocol/openid-connect/token
+          scopes:
+            read: Read access
+            write: Write access
+            admin: Admin access
+x-codegen:
+  suppress-date-time-formatting: true
+  bean-annotations:
+  - io.quarkus.runtime.annotations.RegisterForReflection
+  - annotation: lombok.experimental.SuperBuilder
+    excludeEnums: true
+  - annotation: lombok.AllArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.NoArgsConstructor
+    excludeEnums: true
+  - annotation: lombok.EqualsAndHashCode
+    excludeEnums: true
+  - annotation: lombok.ToString(callSuper = true)
+    excludeEnums: true
