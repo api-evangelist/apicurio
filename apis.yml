@@ -7,7 +7,20 @@ description: >-
   and AsyncAPI), Apicurio Data Models (a data modeling library), Apicurio Codegen
   (Java code generation from OpenAPI), and Apicurito (an embedded API editor).
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apicurio.png
 tags:
 - Apache License
 - API Design
@@ -28,10 +41,9 @@ apis:
 - aid: apicurio:apicurio-registry
   name: Apicurio Registry
   description: >-
-    Apicurio Registry is a high-performance, runtime registry for schemas and
-    API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema,
-    Protobuf, and other artifact types, providing a REST API for schema
-    management with compatibility checking and content versioning.
+    Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and
+    manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST
+    API for schema management with compatibility checking and content versioning.
   humanURL: https://www.apicur.io/registry/
   tags:
   - Avro
@@ -50,10 +62,9 @@ apis:
 - aid: apicurio:apicurio-studio
   name: Apicurio Studio
   description: >-
-    Apicurio Studio is a visual, zero-code API design tool for creating and
-    editing OpenAPI and AsyncAPI specifications. Note: Apicurio Studio is
-    deprecated in favor of the integrated design capabilities in Apicurio
-    Registry.
+    Apicurio Studio is a visual, zero-code API design tool for creating and editing OpenAPI and AsyncAPI
+    specifications. Note: Apicurio Studio is deprecated in favor of the integrated design capabilities
+    in Apicurio Registry.
   humanURL: https://www.apicur.io/studio/
   tags:
   - API Design
@@ -69,9 +80,8 @@ apis:
 - aid: apicurio:apicurio-data-models
   name: Apicurio Data Models
   description: >-
-    Apicurio Data Models is a Java and TypeScript library for parsing,
-    validating, and manipulating OpenAPI and AsyncAPI specification documents
-    programmatically.
+    Apicurio Data Models is a Java and TypeScript library for parsing, validating, and manipulating OpenAPI
+    and AsyncAPI specification documents programmatically.
   humanURL: https://github.com/Apicurio/apicurio-data-models
   tags:
   - AsyncAPI
@@ -86,8 +96,8 @@ apis:
 - aid: apicurio:apicurio-codegen
   name: Apicurio Codegen
   description: >-
-    Apicurio Codegen generates Java JAX-RS server stubs and client code from
-    OpenAPI specifications, enabling design-first API development workflows.
+    Apicurio Codegen generates Java JAX-RS server stubs and client code from OpenAPI specifications, enabling
+    design-first API development workflows.
   humanURL: https://github.com/Apicurio/apicurio-codegen
   tags:
   - Code Generation
@@ -97,6 +107,177 @@ apis:
   properties:
   - type: GitHubRepository
     url: https://github.com/Apicurio/apicurio-codegen
+- aid: apicurio:apicurio-admin-api
+  name: Apicurio Admin API
+  description: The Admin API from Apicurio — 17 operation(s) for admin.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Admin
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-admin-api-openapi.yml
+- aid: apicurio:apicurio-ai-api
+  name: Apicurio AI API
+  description: The AI API from Apicurio — 1 operation(s) for ai.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - AI
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-ai-api-openapi.yml
+- aid: apicurio:apicurio-artifact-rules-api
+  name: Apicurio Artifact rules API
+  description: The Artifact rules API from Apicurio — 2 operation(s) for artifact rules.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Artifact rules
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-artifact-rules-api-openapi.yml
+- aid: apicurio:apicurio-artifact-type-api
+  name: Apicurio Artifact Type API
+  description: The Artifact Type API from Apicurio — 1 operation(s) for artifact type.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Artifact Type
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-artifact-type-api-openapi.yml
+- aid: apicurio:apicurio-artifacts-api
+  name: Apicurio Artifacts API
+  description: The Artifacts API from Apicurio — 9 operation(s) for artifacts.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Artifacts
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-artifacts-api-openapi.yml
+- aid: apicurio:apicurio-branches-api
+  name: Apicurio Branches API
+  description: The Branches API from Apicurio — 3 operation(s) for branches.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Branches
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-branches-api-openapi.yml
+- aid: apicurio:apicurio-content-api
+  name: Apicurio Content API
+  description: The Content API from Apicurio — 1 operation(s) for content.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Content
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-content-api-openapi.yml
+- aid: apicurio:apicurio-contracts-api
+  name: Apicurio Contracts API
+  description: The Contracts API from Apicurio — 16 operation(s) for contracts.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Contracts
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-contracts-api-openapi.yml
+- aid: apicurio:apicurio-gitops-api
+  name: Apicurio GitOps API
+  description: The GitOps API from Apicurio — 2 operation(s) for gitops.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - GitOps
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-gitops-api-openapi.yml
+- aid: apicurio:apicurio-global-rules-api
+  name: Apicurio Global rules API
+  description: The Global rules API from Apicurio — 2 operation(s) for global rules.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Global rules
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-global-rules-api-openapi.yml
+- aid: apicurio:apicurio-group-rules-api
+  name: Apicurio Group rules API
+  description: The Group rules API from Apicurio — 2 operation(s) for group rules.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Group rules
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-group-rules-api-openapi.yml
+- aid: apicurio:apicurio-groups-api
+  name: Apicurio Groups API
+  description: The Groups API from Apicurio — 3 operation(s) for groups.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-groups-api-openapi.yml
+- aid: apicurio:apicurio-kafkasql-api
+  name: Apicurio KafkaSQL API
+  description: The KafkaSQL API from Apicurio — 1 operation(s) for kafkasql.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - KafkaSQL
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-kafkasql-api-openapi.yml
+- aid: apicurio:apicurio-metadata-api
+  name: Apicurio Metadata API
+  description: The Metadata API from Apicurio — 2 operation(s) for metadata.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-metadata-api-openapi.yml
+- aid: apicurio:apicurio-search-api
+  name: Apicurio Search API
+  description: The Search API from Apicurio — 5 operation(s) for search.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-search-api-openapi.yml
+- aid: apicurio:apicurio-snapshot-api
+  name: Apicurio Snapshot API
+  description: The Snapshot API from Apicurio — 1 operation(s) for snapshot.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Snapshot
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-snapshot-api-openapi.yml
+- aid: apicurio:apicurio-system-api
+  name: Apicurio System API
+  description: The System API from Apicurio — 2 operation(s) for system.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-system-api-openapi.yml
+- aid: apicurio:apicurio-users-api
+  name: Apicurio Users API
+  description: The Users API from Apicurio — 1 operation(s) for users.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-users-api-openapi.yml
+- aid: apicurio:apicurio-versions-api
+  name: Apicurio Versions API
+  description: The Versions API from Apicurio — 11 operation(s) for versions.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-versions-api-openapi.yml
 common:
 - type: Website
   url: https://www.apicur.io
