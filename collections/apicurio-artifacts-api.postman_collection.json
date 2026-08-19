@@ -1,0 +1,3954 @@
+{
+  "item": [
+    {
+      "id": "c1c29b65-d8df-4089-b7ee-0527db9c44ac",
+      "name": "Artifacts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d496f9e3-1941-44d8-8607-67cb9d7e2ceb",
+          "name": "Get artifact by global ID",
+          "request": {
+            "name": "Get artifact by global ID",
+            "description": {
+              "content": "Gets the content for an artifact version in the registry using its globally unique\nidentifier.\n\nThis operation may fail for one of the following reasons:\n\n* No artifact version with this `globalId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "globalIds",
+                ":globalId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "references",
+                  "value": "<string>",
+                  "description": "Allows the user to specify how references in the content should be treated."
+                },
+                {
+                  "disabled": false,
+                  "key": "returnArtifactType",
+                  "value": "<boolean>",
+                  "description": "When set to `true`, the HTTP response will include a header named `X-Registry-ArtifactType`\nthat contains the type of the artifact being returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "globalId",
+                  "description": "(Required) Global identifier for an artifact version."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "99329249-b81e-4f11-afd9-cb3c6f2160ab",
+              "name": "The content of one version of one artifact.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnArtifactType",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "X-Registry-ArtifactType",
+                  "value": "AVRO",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"openapi\": \"3.0.2\",\n  \"info\": {\n    \"title\": \"Empty API\",\n    \"version\": \"1.0.0\",\n    \"description\": \"An example API design using OpenAPI.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f20ac93-83f3-4eb8-ac45-72e8d6dc0f01",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnArtifactType",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca25370b-b783-4e97-859c-6d025d7dec31",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnArtifactType",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b4faf4b-d074-41ca-a28d-27570ae77557",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnArtifactType",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8d516e8-0de7-47f3-9fa7-799dd6bab2db",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "references",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "returnArtifactType",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2c18a99-f8d7-43ec-b90c-d05bf8151441",
+          "name": "Search for artifacts",
+          "request": {
+            "name": "Search for artifacts",
+            "description": {
+              "content": "Returns a paginated list of all artifacts that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by artifact name."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>",
+                  "description": "Filter by description."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by artifact group."
+                },
+                {
+                  "disabled": false,
+                  "key": "globalId",
+                  "value": "<long>",
+                  "description": "Filter by globalId."
+                },
+                {
+                  "disabled": false,
+                  "key": "contentId",
+                  "value": "<long>",
+                  "description": "Filter by contentId."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactId",
+                  "value": "<string>",
+                  "description": "Filter by artifactId."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Filter by artifact type (`AVRO`, `JSON`, etc)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b7d16732-7569-485d-8a0e-7a34c33cf26e",
+              "name": "On a successful response, returns a result set of artifacts - one for each artifact\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3778,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0633abcf-c5a9-4a0e-8888-04949e48cd8d",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99e03f92-4eee-4210-924c-0267eb0890c9",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fb96c77-b7e1-469a-9dde-a29cf64caab1",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ae4c54d-3239-4cb6-9c76-681b0261604f",
+          "name": "Search for artifacts by content",
+          "request": {
+            "name": "Search for artifacts by content",
+            "description": {
+              "content": "Returns a paginated list of all artifacts with at least one version that matches the\nposted content.\n\nThis operation can fail for the following reasons:\n\n* Provided content (request body) was empty (HTTP error `400`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canonical",
+                  "value": "<boolean>",
+                  "description": "Parameter that can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by artifact group."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "*/*"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<binary>"
+            }
+          },
+          "response": [
+            {
+              "id": "e5360e74-a412-4ab6-8890-2144886ae377",
+              "name": "On a successful response, returns a result set of artifacts - one for each artifact\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7641,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5102cd7e-8911-4594-b366-3df198febaca",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b42298e-ce7d-4f40-b4d7-2fd70386ab7c",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d819180e-9211-4a1a-8526-a98726d2401b",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "415c0ea2-1246-48b1-93ac-4586668a1e1b",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "file"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf3fef37-b588-4cec-b0ae-50bb0029a6c7",
+          "name": "List artifact references by content ID",
+          "request": {
+            "name": "List artifact references by content ID",
+            "description": {
+              "content": "Returns a list containing all the artifact references using the artifact content ID.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "contentIds",
+                ":contentId",
+                "references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contentId",
+                  "description": "(Required) Global identifier for a single artifact content."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ff43a66-ffe3-483e-9af9-a787f120ae4b",
+              "name": "A list containing all the references for the artifact with the given content id.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  },\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7daed067-3915-4d96-bd22-c552e92970b6",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "861f591c-ca62-4620-a4d4-535b18dc4b2e",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7935f1f1-71d0-4930-8144-8cf6f8257f72",
+          "name": "List artifact references by global ID",
+          "request": {
+            "name": "List artifact references by global ID",
+            "description": {
+              "content": "Returns a list containing all the artifact references using the artifact global ID.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "globalIds",
+                ":globalId",
+                "references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "refType",
+                  "value": "<string>",
+                  "description": "Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "globalId",
+                  "description": "(Required) Global identifier for an artifact version."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "462fb4b2-04b0-4164-8530-2211cc802de2",
+              "name": "A list containing all the references for the artifact with the given global id.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  },\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c652f21-e1ec-4390-be37-3d9fbb7fae95",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed42f40f-4a8a-424d-b195-fb077299898f",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "globalIds",
+                    ":globalId",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "refType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "globalId",
+                      "description": "(Required) Global identifier for an artifact version."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95e7698e-c8d2-4e81-9519-a87635b6b3d6",
+          "name": "List artifacts in group",
+          "request": {
+            "name": "List artifacts in group",
+            "description": {
+              "content": "Returns a list of all artifacts in the group.  This list is paged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":groupId",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "The number of artifacts to skip before starting the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "054f6fff-3b0d-464f-8058-a5a1711ca7b7",
+              "name": "On a successful response, returns a bounded set of artifacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9853,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8aa0c56-78a0-4721-8a23-3dfde184cbe5",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19d236ee-d9fa-4922-8028-67048458c501",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "097a934b-3f2d-4ab1-937f-3501f9c173c0",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "275bedd4-58f2-4b5c-836a-875761f38e1d",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec72dcc4-6713-41dd-a0d4-0f5e6723c2ac",
+          "name": "Create artifact",
+          "request": {
+            "name": "Create artifact",
+            "description": {
+              "content": "Creates a new artifact.  The body of the request should be a `CreateArtifact` \nobject, which includes the metadata of the new artifact and, optionally, the \nmetadata and content of the first version.\n\nIf the artifact type is not provided, the registry attempts to figure out what \nkind of artifact is being added from the\nfollowing supported list:\n\n* Avro (`AVRO`)\n* Protobuf (`PROTOBUF`)\n* JSON Schema (`JSON`)\n* Kafka Connect (`KCONNECT`)\n* OpenAPI (`OPENAPI`)\n* AsyncAPI (`ASYNCAPI`)\n* GraphQL (`GRAPHQL`)\n* Web Services Description Language (`WSDL`)\n* XML Schema (`XSD`)\n\nAn artifact will be created using the unique artifact ID that can optionally be \nprovided in the request body.  If not provided in the request, the server will\ngenerate a unique ID for the artifact.  It is typically recommended that callers\nprovide the ID, because it is typically a meaningful identifier, and as such\nfor most use cases should be supplied by the caller.\n\nIf an artifact with the provided artifact ID already exists, the default behavior\nis for the server to reject the content with a 409 error.  However, the caller can\nsupply the `ifExists` query parameter to alter this default behavior. The `ifExists`\nquery parameter can have one of the following values:\n\n* `FAIL` (*default*) - server rejects the content with a 409 error\n* `CREATE_VERSION` - server creates a new version of the existing artifact and returns it\n* `FIND_OR_CREATE_VERSION` - server returns an existing **version** that matches the \nprovided content if such a version exists, otherwise a new version is created\n\nThis operation may fail for one of the following reasons:\n\n* An invalid `ArtifactType` was indicated (HTTP error `400`)\n* No `ArtifactType` was indicated and the server could not determine one from the content (HTTP error `400`)\n* Provided content (request body) was empty (HTTP error `400`)\n* An invalid version number was used for the optional included first version (HTTP error `400`)\n* The group does not exist and automatic-group-creation is not enabled (HTTP error `404`)\n* An artifact with the provided ID already exists (HTTP error `409`)\n* The content violates one of the configured global rules (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n\nNote that if the `dryRun` query parameter is set to `true`, then this operation\nwill not actually make any changes.  Instead it will succeed or fail based on \nwhether it **would have worked**.  Use this option to, for example, check if an\nartifact is valid or if a new version passes configured compatibility checks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":groupId",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ifExists",
+                  "value": "<string>",
+                  "description": "Set this option to instruct the server on what to do if the artifact already exists."
+                },
+                {
+                  "disabled": false,
+                  "key": "canonical",
+                  "value": "<boolean>",
+                  "description": "Used only when the `ifExists` query parameter is set to `RETURN_OR_UPDATE`, this parameter can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for a matching version.  The canonicalization algorithm is unique to each artifact type, but typically involves removing extra whitespace and formatting the content in a consistent manner."
+                },
+                {
+                  "disabled": false,
+                  "key": "dryRun",
+                  "value": "<boolean>",
+                  "description": "When set to `true`, the operation will not result in any changes. Instead, it\nwill return a result based on whether the operation **would have succeeded**."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"artifactId\": \"<string>\",\n  \"artifactType\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"content\": {\n      \"content\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"references\": [\n        {\n          \"artifactId\": \"<string>\",\n          \"groupId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"version\": \"<string>\"\n        },\n        {\n          \"artifactId\": \"<string>\",\n          \"groupId\": \"<string>\",\n          \"name\": \"<string>\",\n          \"version\": \"<string>\"\n        }\n      ],\n      \"encoding\": \"<string>\"\n    },\n    \"version\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\"\n    },\n    \"branches\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"isDraft\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aeb66233-680b-4229-80d9-1ca30ecc1daa",
+              "name": "Artifact was successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"artifact\": {\n    \"groupId\": \"My-Group\",\n    \"artifactId\": \"Procurement-Invoice\",\n    \"name\": \"Artifact Name\",\n    \"description\": \"Description of the artifact\",\n    \"artifactType\": \"AVRO\",\n    \"owner\": \"user1\",\n    \"createdOn\": \"2019-03-22T12:51:19Z\",\n    \"modifiedBy\": \"user2\",\n    \"modifiedOn\": \"2019-07-19T15:09:00Z\",\n    \"labels\": {\n      \"custom-1\": \"foo\",\n      \"custom-2\": \"bar\"\n    }\n  },\n  \"version\": {\n    \"createdOn\": \"2004-11-24T13:00:56.772Z\",\n    \"owner\": \"string\",\n    \"version\": \"<string>\",\n    \"artifactType\": \"AVRO\",\n    \"globalId\": 9479,\n    \"artifactId\": \"\\\"example-artifact\\\"\",\n    \"contentId\": 8390,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"state\": \"ENABLED\",\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\",\n      \"key_2\": \"<string>\"\n    },\n    \"groupId\": \"\\\"my-group\\\"\",\n    \"modifiedBy\": \"string\",\n    \"modifiedOn\": \"2012-06-04T18:57:03.972Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3d40ad2-3494-4df6-8da4-262081622100",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08d240c3-ef7d-43a0-b38c-4bed13386e89",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "080c71ea-7466-4edc-a34e-bd0dc15df435",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76e0fb7e-23aa-4f66-9a1d-fe48de7f924e",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73f5237f-339b-4058-93a4-24b59768d3a3",
+              "name": "Common response used when an input conflicts with existing data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 409,\n  \"message\": \"The artifact content was invalid\",\n  \"causes\": [\n    {\n      \"description\": \"API is missing a title\",\n      \"context\": \"/info[title]\"\n    },\n    {\n      \"description\": \"Operation IDs must be unique\",\n      \"context\": \"/paths[/invoices]/put[operationId]\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e465e316-2d9f-49c6-82bd-da756339bf70",
+              "name": "The artifact content is not valid for one of the following reasons:\n* Schema validation failed\n* References could not be validated\n* Required references are missing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 422,\n  \"message\": \"The artifact content is invalid: Schema validation failed\",\n  \"name\": \"SchemaValidationException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50533411-a9f3-4584-bc8d-b4d71353b090",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ifExists",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "dryRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifactId\": \"\\\"example-artifact\\\"\",\n  \"artifactType\": \"AVRO\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"labels\": {\n    \"key_0\": \"<string>\"\n  },\n  \"firstVersion\": {\n    \"version\": \"1.0.1\",\n    \"content\": {\n      \"content\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"ExampleType\\\",\\\"fields\\\":[{\\\"name\\\":\\\"foo\\\",\\\"type\\\":\\\"string\\\"}]}\",\n      \"contentType\": \"application/json\"\n    },\n    \"name\": \"Version 1.0.1\",\n    \"description\": \"The latest version of this artifact.\",\n    \"isDraft\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c35d2fed-6362-41f2-9e7a-a65c308411b2",
+          "name": "Delete artifacts in group",
+          "request": {
+            "name": "Delete artifacts in group",
+            "description": {
+              "content": "Deletes all of the artifacts that exist in a given group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":groupId",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac0d6ac0-749c-415e-92d6-e7f9fbd1de91",
+              "name": "When the delete operation is successful, a simple 204 is returned.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "277bf65f-0c3f-4fcc-b0fb-91673a85cee9",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb6c784b-f6de-4967-b905-fedcea1a6746",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fd5bab5-f87f-4b1c-8829-c538efe85977",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3e07475-21c7-4250-94f6-3d3f77ba9530",
+          "name": "List artifact references by hash",
+          "request": {
+            "name": "List artifact references by hash",
+            "description": {
+              "content": "Returns a list containing all the artifact references using the artifact content hash.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "contentHashes",
+                ":contentHash",
+                "references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentHash",
+                  "description": "(Required) SHA-256 content hash for a single artifact content."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e6ba6a1-7482-4dfa-a908-25565d2eb894",
+              "name": "A list containing all the references for the artifact with the given content hash.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  },\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f72431a5-2cb5-46b0-9691-58e27f22db25",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3079574-b8e0-45a0-aff6-4a6bed35608c",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91b9a06a-4e35-4fca-9926-e2fed86e8d43",
+          "name": "Get artifact content by SHA-256 hash",
+          "request": {
+            "name": "Get artifact content by SHA-256 hash",
+            "description": {
+              "content": "Gets the content for an artifact version in the registry using the \nSHA-256 hash of the content.  This content hash may be shared by multiple artifact\nversions in the case where the artifact versions have identical content.\n\nThis operation may fail for one of the following reasons:\n\n* No content with this `contentHash` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "contentHashes",
+                ":contentHash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "contentHash",
+                  "description": "(Required) SHA-256 content hash for a single artifact content."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "87aff98f-468a-4326-bb8b-855578690f5f",
+              "name": "The content of one version of one artifact.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "X-Registry-ArtifactType",
+                  "value": "AVRO",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"openapi\": \"3.0.2\",\n  \"info\": {\n    \"title\": \"Empty API\",\n    \"version\": \"1.0.0\",\n    \"description\": \"An example API design using OpenAPI.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a82410a6-eb42-4e32-a392-f3f81a3493a3",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cdf9743-a1f3-49a9-8a70-6be971f49730",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca589eaf-2f59-4807-81d0-1c710bf8c025",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14db09a5-fd16-4190-a8e1-026814b7a8a9",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentHashes",
+                    ":contentHash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "contentHash",
+                      "description": "(Required) SHA-256 content hash for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45777343-e6e5-4070-9bcb-bd4067056fc4",
+          "name": "Get artifact content by ID",
+          "request": {
+            "name": "Get artifact content by ID",
+            "description": {
+              "content": "Gets the content for an artifact version in the registry using the unique content\nidentifier for that content.  This content ID may be shared by multiple artifact\nversions in the case where the artifact versions are identical.\n\nThis operation may fail for one of the following reasons:\n\n* No content with this `contentId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ids",
+                "contentIds",
+                ":contentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "contentId",
+                  "description": "(Required) Global identifier for a single artifact content."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51db78e1-4f23-438a-b1ca-6f011618b109",
+              "name": "The content of one version of one artifact.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "X-Registry-ArtifactType",
+                  "value": "AVRO",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{\n  \"openapi\": \"3.0.2\",\n  \"info\": {\n    \"title\": \"Empty API\",\n    \"version\": \"1.0.0\",\n    \"description\": \"An example API design using OpenAPI.\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c7e951d-21b0-4bdb-b043-48a224ec6e2a",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63bf7ff4-2a5b-4df3-b163-8c2b96b4e239",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9179164-85fe-4413-80ba-53c991976269",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c48c8390-97e3-4ec2-adf1-d80bb91effe7",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ids",
+                    "contentIds",
+                    ":contentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<long>",
+                      "key": "contentId",
+                      "description": "(Required) Global identifier for a single artifact content."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61911a03-9fcb-4bbe-aac1-a1575f3710c1",
+          "name": "Delete artifact",
+          "request": {
+            "name": "Delete artifact",
+            "description": {
+              "content": "Deletes an artifact completely, resulting in all versions of the artifact also being\ndeleted.  This may fail for one of the following reasons:\n\n* No artifact with the `artifactId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "groups",
+                ":groupId",
+                "artifacts",
+                ":artifactId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "artifactId",
+                  "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c25693e4-3543-45ac-bbc3-da008eb95feb",
+              "name": "Returned when the artifact was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f445cb6e-86c0-4b17-9074-51271d1c5b61",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dadeb7c9-fcb2-42a1-86df-2bb72d39f0c0",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "259d86d9-1792-45f2-8c16-34599253a5fc",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9db0bddd-cb2f-4202-9d43-4bdd44c4c430",
+              "name": "Common response for all operations that can fail due to method not allowed or disabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 405,\n  \"message\": \"Method is currently not supported or disabled.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81b0ce51-4541-42d6-9023-2c32f5a9ace7",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "groups",
+                    ":groupId",
+                    "artifacts",
+                    ":artifactId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "artifactId",
+                      "description": "(Required) The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0c655ace-631e-40f6-960e-755e8d6b91b6",
+    "name": "Apicurio Registry Admin Artifacts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}

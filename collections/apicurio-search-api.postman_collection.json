@@ -1,0 +1,2682 @@
+{
+  "item": [
+    {
+      "id": "e5f35120-77c7-489d-86b6-c27a4167b098",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f707a8f4-7bc8-494e-8a59-71b7c4c98fa5",
+          "name": "Search for artifacts",
+          "request": {
+            "name": "Search for artifacts",
+            "description": {
+              "content": "Returns a paginated list of all artifacts that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by artifact name."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>",
+                  "description": "Filter by description."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by artifact group."
+                },
+                {
+                  "disabled": false,
+                  "key": "globalId",
+                  "value": "<long>",
+                  "description": "Filter by globalId."
+                },
+                {
+                  "disabled": false,
+                  "key": "contentId",
+                  "value": "<long>",
+                  "description": "Filter by contentId."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactId",
+                  "value": "<string>",
+                  "description": "Filter by artifactId."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Filter by artifact type (`AVRO`, `JSON`, etc)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9a5248c-bd14-4fca-afd6-3b633dc86aea",
+              "name": "On a successful response, returns a result set of artifacts - one for each artifact\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8174,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d44c727b-cf59-4dae-b900-14c888301ca5",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b28322bd-55ad-4bca-8539-a0f9fc40b537",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c9062ee-914e-451f-893b-b0be38d83849",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3dc12151-2f14-4363-b1d8-905961f54ca8",
+          "name": "Search for artifacts by content",
+          "request": {
+            "name": "Search for artifacts by content",
+            "description": {
+              "content": "Returns a paginated list of all artifacts with at least one version that matches the\nposted content.\n\nThis operation can fail for the following reasons:\n\n* Provided content (request body) was empty (HTTP error `400`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canonical",
+                  "value": "<boolean>",
+                  "description": "Parameter that can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by artifact group."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "*/*"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<binary>"
+            }
+          },
+          "response": [
+            {
+              "id": "a53c54ae-68a4-4e4a-95c6-845fbe041489",
+              "name": "On a successful response, returns a result set of artifacts - one for each artifact\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8174,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64fac0dc-1505-48f3-9efd-9a4f702ce352",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f25ca70b-1eee-4047-89c0-e363a5be7f7e",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7948cdbe-9a4e-4f96-ba41-c0aea0d12aa7",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f593b0d-64fa-45f5-b9ee-15ff343a4ad0",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "modifiedOn"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ec40598-0c5c-49dd-b648-dcb1d343e35f",
+          "name": "Search for groups",
+          "request": {
+            "name": "Search for groups",
+            "description": {
+              "content": "Returns a paginated list of all groups that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "groups"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of artifacts to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>",
+                  "description": "Filter by description."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by group name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "456387e8-d5d7-4d30-b2b5-095c04bfb73d",
+              "name": "On a successful response, returns a result set of groups - one for each group\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "createdOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 4970,\n  \"groups\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"name\": \"Group Name\",\n      \"description\": \"Description of the group\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user1\",\n      \"modifiedOn\": \"2019-03-22T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"name\": \"Group Name\",\n      \"description\": \"Description of the group\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user1\",\n      \"modifiedOn\": \"2019-03-22T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4bd764f-02e7-4fd9-92e2-b9e4c8a43110",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "createdOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a903918-0256-4fc0-83f5-fb474b48c329",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "createdOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d451e4b-d8dc-4f25-9367-5cba3a4ba135",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "groups"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "createdOn"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f3ecaaa-6be7-4ec8-abc9-c99e0fc74c59",
+          "name": "Search for versions",
+          "request": {
+            "name": "Search for versions",
+            "description": {
+              "content": "Returns a paginated list of all versions that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "version",
+                  "value": "<string>",
+                  "description": "Filter by version number."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of versions to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of versions to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "labels",
+                  "value": "<string>",
+                  "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>",
+                  "description": "Filter by description."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by artifact group."
+                },
+                {
+                  "disabled": false,
+                  "key": "globalId",
+                  "value": "<long>",
+                  "description": "Filter by globalId."
+                },
+                {
+                  "disabled": false,
+                  "key": "contentId",
+                  "value": "<long>",
+                  "description": "Filter by contentId."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactId",
+                  "value": "<string>",
+                  "description": "Filter by artifactId."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter by name."
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Filter by version state."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Filter by artifact type (`AVRO`, `JSON`, etc)."
+                },
+                {
+                  "disabled": false,
+                  "key": "content",
+                  "value": "<string>",
+                  "description": "Full-text search of artifact content.  Requires the Lucene search index to be enabled."
+                },
+                {
+                  "disabled": false,
+                  "key": "structure",
+                  "value": "<string>",
+                  "description": "Search by structured content elements (schemas, paths, fields, etc.) using a faceted format. Supports three formats: `type:kind:name` for exact match (e.g. `openapi:schema:Pet`), `kind:name` for cross-type match (e.g. `schema:Pet`), or just `name` for plain text search. Requires the Lucene search index to be enabled."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2b6552f8-4236-4a0d-901e-2f74fc249bff",
+              "name": "On a successful response, returns a result set of versions - one for each version\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "gAP+wxcsZGYvDJSYb9ZPya82HyXw8LMyaBdltlBF..N+QOQ+aRwV34rP_iC6_ulN+abvvL"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "SUNSET"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "content",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "structure",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7242,\n  \"versions\": [\n    {\n      \"owner\": \"string\",\n      \"createdOn\": \"1973-01-03T23:51:58.699Z\",\n      \"artifactType\": \"AVRO\",\n      \"state\": \"DRAFT\",\n      \"globalId\": 5958,\n      \"version\": \"6EmKnuWjF-aI.W++R69WFg+m-lvbAiBACS_inpovL0.w.3TC9nIdqSTKfRGDgFYQnc+ktA2zCSzuyldnGZUeE1pzEvYOYc-bOOsmxMz5Y3F8ECPB2Tn3dMwoIVF.EWdQ6pg\",\n      \"contentId\": 7553,\n      \"artifactId\": \"\\\"example-artifact\\\"\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"groupId\": \"\\\"my-group\\\"\",\n      \"modifiedBy\": \"string\",\n      \"modifiedOn\": \"2001-07-30T15:00:04.057Z\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"owner\": \"string\",\n      \"createdOn\": \"2026-05-30T14:58:06.715Z\",\n      \"artifactType\": \"AVRO\",\n      \"state\": \"DEPRECATED\",\n      \"globalId\": 4728,\n      \"version\": \"vs93WYPCLdbdkqV2wx9B6hXuBtGTUcPiiLluLPSOY0EEu90ICQpH2OCWebaN7n-weJB+HwGVPPWWy3yWqDEAtfle0E4XiWQJ3BF-dU_3LDod5O-SAThj1j1ruaDZgkw4bi3dfDFzR.svRL4suQw3Ah2t1JcWH4tTnNAjftf8uLdb-PBdDrBiFHiuNwOYIi4S22aE1rTmE-EH7Nft0VcdPRtvP20g204o6zS\",\n      \"contentId\": 9848,\n      \"artifactId\": \"\\\"example-artifact\\\"\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"groupId\": \"\\\"my-group\\\"\",\n      \"modifiedBy\": \"string\",\n      \"modifiedOn\": \"1973-01-29T21:45:18.665Z\",\n      \"labels\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9750e435-fb13-4647-9b15-c54449ef230e",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "gAP+wxcsZGYvDJSYb9ZPya82HyXw8LMyaBdltlBF..N+QOQ+aRwV34rP_iC6_ulN+abvvL"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "SUNSET"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "content",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "structure",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8eb6e51f-2be9-4039-801f-18477cd969b8",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "gAP+wxcsZGYvDJSYb9ZPya82HyXw8LMyaBdltlBF..N+QOQ+aRwV34rP_iC6_ulN+abvvL"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "SUNSET"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "content",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "structure",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48e71b8e-5761-47cc-884b-633e61945967",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "version",
+                      "value": "gAP+wxcsZGYvDJSYb9ZPya82HyXw8LMyaBdltlBF..N+QOQ+aRwV34rP_iC6_ulN+abvvL"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "labels",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "description",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "globalId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "contentId",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "SUNSET"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "content",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "structure",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0376f759-f8bc-40a6-8482-cdd35e828ab2",
+          "name": "Search for versions by content",
+          "request": {
+            "name": "Search for versions by content",
+            "description": {
+              "content": "Returns a paginated list of all versions that match the posted content.\n\nThis operation can fail for the following reasons:\n\n* Provided content (request body) was empty (HTTP error `400`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "versions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "canonical",
+                  "value": "<boolean>",
+                  "description": "Parameter that can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching versions."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The number of versions to skip before starting to collect the result set.  Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "The number of versions to return.  Defaults to 20."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "groupId",
+                  "value": "<string>",
+                  "description": "Filter by group Id."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifactId",
+                  "value": "<string>",
+                  "description": "Filter by artifact Id."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "*/*"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<binary>"
+            }
+          },
+          "response": [
+            {
+              "id": "58278143-52fa-40e9-90eb-3e69dde96580",
+              "name": "On a successful response, returns a result set of versions - one for each version\nin the registry that matches the criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 7242,\n  \"versions\": [\n    {\n      \"owner\": \"string\",\n      \"createdOn\": \"1973-01-03T23:51:58.699Z\",\n      \"artifactType\": \"AVRO\",\n      \"state\": \"DRAFT\",\n      \"globalId\": 5958,\n      \"version\": \"6EmKnuWjF-aI.W++R69WFg+m-lvbAiBACS_inpovL0.w.3TC9nIdqSTKfRGDgFYQnc+ktA2zCSzuyldnGZUeE1pzEvYOYc-bOOsmxMz5Y3F8ECPB2Tn3dMwoIVF.EWdQ6pg\",\n      \"contentId\": 7553,\n      \"artifactId\": \"\\\"example-artifact\\\"\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"groupId\": \"\\\"my-group\\\"\",\n      \"modifiedBy\": \"string\",\n      \"modifiedOn\": \"2001-07-30T15:00:04.057Z\",\n      \"labels\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\"\n      }\n    },\n    {\n      \"owner\": \"string\",\n      \"createdOn\": \"2026-05-30T14:58:06.715Z\",\n      \"artifactType\": \"AVRO\",\n      \"state\": \"DEPRECATED\",\n      \"globalId\": 4728,\n      \"version\": \"vs93WYPCLdbdkqV2wx9B6hXuBtGTUcPiiLluLPSOY0EEu90ICQpH2OCWebaN7n-weJB+HwGVPPWWy3yWqDEAtfle0E4XiWQJ3BF-dU_3LDod5O-SAThj1j1ruaDZgkw4bi3dfDFzR.svRL4suQw3Ah2t1JcWH4tTnNAjftf8uLdb-PBdDrBiFHiuNwOYIi4S22aE1rTmE-EH7Nft0VcdPRtvP20g204o6zS\",\n      \"contentId\": 9848,\n      \"artifactId\": \"\\\"example-artifact\\\"\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"groupId\": \"\\\"my-group\\\"\",\n      \"modifiedBy\": \"string\",\n      \"modifiedOn\": \"1973-01-29T21:45:18.665Z\",\n      \"labels\": {\n        \"key_0\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66c5cde1-bd64-47b2-a177-618359ec7909",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c3cef73-e610-48d3-903c-0cd5bf790219",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfe2f820-6cda-4370-acc8-711bd0e15ef2",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c21ee673-0aad-4b99-95db-4ec9b31077d1",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "versions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "canonical",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "artifactType",
+                      "value": "AVRO"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "desc"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "groupId"
+                    },
+                    {
+                      "key": "groupId",
+                      "value": "\"my-group\""
+                    },
+                    {
+                      "key": "artifactId",
+                      "value": "\"example-artifact\""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<binary>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "444d603b-f9b0-442f-ad9d-70bc80f6616b",
+          "name": "Search contract rules by tag",
+          "request": {
+            "name": "Search contract rules by tag",
+            "description": {
+              "content": "Returns all contract rules across all artifacts that contain the specified tag.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "contract",
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "(Required) The tag value to search for in contract rules."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb20cbb9-5a54-452e-a6b5-1a9d777bbf81",
+              "name": "A list of contract rules matching the specified tag, with their artifact coordinates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contract",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupId\": \"string\",\n    \"artifactId\": \"string\",\n    \"globalId\": 544,\n    \"ruleCategory\": \"MIGRATION\",\n    \"rule\": {\n      \"name\": \"string\",\n      \"kind\": \"TRANSFORM\",\n      \"type\": \"string\",\n      \"mode\": \"WRITE\",\n      \"expr\": \"string\",\n      \"params\": {\n        \"key_0\": \"string\"\n      },\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"onSuccess\": \"DLQ\",\n      \"onFailure\": \"ERROR\",\n      \"disabled\": true\n    }\n  },\n  {\n    \"groupId\": \"string\",\n    \"artifactId\": \"string\",\n    \"globalId\": 8542,\n    \"ruleCategory\": \"DOMAIN\",\n    \"rule\": {\n      \"name\": \"string\",\n      \"kind\": \"TRANSFORM\",\n      \"type\": \"string\",\n      \"mode\": \"READ\",\n      \"expr\": \"string\",\n      \"params\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"onSuccess\": \"ERROR\",\n      \"onFailure\": \"ERROR\",\n      \"disabled\": true\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "220c34e4-6a81-4ee3-a8e1-3269691c588f",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contract",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f5489bb-9322-4ae5-8c78-3afbd70f5751",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contract",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21b014f4-68b7-43b6-bf8d-d37efd7c7bff",
+          "name": "Search contracts",
+          "request": {
+            "name": "Search contracts",
+            "description": {
+              "content": "Searches for artifacts that have contract metadata labels. Filters by status, owner team, and compatibility group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "contracts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by contract status (DRAFT, STABLE, DEPRECATED)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ownerTeam",
+                  "value": "<string>",
+                  "description": "Filter by owner team."
+                },
+                {
+                  "disabled": false,
+                  "key": "compatibilityGroup",
+                  "value": "<string>",
+                  "description": "Filter by compatibility group."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of results to skip."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "Sort order (asc or desc)."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderby",
+                  "value": "<string>",
+                  "description": "Field to sort by."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a387682f-3fbc-4e5a-96bd-216506148c67",
+              "name": "A paginated list of artifacts that have contract metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerTeam",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compatibilityGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 8174,\n  \"artifacts\": [\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    },\n    {\n      \"groupId\": \"My-Group\",\n      \"artifactId\": \"Procurement-Invoice\",\n      \"name\": \"Artifact Name\",\n      \"description\": \"Description of the artifact\",\n      \"artifactType\": \"AVRO\",\n      \"owner\": \"user1\",\n      \"createdOn\": \"2019-03-22T12:51:19Z\",\n      \"modifiedBy\": \"user2\",\n      \"modifiedOn\": \"2019-04-01T12:51:19Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e09f9ac-86bb-48d6-9160-51d309af1ba3",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "contracts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ownerTeam",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "compatibilityGroup",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderby",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7036d6b8-dbca-405f-961e-9cf2268f4bd9",
+    "name": "Apicurio Registry Admin Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}

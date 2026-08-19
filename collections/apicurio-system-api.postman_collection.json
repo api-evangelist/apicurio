@@ -1,0 +1,248 @@
+{
+  "item": [
+    {
+      "id": "39d782d6-8ae2-450f-8183-875da250eed8",
+      "name": "System",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "94a3a0b6-2b1f-4ad2-aa7f-b6e3d73e6636",
+          "name": "Get system information",
+          "request": {
+            "name": "Get system information",
+            "description": {
+              "content": "This operation retrieves information about the running registry system, such as the version\nof the software and when it was built.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "system",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "054b1acb-c555-45bd-8c3f-559ebcf9dab0",
+              "name": "On success, returns the system information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"Apicurio Registry (SQL)\",\n  \"description\": \"The Apicurio Registry application.\",\n  \"version\": \"2.0.0.Final\",\n  \"builtOn\": \"2021-03-19T12:55:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5ea7e43-9e67-44f5-8049-575b3bb1e0d0",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "585a3936-dd7e-482a-9f49-0e4857820a1c",
+          "name": "Get UI config",
+          "request": {
+            "name": "Get UI config",
+            "description": {
+              "content": "Returns the UI configuration properties for this server.  The registry UI can be\nconnected to a backend using just a URL.  The rest of the UI configuration can then\nbe fetched from the backend using this operation.  This allows UI and backend to\nboth be configured in the same place.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "system",
+                "uiConfig"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9e0dbe9-2e67-48d2-ad12-7c22f751139f",
+              "name": "The UI config.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "uiConfig"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ui\": {\n    \"contextPath\": \"/\",\n    \"navPrefixPath\": \"/\",\n    \"oaiDocsUrl\": \"https://registry.apicur.io/docs\",\n    \"editorsUrl\": \"https://registry.apicur.io/editors\"\n  },\n  \"auth\": {\n    \"type\": \"oidc\",\n    \"rbacEnabled\": true,\n    \"obacEnabled\": false,\n    \"options\": {\n      \"url\": \"https://auth.apicur.io/realms/apicurio\",\n      \"redirectUri\": \"http://registry.apicur.io\",\n      \"clientId\": \"apicurio-registry-ui\"\n    }\n  },\n  \"features\": {\n    \"readOnly\": false,\n    \"breadcrumbs\": true,\n    \"roleManagement\": false,\n    \"settings\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b68375b-04bc-4bb7-92b4-3a0f9f6c6f55",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "system",
+                    "uiConfig"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "764a8054-3ce1-4b0b-9341-892ba6a859c9",
+    "name": "Apicurio Registry Admin System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}

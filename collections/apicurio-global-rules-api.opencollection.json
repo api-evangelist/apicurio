@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Global rules API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Global rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List global rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules"
+          },
+          "docs": "Gets a list of all the currently configured global rules (if any).\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Create global rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a rule to the list of globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* The rule type is unknown (HTTP error `400`)\n* The rule already exists (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete all global rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules"
+          },
+          "docs": "Deletes all globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get global rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Returns information about the named globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Update global rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration for a globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete global rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Deletes a single global rule.  If this is the only rule configured, this is the same\nas deleting **all** rules.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* Rule cannot be deleted (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

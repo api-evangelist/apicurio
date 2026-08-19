@@ -1,0 +1,1550 @@
+{
+  "item": [
+    {
+      "id": "309a62db-c9f6-4bf0-9e9e-429960db4bd6",
+      "name": "Global rules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7e089144-65fe-44de-b8c4-f3762ccf74aa",
+          "name": "List global rules",
+          "request": {
+            "name": "List global rules",
+            "description": {
+              "content": "Gets a list of all the currently configured global rules (if any).\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b13d27c-2507-40e6-9529-9525287a327e",
+              "name": "The list of names of the globally configured rules.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"VALIDITY\",\n  \"VALIDITY\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef4021ae-dc6c-46f5-8ed2-edf2e94e9eda",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dbc0507a-387d-4790-aec0-b5c5ac36b9d8",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de674986-f5ce-425b-9f1d-f74e765c2eee",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00c5d490-c0ec-4cf0-8dc1-f07ed909f692",
+          "name": "Create global rule",
+          "request": {
+            "name": "Create global rule",
+            "description": {
+              "content": "Adds a rule to the list of globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* The rule type is unknown (HTTP error `400`)\n* The rule already exists (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": \"<string>\",\n  \"ruleType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2f140b5-0667-419d-b4fe-fa2cbd7364c7",
+              "name": "The global rule was added.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce25e8ff-62e7-4f99-9716-47b5b8b0ff5d",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bddb0a3-eab0-44dd-8364-87a158b8cda0",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e9567c1-7aec-4c2a-ad1d-3bee3f0e3a4c",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfb62c86-ca1e-4dba-87c4-844480efb2ed",
+              "name": "Common response used when an input conflicts with existing data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 409,\n  \"message\": \"The artifact content was invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9903281-4ef8-4368-9579-8ca61400f77e",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e97f708-50a5-41cf-8591-34892f436bfa",
+          "name": "Delete all global rules",
+          "request": {
+            "name": "Delete all global rules",
+            "description": {
+              "content": "Deletes all globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1c1e223-d639-4f13-b622-bf40f6873e19",
+              "name": "All global rules have been removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "372c5bfc-b01c-435e-894e-ac5a98cfc7df",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fce92947-c32a-48ea-a322-45e96b2d2ad9",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bec3c9d3-17b2-40bc-b191-44dda946df8a",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "624d73d7-3be4-4343-bddf-c5d22af7fb89",
+          "name": "Get global rule configuration",
+          "request": {
+            "name": "Get global rule configuration",
+            "description": {
+              "content": "Returns information about the named globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules",
+                ":ruleType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleType",
+                  "description": "(Required) The unique name/type of a rule."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f260484-bc9d-4d2c-b757-69bac4a661c9",
+              "name": "The global rule's configuration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5845ca01-0224-4082-bf06-13f5cf28a68b",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20b20af0-2e07-4917-a584-fb99f62c99f2",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "872d4f80-241d-45fc-b804-8229188413a3",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd0ef46f-d38b-4c5c-a5d2-9e83d3f234f0",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8bf3cc6b-812d-45fd-8246-faf83bfb6921",
+          "name": "Update global rule configuration",
+          "request": {
+            "name": "Update global rule configuration",
+            "description": {
+              "content": "Updates the configuration for a globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules",
+                ":ruleType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleType",
+                  "description": "(Required) The unique name/type of a rule."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": \"<string>\",\n  \"ruleType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2ae0980e-0161-4c6c-a96a-86c2511cfe6b",
+              "name": "The global rule's configuration was successfully updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d717db6-5d29-4cae-a1fc-4755388a5aad",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bf58115-451e-400c-a205-30d7f3921460",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "68408164-0c6b-4773-9678-48eb6948ac68",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "531dd866-6195-423f-981e-e74d6a643c00",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ruleType\": \"VALIDITY\",\n  \"config\": \"FULL\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e242a07-2226-426a-a83c-75f8d63539fc",
+          "name": "Delete global rule",
+          "request": {
+            "name": "Delete global rule",
+            "description": {
+              "content": "Deletes a single global rule.  If this is the only rule configured, this is the same\nas deleting **all** rules.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* Rule cannot be deleted (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "rules",
+                ":ruleType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ruleType",
+                  "description": "(Required) The unique name/type of a rule."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c55ee00-e9cb-4666-abde-e78f489f1093",
+              "name": "The global rule was successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0384f2ac-c11f-438f-95a0-0fc907992af1",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75db7073-c130-45d1-a33a-82163cee97ca",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36770f80-7875-4076-a6a3-e490ffecce1e",
+              "name": "Common response for all operations that can return a `404` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 404,\n  \"message\": \"No artifact with id 'Topic-1/Inbound' could be found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab6181e3-f1ef-47e6-b7f8-48e06affd523",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "rules",
+                    ":ruleType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ruleType",
+                      "description": "(Required) The unique name/type of a rule."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ad127b9a-ca96-44a9-94ca-1c1e3d6ac093",
+    "name": "Apicurio Registry Admin Global rules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}

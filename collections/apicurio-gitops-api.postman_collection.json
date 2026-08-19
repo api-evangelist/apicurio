@@ -1,0 +1,470 @@
+{
+  "item": [
+    {
+      "id": "836500c2-954f-4cf8-99a7-0efe56fe190d",
+      "name": "GitOps",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d93088a4-d319-4076-b808-3ea3265277e4",
+          "name": "Get GitOps synchronization status",
+          "request": {
+            "name": "Get GitOps synchronization status",
+            "description": {
+              "content": "**Experimental.** Returns the current synchronization status of the GitOps storage, including the current commit SHA, sync state, load statistics, and any errors from the last sync attempt.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.\n\nThis operation can fail for the following reasons:\n\n* GitOps storage is not enabled (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "gitops",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8405fe5d-2538-4e03-b26e-6855559e40a2",
+              "name": "The current GitOps synchronization status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"syncState\": \"string\",\n  \"lastSuccessfulSync\": \"1979-04-08T18:50:37.758Z\",\n  \"lastSyncAttempt\": \"1959-02-27T16:42:54.880Z\",\n  \"groupCount\": 56,\n  \"artifactCount\": 3822,\n  \"versionCount\": 7534,\n  \"errors\": [\n    {\n      \"detail\": \"string\",\n      \"source\": \"string\",\n      \"context\": \"string\"\n    },\n    {\n      \"detail\": \"string\",\n      \"source\": \"string\",\n      \"context\": \"string\"\n    }\n  ],\n  \"sources\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0173b5b9-10a8-4fb8-ba0a-ce8a70046f03",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d38ca443-eb3c-4cdc-824f-cd33d107b535",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "946f87f9-4f90-4f6e-9dea-522ce3f03c5b",
+              "name": "Common response used when an input conflicts with existing data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 409,\n  \"message\": \"The artifact content was invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1eab42f6-93be-4ffb-8934-7de3cb294fd1",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b0f1fd9-c146-465b-8e45-7f86476169d8",
+          "name": "Trigger GitOps synchronization",
+          "request": {
+            "name": "Trigger GitOps synchronization",
+            "description": {
+              "content": "**Experimental.** Requests an immediate synchronization of the GitOps storage. This resets the poll timer so the next scheduler cycle will poll the Git repository without waiting for the configured poll period.\n\nThe synchronization happens asynchronously — this endpoint returns immediately and the actual sync occurs on the next scheduler cycle.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.\n\nThis operation can fail for the following reasons:\n\n* GitOps storage is not enabled (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "gitops",
+                "sync"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0a153761-f3ac-46f6-936d-5a2275342d8b",
+              "name": "Synchronization has been requested. The sync will happen asynchronously on the next scheduler cycle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed7272e3-2a32-4c37-9557-8361919058d3",
+              "name": "Common response for all operations that can return a `401` error indicating authentication is required.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"UnauthorizedException: User is not authenticated.\",\n  \"title\": \"User is not authenticated.\",\n  \"status\": 401,\n  \"name\": \"UnauthorizedException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4db8a199-26aa-468f-9bb8-67f1d548fe08",
+              "name": "Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"ForbiddenException: User is not authorized to perform this operation.\",\n  \"title\": \"User is not authorized to perform this operation.\",\n  \"status\": 403,\n  \"name\": \"ForbiddenException\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdadf085-ab76-428b-abf7-ca442e430b31",
+              "name": "Common response used when an input conflicts with existing data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 409,\n  \"message\": \"The artifact content was invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8b832ec-b4fc-4a7a-93d6-dac644a09439",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "gitops",
+                    "sync"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9f868373-6dfc-4c18-a7fe-ba6994a4ef22",
+    "name": "Apicurio Registry Admin GitOps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}

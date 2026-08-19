@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin AI API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Render a prompt template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/versions/:versionExpression/render",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "versionExpression",
+                "value": "",
+                "type": "path",
+                "description": "An expression resolvable to a specific version ID within the given group and artifact. The following rules apply:\n\n - If the expression is in the form \"branch={branchId}\", and artifact branch {branchId} exists: The expression is resolved to a version that the branch points to.\n - Otherwise: The expression is resolved to a version with the same ID, which must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renders a prompt template artifact by substituting the provided variables into the template.\nThe artifact must be of type `PROMPT_TEMPLATE`. Variables are validated against the template's\nvariable schema before rendering.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No version with this `version` exists (HTTP error `404`)\n* The artifact is not a PROMPT_TEMPLATE (HTTP error `400`)\n* Required variables are missing or have inv"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

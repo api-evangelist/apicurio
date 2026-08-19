@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin KafkaSQL API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "KafkaSQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Trigger storage snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/snapshots"
+          },
+          "docs": "Triggers the creation of a snapshot of the internal database for compatible storages.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

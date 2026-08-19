@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin GitOps API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GitOps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get GitOps synchronization status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/gitops/status"
+          },
+          "docs": "**Experimental.** Returns the current synchronization status of the GitOps storage, including the current commit SHA, sync state, load statistics, and any errors from the last sync attempt.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.\n\nThis operation can fail for the following reasons:\n\n* GitOps storage is not enabled (HTTP error `409`)\n* A server error occurred (HTTP error "
+        },
+        {
+          "info": {
+            "name": "Trigger GitOps synchronization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/gitops/sync"
+          },
+          "docs": "**Experimental.** Requests an immediate synchronization of the GitOps storage. This resets the poll timer so the next scheduler cycle will poll the Git repository without waiting for the configured poll period.\n\nThe synchronization happens asynchronously — this endpoint returns immediately and the actual sync occurs on the next scheduler cycle.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage back"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

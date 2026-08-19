@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin System API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get system information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/system/info"
+          },
+          "docs": "This operation retrieves information about the running registry system, such as the version\nof the software and when it was built."
+        },
+        {
+          "info": {
+            "name": "Get UI config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/system/uiConfig"
+          },
+          "docs": "Returns the UI configuration properties for this server.  The registry UI can be\nconnected to a backend using just a URL.  The rest of the UI configuration can then\nbe fetched from the backend using this operation.  This allows UI and backend to\nboth be configured in the same place.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

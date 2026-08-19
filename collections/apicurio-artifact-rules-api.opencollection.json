@@ -1,0 +1,194 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Artifact rules API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Artifact rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List artifact rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Returns a list of all rules configured for the artifact.  The set of rules determines\nhow the content of an artifact can evolve over time.  If no rules are configured for\nan artifact, then the rules configured for the group is used.  If no rules are \nconfigured at the group level, then the set of globally configured rules are used.  \nIf no global rules are defined, there are no restrictions on content evolution.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifa"
+        },
+        {
+          "info": {
+            "name": "Create artifact rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a rule to the list of rules that get applied to the artifact when adding new\nversions.  All configured rules must pass to successfully add a new artifact version.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* Rule (named in the request body) is unknown (HTTP error `400`)\n* Rule is already configured (HTTP error `409`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Delete artifact rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes all of the rules configured for the artifact.  After this is done, the global\nrules apply to the artifact again.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Get artifact rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Returns information about a single rule configured for an artifact.  This is useful\nwhen you want to know what the current configuration settings are for a specific rule.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Update artifact rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of a single rule for the artifact.  The configuration data\nis specific to each rule type, so the configuration of the `COMPATIBILITY` rule \nis in a different format from the configuration of the `VALIDITY` rule.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred "
+        },
+        {
+          "info": {
+            "name": "Delete artifact rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Deletes a rule from the artifact.  This results in the rule no longer applying for\nthis artifact.  If this is the only rule configured for the artifact, this is the \nsame as deleting **all** rules, and the globally configured rules now apply to\nthis artifact.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `artifactId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Group rules API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Group rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List group rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Returns a list of all rules configured for the group.  The set of rules determines\nhow the content of an artifact in the group can evolve over time.  If no rules are \nconfigured for a group, the set of globally configured rules are used.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Create group rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a rule to the list of rules that get applied to an artifact in the group when adding new\nversions.  All configured rules must pass to successfully add a new artifact version.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* Rule (named in the request body) is unknown (HTTP error `400`)\n* Rule is already configured (HTTP error `409`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Delete group rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes all of the rules configured for the group.  After this is done, the global\nrules apply to artifacts in the group again.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Get group rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Returns information about a single rule configured for a group.  This is useful\nwhen you want to know what the current configuration settings are for a specific rule.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Update group rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration of a single rule for the group.  The configuration data\nis specific to each rule type, so the configuration of the `COMPATIBILITY` rule \nis in a different format from the configuration of the `VALIDITY` rule.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred (HTTP err"
+        },
+        {
+          "info": {
+            "name": "Delete group rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/rules/:ruleType",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Deletes a rule from the group.  This results in the rule no longer applying for\nthis group.  If this is the only rule configured for the group, this is the \nsame as deleting **all** rules, and the globally configured rules now apply to\nthis group.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this group (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

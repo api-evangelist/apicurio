@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Groups API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of groups to return.  Defaults to 20."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of groups to skip before starting the result set.  Defaults to 0."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of all groups.  This list is paged."
+        },
+        {
+          "info": {
+            "name": "Create a new group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new group.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n* The group already exist (HTTP error `409`)\n* Invalid group ID (e.g., reserved name 'default') (HTTP error `400`)\n"
+        },
+        {
+          "info": {
+            "name": "Get a group by the specified ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Returns a group using the specified id.\n\nThis operation can fail for the following reasons:\n\n* No group exists with the specified ID (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Update group metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the metadata of a group using the specified id.\n\nThis operation can fail for the following reasons:\n\n* No group exists with the specified ID (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "Delete a group by the specified ID.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes a group by identifier.  This operation also deletes all artifacts within\nthe group, so should be used very carefully.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n* The group does not exist (HTTP error `404`)\n"
+        },
+        {
+          "info": {
+            "name": "Search for groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/search/groups",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to return.  Defaults to 20."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+              },
+              {
+                "name": "description",
+                "value": "",
+                "type": "query",
+                "description": "Filter by description."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by group name."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all groups that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

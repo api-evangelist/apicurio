@@ -1,0 +1,418 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Artifacts API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Artifacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get artifact by global ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/globalIds/:globalId",
+            "params": [
+              {
+                "name": "globalId",
+                "value": "",
+                "type": "path",
+                "description": "Global identifier for an artifact version."
+              },
+              {
+                "name": "references",
+                "value": "",
+                "type": "query",
+                "description": "Allows the user to specify how references in the content should be treated."
+              },
+              {
+                "name": "returnArtifactType",
+                "value": "",
+                "type": "query",
+                "description": "When set to `true`, the HTTP response will include a header named `X-Registry-ArtifactType`\nthat contains the type of the artifact being returned."
+              }
+            ]
+          },
+          "docs": "Gets the content for an artifact version in the registry using its globally unique\nidentifier.\n\nThis operation may fail for one of the following reasons:\n\n* No artifact version with this `globalId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Search for artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/search/artifacts",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by artifact name."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to return.  Defaults to 20."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more name/value label.  Separate each name/value pair using a colon.  For\nexample `labels=foo:bar` will return only artifacts with a label named `foo`\nand value `bar`."
+              },
+              {
+                "name": "description",
+                "value": "",
+                "type": "query",
+                "description": "Filter by description."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by artifact group."
+              },
+              {
+                "name": "globalId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by globalId."
+              },
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contentId."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by artifactId."
+              },
+              {
+                "name": "artifactType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by artifact type (`AVRO`, `JSON`, etc)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all artifacts that match the provided filter criteria.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Search for artifacts by content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/search/artifacts",
+            "params": [
+              {
+                "name": "canonical",
+                "value": "",
+                "type": "query",
+                "description": "Parameter that can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for matching artifacts.  Canonicalization is unique to each artifact type, but typically involves removing any extra whitespace and formatting the content in a consistent manner.  Must be used along with the `artifactType` query parameter."
+              },
+              {
+                "name": "artifactType",
+                "value": "",
+                "type": "query",
+                "description": "Indicates the type of artifact represented by the content being used for the search.  This is only needed when using the `canonical` query parameter, so that the server knows how to canonicalize the content prior to searching for matching artifacts."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by artifact group."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to skip before starting to collect the result set.  Defaults to 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to return.  Defaults to 20."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all artifacts with at least one version that matches the\nposted content.\n\nThis operation can fail for the following reasons:\n\n* Provided content (request body) was empty (HTTP error `400`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "List artifact references by content ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/contentIds/:contentId/references",
+            "params": [
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "path",
+                "description": "Global identifier for a single artifact content."
+              }
+            ]
+          },
+          "docs": "Returns a list containing all the artifact references using the artifact content ID.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "List artifact references by global ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/globalIds/:globalId/references",
+            "params": [
+              {
+                "name": "globalId",
+                "value": "",
+                "type": "path",
+                "description": "Global identifier for an artifact version."
+              },
+              {
+                "name": "refType",
+                "value": "",
+                "type": "query",
+                "description": "Determines the type of reference to return, either INBOUND or OUTBOUND.  Defaults to OUTBOUND."
+              }
+            ]
+          },
+          "docs": "Returns a list containing all the artifact references using the artifact global ID.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)"
+        },
+        {
+          "info": {
+            "name": "List artifacts in group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to return.  Defaults to 20."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of artifacts to skip before starting the result set.  Defaults to 0."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order, ascending (`asc`) or descending (`desc`)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by.  Can be one of:\n\n* `name`\n* `createdOn`\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of all artifacts in the group.  This list is paged."
+        },
+        {
+          "info": {
+            "name": "Create artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "ifExists",
+                "value": "",
+                "type": "query",
+                "description": "Set this option to instruct the server on what to do if the artifact already exists."
+              },
+              {
+                "name": "canonical",
+                "value": "",
+                "type": "query",
+                "description": "Used only when the `ifExists` query parameter is set to `RETURN_OR_UPDATE`, this parameter can be set to `true` to indicate that the server should \"canonicalize\" the content when searching for a matching version.  The canonicalization algorithm is unique to each artifact type, but typically involves removing extra whitespace and formatting the content in a consistent manner."
+              },
+              {
+                "name": "dryRun",
+                "value": "",
+                "type": "query",
+                "description": "When set to `true`, the operation will not result in any changes. Instead, it\nwill return a result based on whether the operation **would have succeeded**."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new artifact.  The body of the request should be a `CreateArtifact` \nobject, which includes the metadata of the new artifact and, optionally, the \nmetadata and content of the first version.\n\nIf the artifact type is not provided, the registry attempts to figure out what \nkind of artifact is being added from the\nfollowing supported list:\n\n* Avro (`AVRO`)\n* Protobuf (`PROTOBUF`)\n* JSON Schema (`JSON`)\n* Kafka Connect (`KCONNECT`)\n* OpenAPI (`OPENAPI`)\n* AsyncAPI (`ASYNCAPI`)\n* GraphQL (`G"
+        },
+        {
+          "info": {
+            "name": "Delete artifacts in group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes all of the artifacts that exist in a given group."
+        },
+        {
+          "info": {
+            "name": "List artifact references by hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/contentHashes/:contentHash/references",
+            "params": [
+              {
+                "name": "contentHash",
+                "value": "",
+                "type": "path",
+                "description": "SHA-256 content hash for a single artifact content."
+              }
+            ]
+          },
+          "docs": "Returns a list containing all the artifact references using the artifact content hash.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get artifact content by SHA-256 hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/contentHashes/:contentHash",
+            "params": [
+              {
+                "name": "contentHash",
+                "value": "",
+                "type": "path",
+                "description": "SHA-256 content hash for a single artifact content."
+              }
+            ]
+          },
+          "docs": "Gets the content for an artifact version in the registry using the \nSHA-256 hash of the content.  This content hash may be shared by multiple artifact\nversions in the case where the artifact versions have identical content.\n\nThis operation may fail for one of the following reasons:\n\n* No content with this `contentHash` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get artifact content by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/ids/contentIds/:contentId",
+            "params": [
+              {
+                "name": "contentId",
+                "value": "",
+                "type": "path",
+                "description": "Global identifier for a single artifact content."
+              }
+            ]
+          },
+          "docs": "Gets the content for an artifact version in the registry using the unique content\nidentifier for that content.  This content ID may be shared by multiple artifact\nversions in the case where the artifact versions are identical.\n\nThis operation may fail for one of the following reasons:\n\n* No content with this `contentId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes an artifact completely, resulting in all versions of the artifact also being\ndeleted.  This may fail for one of the following reasons:\n\n* No artifact with the `artifactId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

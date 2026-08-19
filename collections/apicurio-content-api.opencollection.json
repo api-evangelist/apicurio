@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Content API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Content",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Detect references in content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/content/references",
+            "params": [
+              {
+                "name": "artifactType",
+                "value": "",
+                "type": "query",
+                "description": "The type of artifact represented by the content.  If not provided, the server will attempt to auto-detect the type from the content."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Analyzes the provided content and returns a list of external references found within it.  The artifact type is used to determine the appropriate reference detection strategy.  If no artifact type is provided, the system will attempt to auto-detect it from the content."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

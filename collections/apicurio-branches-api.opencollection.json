@@ -1,0 +1,294 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Branches API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Branches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of branches to skip before starting to collect the result set.  Defaults to 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of branches to return.  Defaults to 20."
+              }
+            ]
+          },
+          "docs": "Returns a list of all branches in the artifact. Each branch is a list of version identifiers,\nordered from the latest (tip of the branch) to the oldest.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Create a new branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new branch for the artifact.  A new branch consists of metadata and a\nlist of versions.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* A branch with the given `branchId` already exists (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get branch metaData",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ]
+          },
+          "docs": "Returns the metaData of a branch.\n\nThis operation can fail for the following reasons:\n\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Update branch metaData",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the metadata of a branch.\n\nThis operation can fail for the following reasons:\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete branch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes a single branch in the artifact.\n\nThis operation can fail for the following reasons:\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get versions in branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId/versions",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of versions to skip before starting to collect the result set.  Defaults to 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of versions to return.  Defaults to 20."
+              }
+            ]
+          },
+          "docs": "Get a list of all versions in the branch.  Returns a list of version identifiers in the branch, \nordered from the latest (tip of the branch) to the oldest.\n\nThis operation can fail for the following reasons:\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Add a new version to a branch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId/versions",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new version to an artifact branch. Returns a list of version identifiers in the branch, ordered from the latest (tip of the branch) to the oldest.\n\nThis operation can fail for the following reasons:\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* Branch already contains the given version. Artifact branches are append-only, cycles and history rewrites, except by replacing the entire branch using the re"
+        },
+        {
+          "info": {
+            "name": "Replace list of versions in branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/branches/:branchId/versions",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID.  Must be a string provided by the client, representing the name of the grouping of artifacts. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID.  Can be a string (client-provided) or UUID (server-generated), representing the unique artifact identifier. Must follow the \".{1,512}\" pattern."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Artifact branch ID.  Must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new version to an artifact branch. Branch is created if it does not exist. Returns a list of version identifiers in the artifact branch, ordered from the latest (tip of the branch) to the oldest.\nThis operation can fail for the following reasons:\n* No artifact with this `groupId` and `artifactId` exists (HTTP error `404`)\n* No branch with this `branchId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

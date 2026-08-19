@@ -1,0 +1,509 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List global rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules"
+          },
+          "docs": "Gets a list of all the currently configured global rules (if any).\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Create global rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a rule to the list of globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* The rule type is unknown (HTTP error `400`)\n* The rule already exists (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete all global rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules"
+          },
+          "docs": "Deletes all globally configured rules.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get global rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Returns information about the named globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Update global rule configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the configuration for a globally configured rule.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete global rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/rules/:ruleType",
+            "params": [
+              {
+                "name": "ruleType",
+                "value": "",
+                "type": "path",
+                "description": "The unique name/type of a rule."
+              }
+            ]
+          },
+          "docs": "Deletes a single global rule.  If this is the only rule configured, this is the same\nas deleting **all** rules.\n\nThis operation can fail for the following reasons:\n\n* Invalid rule name/type (HTTP error `400`)\n* No rule with name/type `rule` exists (HTTP error `404`)\n* Rule cannot be deleted (HTTP error `409`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Export registry data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/export",
+            "params": [
+              {
+                "name": "forBrowser",
+                "value": "",
+                "type": "query",
+                "description": "Indicates if the operation is done for a browser.  If true, the response will be a JSON payload with a property called `href`.  This `href` will be a single-use, naked download link suitable for use by a web browser to download the content."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "If specified, only data belonging to this group will be exported. Global rules will be excluded."
+              }
+            ]
+          },
+          "docs": "Exports registry data as a ZIP archive.  If a `groupId` query parameter is provided, only data belonging to the specified group will be exported and global rules will be excluded."
+        },
+        {
+          "info": {
+            "name": "Import registry data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/import",
+            "headers": [
+              {
+                "name": "X-Registry-Preserve-GlobalId",
+                "value": ""
+              },
+              {
+                "name": "X-Registry-Preserve-ContentId",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "requireEmptyRegistry",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter indicating whether the registry must be empty before allowing\ndata to be imported.  Defaults to `true` if omitted."
+              }
+            ]
+          },
+          "docs": "Imports registry data that was previously exported using the `/admin/export` operation."
+        },
+        {
+          "info": {
+            "name": "Return a single role mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/roleMappings/:principalId",
+            "params": [
+              {
+                "name": "principalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of a principal (typically either a user or service account)."
+              }
+            ]
+          },
+          "docs": "Gets the details of a single role mapping (by `principalId`).\n\nThis operation can fail for the following reasons:\n\n* No role mapping for the `principalId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Update a role mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/roleMappings/:principalId",
+            "params": [
+              {
+                "name": "principalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of a principal (typically either a user or service account)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a single role mapping for one user/principal.\n\nThis operation can fail for the following reasons:\n\n* No role mapping for the principalId exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Delete a role mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/roleMappings/:principalId",
+            "params": [
+              {
+                "name": "principalId",
+                "value": "",
+                "type": "path",
+                "description": "Unique id of a principal (typically either a user or service account)."
+              }
+            ]
+          },
+          "docs": "Deletes a single role mapping, effectively denying access to a user/principal.\n\nThis operation can fail for the following reasons:\n\n* No role mapping for the principalId exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "List all configuration properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/config/properties"
+          },
+          "docs": "Returns a list of all configuration properties that have been set.  The list is not paged.\n\nThis operation may fail for one of the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get configuration property value",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/config/properties/:propertyName",
+            "params": [
+              {
+                "name": "propertyName",
+                "value": "",
+                "type": "path",
+                "description": "The name of a configuration property."
+              }
+            ]
+          },
+          "docs": "Returns the value of a single configuration property.\n\nThis operation may fail for one of the following reasons:\n\n* Property not found or not configured (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Update a configuration property",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/config/properties/:propertyName",
+            "params": [
+              {
+                "name": "propertyName",
+                "value": "",
+                "type": "path",
+                "description": "The name of a configuration property."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the value of a single configuration property.\n\nThis operation may fail for one of the following reasons:\n\n* Property not found or not configured (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Reset a configuration property",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/config/properties/:propertyName",
+            "params": [
+              {
+                "name": "propertyName",
+                "value": "",
+                "type": "path",
+                "description": "The name of a configuration property."
+              }
+            ]
+          },
+          "docs": "Resets the value of a single configuration property.  This will return the property to\nits default value (see external documentation for supported properties and their default\nvalues).\n\nThis operation may fail for one of the following reasons:\n\n* Property not found or not configured (HTTP error `404`)\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "List all role mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/roleMappings",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of role mappings to return.  Defaults to 20."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of role mappings to skip before starting the result set.  Defaults to 0."
+              }
+            ]
+          },
+          "docs": "Gets a list of all role mappings configured in the registry (if any).\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Create a new role mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/roleMappings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new mapping between a user/principal and a role.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n\n"
+        },
+        {
+          "info": {
+            "name": "List artifact types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/config/artifactTypes"
+          },
+          "docs": "Gets a list of all the configured artifact types.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset"
+          },
+          "docs": "Returns the global contract ruleset that applies to all artifacts."
+        },
+        {
+          "info": {
+            "name": "Set global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the global contract ruleset that applies to all artifacts."
+        },
+        {
+          "info": {
+            "name": "Delete global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset"
+          },
+          "docs": "Deletes the global contract ruleset."
+        },
+        {
+          "info": {
+            "name": "Trigger storage snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/snapshots"
+          },
+          "docs": "Triggers the creation of a snapshot of the internal database for compatible storages.\n\nThis operation can fail for the following reasons:\n\n* A server error occurred (HTTP error `500`)\n"
+        },
+        {
+          "info": {
+            "name": "Get GitOps synchronization status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/gitops/status"
+          },
+          "docs": "**Experimental.** Returns the current synchronization status of the GitOps storage, including the current commit SHA, sync state, load statistics, and any errors from the last sync attempt.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage backend is active.\n\nThis operation can fail for the following reasons:\n\n* GitOps storage is not enabled (HTTP error `409`)\n* A server error occurred (HTTP error "
+        },
+        {
+          "info": {
+            "name": "Trigger GitOps synchronization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/admin/gitops/sync"
+          },
+          "docs": "**Experimental.** Requests an immediate synchronization of the GitOps storage. This resets the poll timer so the next scheduler cycle will poll the Git repository without waiting for the configured poll period.\n\nThe synchronization happens asynchronously — this endpoint returns immediately and the actual sync occurs on the next scheduler cycle.\n\nThis endpoint is only available when GitOps storage is enabled (`apicurio.storage.kind=gitops`). Returns HTTP 409 (Conflict) if a different storage back"
+        },
+        {
+          "info": {
+            "name": "Get usage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/usage/summary"
+          },
+          "docs": "Get usage summary"
+        },
+        {
+          "info": {
+            "name": "Get artifact usage metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/usage/artifacts/:groupId/:artifactId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get artifact usage metrics"
+        },
+        {
+          "info": {
+            "name": "Get consumer version heatmap",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/usage/artifacts/:groupId/:artifactId/heatmap",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get consumer version heatmap"
+        },
+        {
+          "info": {
+            "name": "Get deprecation readiness report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/usage/artifacts/:groupId/:artifactId/versions/:version/deprecation-readiness",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get deprecation readiness report"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

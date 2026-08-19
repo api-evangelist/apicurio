@@ -1,0 +1,740 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apicurio Registry Admin Contracts API",
+    "version": "3.1.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contracts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset"
+          },
+          "docs": "Returns the global contract ruleset that applies to all artifacts."
+        },
+        {
+          "info": {
+            "name": "Set global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the global contract ruleset that applies to all artifacts."
+        },
+        {
+          "info": {
+            "name": "Delete global contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/admin/contracts/ruleset"
+          },
+          "docs": "Deletes the global contract ruleset."
+        },
+        {
+          "info": {
+            "name": "Search contract rules by tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/search/contract/rules",
+            "params": [
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "The tag value to search for in contract rules."
+              }
+            ]
+          },
+          "docs": "Returns all contract rules across all artifacts that contain the specified tag."
+        },
+        {
+          "info": {
+            "name": "Search contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/search/contracts",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by contract status (DRAFT, STABLE, DEPRECATED)."
+              },
+              {
+                "name": "ownerTeam",
+                "value": "",
+                "type": "query",
+                "description": "Filter by owner team."
+              },
+              {
+                "name": "compatibilityGroup",
+                "value": "",
+                "type": "query",
+                "description": "Filter by compatibility group."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (asc or desc)."
+              },
+              {
+                "name": "orderby",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort by."
+              }
+            ]
+          },
+          "docs": "Searches for artifacts that have contract metadata labels. Filters by status, owner team, and compatibility group."
+        },
+        {
+          "info": {
+            "name": "Get contract metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/metadata",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ]
+          },
+          "docs": "Returns the contract metadata for an artifact, projected from its labels."
+        },
+        {
+          "info": {
+            "name": "Update contract metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/metadata",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or updates the contract metadata for an artifact."
+        },
+        {
+          "info": {
+            "name": "Transition contract status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/status",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transitions the contract status. Valid transitions: DRAFT to STABLE, DRAFT to DEPRECATED, STABLE to DEPRECATED. Reverse transitions are not allowed."
+        },
+        {
+          "info": {
+            "name": "Get artifact contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ]
+          },
+          "docs": "Returns the contract ruleset for the artifact (artifact-level rules that apply to all versions)."
+        },
+        {
+          "info": {
+            "name": "Set artifact contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or replaces the contract ruleset for the artifact."
+        },
+        {
+          "info": {
+            "name": "Delete artifact contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ]
+          },
+          "docs": "Deletes the contract ruleset for the artifact."
+        },
+        {
+          "info": {
+            "name": "Get version contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/versions/:versionExpression/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              },
+              {
+                "name": "versionExpression",
+                "value": "",
+                "type": "path",
+                "description": "An expression resolvable to a specific version ID within the given group and artifact. The following rules apply:\n\n - If the expression is in the form \"branch={branchId}\", and artifact branch {branchId} exists: The expression is resolved to a version that the branch points to.\n - Otherwise: The expression is resolved to a version with the same ID, which must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ]
+          },
+          "docs": "Returns the contract ruleset for a specific artifact version."
+        },
+        {
+          "info": {
+            "name": "Set version contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/versions/:versionExpression/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              },
+              {
+                "name": "versionExpression",
+                "value": "",
+                "type": "path",
+                "description": "An expression resolvable to a specific version ID within the given group and artifact. The following rules apply:\n\n - If the expression is in the form \"branch={branchId}\", and artifact branch {branchId} exists: The expression is resolved to a version that the branch points to.\n - Otherwise: The expression is resolved to a version with the same ID, which must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or replaces the contract ruleset for a specific version."
+        },
+        {
+          "info": {
+            "name": "Delete version contract ruleset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/versions/:versionExpression/contract/ruleset",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              },
+              {
+                "name": "versionExpression",
+                "value": "",
+                "type": "path",
+                "description": "An expression resolvable to a specific version ID within the given group and artifact. The following rules apply:\n\n - If the expression is in the form \"branch={branchId}\", and artifact branch {branchId} exists: The expression is resolved to a version that the branch points to.\n - Otherwise: The expression is resolved to a version with the same ID, which must follow the \"[a-zA-Z0-9._\\\\-+]{1,256}\" pattern."
+              }
+            ]
+          },
+          "docs": "Deletes the contract ruleset for a specific version."
+        },
+        {
+          "info": {
+            "name": "List ODCS contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/contracts",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of contracts to return (default 20, max 500)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of contracts to skip (for pagination)."
+              }
+            ]
+          },
+          "docs": "Returns ODCS contracts in the specified group with pagination."
+        },
+        {
+          "info": {
+            "name": "Submit an ODCS contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/contracts",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID."
+              }
+            ]
+          },
+          "docs": "Submits an ODCS v3.1 YAML contract. The contract is parsed, stored as an ODCS_CONTRACT artifact, and its contents are projected onto the referenced schema artifact (labels, rules, field tags)."
+        },
+        {
+          "info": {
+            "name": "Get an ODCS contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/contracts/:contractId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID."
+              },
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "path",
+                "description": "The contract ID."
+              }
+            ]
+          },
+          "docs": "Returns the ODCS contract YAML for the specified contract."
+        },
+        {
+          "info": {
+            "name": "Update an ODCS contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/contracts/:contractId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID."
+              },
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "path",
+                "description": "The contract ID."
+              }
+            ]
+          },
+          "docs": "Updates an ODCS contract (creates a new version) and re-projects onto the referenced schema artifact."
+        },
+        {
+          "info": {
+            "name": "Delete an ODCS contract",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/contracts/:contractId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The group ID."
+              },
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "path",
+                "description": "The contract ID."
+              }
+            ]
+          },
+          "docs": "Deletes the ODCS contract artifact."
+        },
+        {
+          "info": {
+            "name": "Export as ODCS",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/export",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact group ID."
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path",
+                "description": "The artifact ID."
+              }
+            ]
+          },
+          "docs": "Reconstructs an ODCS v3.1 YAML contract from the artifact's current contract.* labels, contract rules, and field-tag.* version labels."
+        },
+        {
+          "info": {
+            "name": "Promote contract stage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/promote",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Promotes a contract to the next deployment stage (DEV -> STAGE -> PROD)."
+        },
+        {
+          "info": {
+            "name": "Get quality score",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/quality",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the quality score for a contract, with breakdown by completeness, compliance, and stability."
+        },
+        {
+          "info": {
+            "name": "Get contract audit log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/audit",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a paginated audit log of contract operations for the specified artifact."
+        },
+        {
+          "info": {
+            "name": "Get compatibility group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/compatibility-group",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "contractId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the compatibility group for the artifact's contract."
+        },
+        {
+          "info": {
+            "name": "Set compatibility group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/compatibility-group",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the compatibility group for the artifact's contract."
+        },
+        {
+          "info": {
+            "name": "Migrate record between versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/contract/migrate",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes migration rules to transform a record from one schema version to another, chaining transforms across version hops."
+        },
+        {
+          "info": {
+            "name": "Execute contract rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:8080/apis/registry/v3/groups/:groupId/artifacts/:artifactId/versions/:versionExpression/contract/execute",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "artifactId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionExpression",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes contract rules against a data record and returns the result."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,235 @@
+{
+  "item": [
+    {
+      "id": "fcb0b16e-b31a-48f6-b4c9-f5e49d57a55b",
+      "name": "Content",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cd1701cc-e2d8-4b62-a2a7-05a951ab01b6",
+          "name": "Detect references in content",
+          "request": {
+            "name": "Detect references in content",
+            "description": {
+              "content": "Analyzes the provided content and returns a list of external references found within it.  The artifact type is used to determine the appropriate reference detection strategy.  If no artifact type is provided, the system will attempt to auto-detect it from the content.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "content",
+                "references"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "artifactType",
+                  "value": "<string>",
+                  "description": "The type of artifact represented by the content.  If not provided, the server will attempt to auto-detect the type from the content."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"<string>\",\n  \"contentType\": \"<string>\",\n  \"references\": [\n    {\n      \"artifactId\": \"<string>\",\n      \"groupId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    },\n    {\n      \"artifactId\": \"<string>\",\n      \"groupId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\"\n    }\n  ],\n  \"encoding\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "65d254bf-5ea5-42ed-b67d-30640a1e5457",
+              "name": "List of references detected in the provided content.  Each reference will have only the `name` field populated.  The `name` value corresponds to the reference string found in the content (e.g. a JSON Schema `$ref` value, a Protobuf import path, or an Avro type name).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifactType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"\",\n  \"contentType\": \"<string>\",\n  \"references\": [\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    },\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    }\n  ],\n  \"encoding\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  },\n  {\n    \"groupId\": \"mygroup\",\n    \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n    \"version\": \"2\",\n    \"name\": \"foo.bar.Open\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "449c052b-2a8b-4b54-bf98-6b87bbcc576a",
+              "name": "Common response for all operations that can return a `400` error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifactType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"\",\n  \"contentType\": \"<string>\",\n  \"references\": [\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    },\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    }\n  ],\n  \"encoding\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": 500,\n  \"name\": \"NullPointerException\",\n  \"title\": \"An error occurred somewhere.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bcf7d73-fb08-4f92-b8ea-10e6262c352a",
+              "name": "Common response for all operations that can fail with an unexpected server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "content",
+                    "references"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifactType",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"content\": \"\",\n  \"contentType\": \"<string>\",\n  \"references\": [\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    },\n    {\n      \"groupId\": \"mygroup\",\n      \"artifactId\": \"13842090-2ce3-11ec-8d3d-0242ac130003\",\n      \"version\": \"2\",\n      \"name\": \"foo.bar.Open\"\n    }\n  ],\n  \"encoding\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": 500,\n  \"message\": \"Lost connection to the database.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:8080/apis/registry/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "80f25c74-64f5-4e6b-a1ac-b2af75edc941",
+    "name": "Apicurio Registry Admin Content API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.\n\nContact Support:\n Name: Apicurio",
+      "type": "text/plain"
+    }
+  }
+}
