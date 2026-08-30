@@ -225,7 +225,7 @@ apis:
   description: The Global rules API from Apicurio — 2 operation(s) for global rules.
   humanURL: https://www.apicur.io/registry/
   tags:
-  - Global Rules
+  - Global rules
   tags_raw:
   - Global rules
   properties:
