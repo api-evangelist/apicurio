@@ -60,9 +60,10 @@ specificationVersion: '0.23'
 apis:
 - aid: apicurio:apicurio-registry
   name: Apicurio Registry
-  description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs.
-    It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing
-    a REST API for schema management with compatibility checking and content versioning.
+  description: >-
+    Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and
+    manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST
+    API for schema management with compatibility checking and content versioning.
   humanURL: https://www.apicur.io/registry/
   tags:
   - Avro
@@ -87,9 +88,10 @@ apis:
     type: GraphQL
 - aid: apicurio:apicurio-studio
   name: Apicurio Studio
-  description: 'Apicurio Studio is a visual, zero-code API design tool for creating and editing OpenAPI
-    and AsyncAPI specifications. Note: Apicurio Studio is deprecated in favor of the integrated design
-    capabilities in Apicurio Registry.'
+  description: >-
+    Apicurio Studio is a visual, zero-code API design tool for creating and editing OpenAPI and AsyncAPI
+    specifications. Note: Apicurio Studio is deprecated in favor of the integrated design capabilities
+    in Apicurio Registry.
   humanURL: https://www.apicur.io/studio/
   tags:
   - API Design
@@ -104,8 +106,9 @@ apis:
     url: https://github.com/Apicurio/apicurio-studio
 - aid: apicurio:apicurio-data-models
   name: Apicurio Data Models
-  description: Apicurio Data Models is a Java and TypeScript library for parsing, validating, and manipulating
-    OpenAPI and AsyncAPI specification documents programmatically.
+  description: >-
+    Apicurio Data Models is a Java and TypeScript library for parsing, validating, and manipulating OpenAPI
+    and AsyncAPI specification documents programmatically.
   humanURL: https://github.com/Apicurio/apicurio-data-models
   tags:
   - AsyncAPI
@@ -119,8 +122,9 @@ apis:
     url: https://github.com/Apicurio/apicurio-data-models
 - aid: apicurio:apicurio-codegen
   name: Apicurio Codegen
-  description: Apicurio Codegen generates Java JAX-RS server stubs and client code from OpenAPI specifications,
-    enabling design-first API development workflows.
+  description: >-
+    Apicurio Codegen generates Java JAX-RS server stubs and client code from OpenAPI specifications, enabling
+    design-first API development workflows.
   humanURL: https://github.com/Apicurio/apicurio-codegen
   tags:
   - Code Generation
@@ -204,15 +208,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/apicurio-contracts-api-openapi.yml
-- aid: apicurio:apicurio-gitops-api
-  name: Apicurio GitOps API
-  description: The GitOps API from Apicurio — 2 operation(s) for gitops.
-  humanURL: https://www.apicur.io/registry/
-  tags:
-  - GitOps
-  properties:
-  - type: OpenAPI
-    url: openapi/apicurio-gitops-api-openapi.yml
 - aid: apicurio:apicurio-global-rules-api
   name: Apicurio Global rules API
   description: The Global rules API from Apicurio — 2 operation(s) for global rules.
@@ -309,6 +304,15 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/apicurio-versions-api-openapi.yml
+- aid: apicurio:apicurio-git-ops-api
+  name: Apicurio Git Ops API
+  description: The Git Ops API from Apicurio — 2 operation(s) for git ops.
+  humanURL: https://www.apicur.io/registry/
+  tags:
+  - Git Ops
+  properties:
+  - type: OpenAPI
+    url: openapi/apicurio-git-ops-api-openapi.yml
 common:
 - type: Website
   url: https://apicur.io
