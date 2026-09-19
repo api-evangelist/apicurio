@@ -309,6 +309,8 @@ apis:
   description: The Git Ops API from Apicurio — 2 operation(s) for git ops.
   humanURL: https://www.apicur.io/registry/
   tags:
+  - GitOps
+  tags_raw:
   - Git Ops
   properties:
   - type: OpenAPI
