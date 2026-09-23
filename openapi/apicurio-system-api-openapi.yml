@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apicurio Registry Admin System API
+  title: Apicurio Registry System API
   version: 3.1.x
   description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
   contact:
@@ -51,11 +51,11 @@ paths:
           $ref: '#/components/responses/ServerError'
       operationId: getUIConfig
       summary: Get UI config
-      description: 'Returns the UI configuration properties for this server.  The registry UI can be
+      description: 'Returns the UI configuration properties for this server. The registry UI can be
 
-        connected to a backend using just a URL.  The rest of the UI configuration can then
+        connected to a backend using just a URL. The rest of the UI configuration can then
 
-        be fetched from the backend using this operation.  This allows UI and backend to
+        be fetched from the backend using this operation. This allows UI and backend to
 
         both be configured in the same place.
 
@@ -63,9 +63,7 @@ paths:
         This operation may fail for one of the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
 components:
   schemas:
     UserInterfaceConfigAuth:
@@ -96,58 +94,6 @@ components:
           url: https://auth.apicur.io/realms/apicurio
           redirectUri: https://registry.apicur.io
           clientId: registry-ui
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    SystemInfo:
-      title: Root Type for SystemInfo
-      description: ''
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        version:
-          type: string
-        builtOn:
-          format: date-time
-          type: string
-      example:
-        name: Apicurio Registry (SQL)
-        description: The Apicurio Registry application.
-        version: 2.0.0.Final
-        builtOn: '2021-03-19T12:55:00Z'
     UserInterfaceConfigFeatures:
       title: Root Type for UserInterfaceConfigFeatures
       description: ''
@@ -184,24 +130,13 @@ components:
         breadcrumbs: true
         roleManagement: false
         settings: true
-    UserInterfaceConfigUi:
-      title: Root Type for UserInterfaceConfigUi
-      description: ''
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
       type: object
-      properties:
-        contextPath:
-          type: string
-        navPrefixPath:
-          type: string
-        oaiDocsUrl:
-          type: string
-        editorsUrl:
-          type: string
-      example:
-        contextPath: /
-        navPrefixPath: /
-        oaiDocsUrl: https://registry.apicur.io/docs
-        editorsUrl: https://registry.apicur.io/editors
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
     UserInterfaceConfig:
       title: Root Type for UserInterfaceConfig
       description: Defines the user interface configuration data type.
@@ -268,13 +203,76 @@ components:
           breadcrumbs: true
           roleManagement: false
           settings: true
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
+    UserInterfaceConfigUi:
+      title: Root Type for UserInterfaceConfigUi
+      description: ''
       type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
+      properties:
+        contextPath:
+          type: string
+        navPrefixPath:
+          type: string
+        oaiDocsUrl:
+          type: string
+        editorsUrl:
+          type: string
+      example:
+        contextPath: /
+        navPrefixPath: /
+        oaiDocsUrl: https://registry.apicur.io/docs
+        editorsUrl: https://registry.apicur.io/editors
+    SystemInfo:
+      title: Root Type for SystemInfo
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        builtOn:
+          format: date-time
+          type: string
+      example:
+        name: Apicurio Registry (SQL)
+        description: The Apicurio Registry application.
+        version: 2.0.0.Final
+        builtOn: '2021-03-19T12:55:00Z'
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
   responses:
     ServerError:
       content:

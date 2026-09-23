@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apicurio Registry Admin Search API
+  title: Apicurio Registry Search API
   version: 3.1.x
   description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
   contact:
@@ -124,9 +124,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     post:
       requestBody:
         description: The content to search for.
@@ -213,9 +211,7 @@ paths:
 
         * Provided content (request body) was empty (HTTP error `400`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /search/groups:
     summary: Search for groups in the registry.
     get:
@@ -297,9 +293,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /search/versions:
     summary: Search for versions in the registry.
     get:
@@ -429,9 +423,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     post:
       requestBody:
         description: The content to search for.
@@ -521,9 +513,7 @@ paths:
 
         * Provided content (request body) was empty (HTTP error `400`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /search/contract/rules:
     summary: Search for contract rules by tag.
     get:
@@ -623,20 +613,21 @@ paths:
       description: Searches for artifacts that have contract metadata labels. Filters by status, owner team, and compatibility group.
 components:
   schemas:
-    FileContent:
-      format: binary
-      type: string
-      x-codegen-inline: true
-    SearchedGroup:
-      description: Models a single group from the result set returned when searching for groups.
+    SearchedArtifact:
+      description: Models a single artifact from the result set returned when searching for artifacts.
       required:
       - owner
       - createdOn
+      - artifactId
+      - artifactType
       - groupId
       - modifiedBy
       - modifiedOn
       type: object
       properties:
+        name:
+          description: ''
+          type: string
         description:
           description: ''
           type: string
@@ -647,6 +638,9 @@ components:
         owner:
           description: ''
           type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
         modifiedOn:
           format: date-time
           description: ''
@@ -657,17 +651,48 @@ components:
         groupId:
           $ref: '#/components/schemas/GroupId'
           description: ''
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
         labels:
           $ref: '#/components/schemas/Labels'
           description: ''
       example:
         groupId: My-Group
-        name: Group Name
-        description: Description of the group
+        artifactId: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        artifactType: AVRO
         owner: user1
         createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user1
-        modifiedOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-04-01T12:51:19Z'
+    VersionSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - version
+      - name
+      - createdOn
+      - modifiedOn
+      - globalId
+      type: string
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
     Version:
       description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
 
@@ -677,6 +702,55 @@ components:
       pattern: ^[a-zA-Z0-9._\-+]{1,256}$
       type: string
       example: '"3.1.6"'
+    ArtifactSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - artifacts
+      type: object
+      properties:
+        artifacts:
+          description: The artifacts returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedArtifact'
+        count:
+          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
+          type: integer
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    GroupSortBy:
+      description: ''
+      enum:
+      - groupId
+      - createdOn
+      - modifiedOn
+      type: string
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    FileContent:
+      format: binary
+      type: string
+      x-codegen-inline: true
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
+      type: string
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
     ContractRule:
       title: ContractRule
       description: A single contract rule definition.
@@ -738,194 +812,6 @@ components:
         disabled:
           description: Whether the rule is disabled.
           type: boolean
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    VersionSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - versions
-      type: object
-      properties:
-        count:
-          description: 'The total number of versions that matched the query (may be more than the number of versions
-
-            returned in the result set).'
-          type: integer
-        versions:
-          description: The collection of artifact versions returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedVersion'
-    SearchedArtifact:
-      description: Models a single artifact from the result set returned when searching for artifacts.
-      required:
-      - owner
-      - createdOn
-      - artifactId
-      - artifactType
-      - groupId
-      - modifiedBy
-      - modifiedOn
-      type: object
-      properties:
-        name:
-          description: ''
-          type: string
-        description:
-          description: ''
-          type: string
-        createdOn:
-          format: date-time
-          description: ''
-          type: string
-        owner:
-          description: ''
-          type: string
-        artifactType:
-          $ref: '#/components/schemas/ArtifactType'
-          description: ''
-        modifiedOn:
-          format: date-time
-          description: ''
-          type: string
-        modifiedBy:
-          description: ''
-          type: string
-        groupId:
-          $ref: '#/components/schemas/GroupId'
-          description: ''
-        artifactId:
-          $ref: '#/components/schemas/ArtifactId'
-          description: ''
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-      example:
-        groupId: My-Group
-        artifactId: Procurement-Invoice
-        name: Artifact Name
-        description: Description of the artifact
-        artifactType: AVRO
-        owner: user1
-        createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user2
-        modifiedOn: '2019-04-01T12:51:19Z'
-    ArtifactType:
-      description: ''
-      type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"example-artifact"'
-    VersionState:
-      description: 'Describes the state of an artifact or artifact version.
-
-
-        * ENABLED
-
-        * DISABLED
-
-        * DEPRECATED
-
-        * DRAFT
-
-        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
-
-        '
-      enum:
-      - ENABLED
-      - DISABLED
-      - DEPRECATED
-      - DRAFT
-      - SUNSET
-      type: string
-      x-codegen-package: io.apicurio.registry.types
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    VersionSortBy:
-      description: ''
-      enum:
-      - groupId
-      - artifactId
-      - version
-      - name
-      - createdOn
-      - modifiedOn
-      - globalId
-      type: string
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
-      type: string
-    ArtifactSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - artifacts
-      type: object
-      properties:
-        artifacts:
-          description: The artifacts returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedArtifact'
-        count:
-          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
-          type: integer
-    GroupSortBy:
-      description: ''
-      enum:
-      - groupId
-      - createdOn
-      - modifiedOn
-      type: string
     ContractRuleSearchResult:
       title: ContractRuleSearchResult
       description: A contract rule with its artifact coordinates, returned by tag search.
@@ -949,6 +835,47 @@ components:
           - MIGRATION
         rule:
           $ref: '#/components/schemas/ContractRule'
+    SearchedGroup:
+      description: Models a single group from the result set returned when searching for groups.
+      required:
+      - owner
+      - createdOn
+      - groupId
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        name: Group Name
+        description: Description of the group
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user1
+        modifiedOn: '2019-03-22T12:51:19Z'
     SearchedVersion:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -1020,21 +947,84 @@ components:
         globalId: 37
         version: 1.0.7
         contentId: 62
-    GroupSearchResults:
-      description: Describes the response received when searching for groups.
+    VersionState:
+      description: 'Describes the state of an artifact or artifact version.
+
+
+        * ENABLED
+
+        * DISABLED
+
+        * DEPRECATED
+
+        * DRAFT
+
+        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
+
+        '
+      enum:
+      - ENABLED
+      - DISABLED
+      - DEPRECATED
+      - DRAFT
+      - SUNSET
+      type: string
+      x-codegen-package: io.apicurio.registry.types
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
       required:
-      - count
-      - groups
+      - title
+      - status
       type: object
       properties:
-        groups:
-          description: The groups returned in the result set.
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    VersionSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - versions
+      type: object
+      properties:
+        count:
+          description: 'The total number of versions that matched the query (may be more than the number of versions
+
+            returned in the result set).'
+          type: integer
+        versions:
+          description: The collection of artifact versions returned in the result set.
           type: array
           items:
-            $ref: '#/components/schemas/SearchedGroup'
-        count:
-          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
-          type: integer
+            $ref: '#/components/schemas/SearchedVersion'
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
     ArtifactSortBy:
       description: ''
       enum:
@@ -1046,19 +1036,6 @@ components:
       - name
       type: string
   responses:
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     Unauthorized:
       content:
         application/json:
@@ -1078,6 +1055,19 @@ components:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
       description: Common response for all operations that can return a `400` error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     ServerError:
       content:
         application/json:

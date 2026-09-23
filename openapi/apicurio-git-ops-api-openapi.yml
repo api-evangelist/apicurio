@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apicurio Registry Admin GitOps API
+  title: Apicurio Registry Git Ops API
   version: 3.1.x
   description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
   contact:
@@ -13,13 +13,13 @@ servers:
 - url: http://localhost:8080/apis/registry/v3
   description: Local Apicurio Registry
 tags:
-- name: GitOps
+- name: Git Ops
 paths:
   /admin/gitops/status:
     summary: Get the current GitOps synchronization status.
     get:
       tags:
-      - GitOps
+      - Git Ops
       responses:
         '200':
           content:
@@ -48,14 +48,12 @@ paths:
 
         * GitOps storage is not enabled (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/gitops/sync:
     summary: Trigger an immediate GitOps synchronization.
     post:
       tags:
-      - GitOps
+      - Git Ops
       responses:
         '204':
           description: Synchronization has been requested. The sync will happen asynchronously on the next scheduler cycle.
@@ -83,9 +81,7 @@ paths:
 
         * GitOps storage is not enabled (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
 components:
   schemas:
     GitOpsError:
@@ -189,6 +185,19 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     ServerError:
       content:
         application/json:
@@ -211,19 +220,6 @@ components:
                 error_code: 409
                 message: The artifact content was invalid.
       description: Common response used when an input conflicts with existing data.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
   securitySchemes:
     BasicAuth:
       type: http

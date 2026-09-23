@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apicurio Registry Admin Group rules API
+  title: Apicurio Registry Group rules API
   version: 3.1.x
   description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
   contact:
@@ -46,7 +46,19 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: listGroupRules
       summary: List group rules
-      description: "Returns a list of all rules configured for the group.  The set of rules determines\nhow the content of an artifact in the group can evolve over time.  If no rules are \nconfigured for a group, the set of globally configured rules are used.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* A server error occurred (HTTP error `500`)"
+      description: 'Returns a list of all rules configured for the group. The set of rules determines
+
+        how the content of an artifact in the group can evolve over time. If no rules are
+
+        configured for a group, the set of globally configured rules are used.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No group with this `groupId` exists (HTTP error `404`)
+
+        * A server error occurred (HTTP error `500`)'
     post:
       requestBody:
         content:
@@ -75,7 +87,7 @@ paths:
       summary: Create group rule
       description: 'Adds a rule to the list of rules that get applied to an artifact in the group when adding new
 
-        versions.  All configured rules must pass to successfully add a new artifact version.
+        versions. All configured rules must pass to successfully add a new artifact version.
 
 
         This operation can fail for the following reasons:
@@ -104,7 +116,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: deleteGroupRules
       summary: Delete group rules
-      description: 'Deletes all of the rules configured for the group.  After this is done, the global
+      description: 'Deletes all of the rules configured for the group. After this is done, the global
 
         rules apply to artifacts in the group again.
 
@@ -154,7 +166,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: getGroupRuleConfig
       summary: Get group rule configuration
-      description: 'Returns information about a single rule configured for a group.  This is useful
+      description: 'Returns information about a single rule configured for a group. This is useful
 
         when you want to know what the current configuration settings are for a specific rule.
 
@@ -195,7 +207,23 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: updateGroupRuleConfig
       summary: Update group rule configuration
-      description: "Updates the configuration of a single rule for the group.  The configuration data\nis specific to each rule type, so the configuration of the `COMPATIBILITY` rule \nis in a different format from the configuration of the `VALIDITY` rule.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this artifact (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred (HTTP error `500`)\n"
+      description: 'Updates the configuration of a single rule for the group. The configuration data
+
+        is specific to each rule type, so the configuration of the `COMPATIBILITY` rule
+
+        is in a different format from the configuration of the `VALIDITY` rule.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No group with this `groupId` exists (HTTP error `404`)
+
+        * No rule with this name/type is configured for this artifact (HTTP error `404`)
+
+        * Invalid rule type (HTTP error `400`)
+
+        * A server error occurred (HTTP error `500`)'
     delete:
       tags:
       - Group rules
@@ -212,80 +240,50 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: deleteGroupRule
       summary: Delete group rule
-      description: "Deletes a rule from the group.  This results in the rule no longer applying for\nthis group.  If this is the only rule configured for the group, this is the \nsame as deleting **all** rules, and the globally configured rules now apply to\nthis group.\n\nThis operation can fail for the following reasons:\n\n* No group with this `groupId` exists (HTTP error `404`)\n* No rule with this name/type is configured for this group (HTTP error `404`)\n* Invalid rule type (HTTP error `400`)\n* A server error occurred (HTTP error `500`)"
+      description: 'Deletes a rule from the group. This results in the rule no longer applying for
+
+        this group. If this is the only rule configured for the group, this is the
+
+        same as deleting **all** rules, and the globally configured rules now apply to
+
+        this group.
+
+
+        This operation can fail for the following reasons:
+
+
+        * No group with this `groupId` exists (HTTP error `404`)
+
+        * No rule with this name/type is configured for this group (HTTP error `404`)
+
+        * Invalid rule type (HTTP error `400`)
+
+        * A server error occurred (HTTP error `500`)'
 components:
-  responses:
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
   schemas:
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
+    RuleType:
+      description: ''
+      enum:
+      - VALIDITY
+      - COMPATIBILITY
+      - INTEGRITY
       type: string
-      example: '"my-group"'
+      example: VALIDITY
+      x-codegen-package: io.apicurio.registry.types
+    Rule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -319,29 +317,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    Rule:
-      title: Root Type for Rule
-      description: ''
-      required:
-      - config
-      type: object
-      properties:
-        config:
-          type: string
-        ruleType:
-          $ref: '#/components/schemas/RuleType'
-      example:
-        ruleType: VALIDITY
-        config: FULL
-    RuleType:
-      description: ''
-      enum:
-      - VALIDITY
-      - COMPATIBILITY
-      - INTEGRITY
-      type: string
-      example: VALIDITY
-      x-codegen-package: io.apicurio.registry.types
     CreateRule:
       title: Root Type for Rule
       description: ''
@@ -356,6 +331,77 @@ components:
       example:
         ruleType: VALIDITY
         config: FULL
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

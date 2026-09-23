@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Apicurio Registry Admin Groups API
+  title: Apicurio Registry Groups API
   version: 3.1.x
   description: Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
   contact:
@@ -63,7 +63,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: listGroups
       summary: List groups
-      description: Returns a list of all groups.  This list is paged.
+      description: Returns a list of all groups. This list is paged.
     post:
       requestBody:
         content:
@@ -102,9 +102,7 @@ paths:
 
         * The group already exist (HTTP error `409`)
 
-        * Invalid group ID (e.g., reserved name ''default'') (HTTP error `400`)
-
-        '
+        * Invalid group ID (e.g., reserved name ''default'') (HTTP error `400`)'
   /groups/{groupId}:
     summary: Collection to manage a single group in the registry.
     parameters:
@@ -133,7 +131,7 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
       operationId: getGroupById
-      summary: Get a group by the specified ID.
+      summary: Get a group by the specified ID
       description: 'Returns a group using the specified id.
 
 
@@ -192,8 +190,8 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden'
       operationId: deleteGroupById
-      summary: Delete a group by the specified ID.
-      description: 'Deletes a group by identifier.  This operation also deletes all artifacts within
+      summary: Delete a group by the specified ID
+      description: 'Deletes a group by identifier. This operation also deletes all artifacts within
 
         the group, so should be used very carefully.
 
@@ -203,9 +201,7 @@ paths:
 
         * A server error occurred (HTTP error `500`)
 
-        * The group does not exist (HTTP error `404`)
-
-        '
+        * The group does not exist (HTTP error `404`)'
   /search/groups:
     summary: Search for groups in the registry.
     get:
@@ -287,17 +283,9 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
 components:
   schemas:
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
-      type: string
     EditableGroupMetaData:
       title: Root Type for EditableGroupMetaData
       description: ''
@@ -317,44 +305,12 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
       type: string
-      example: '"my-group"'
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
     GroupMetaData:
       title: Root Type for GroupMetaData
       description: ''
@@ -395,6 +351,35 @@ components:
         properties:
           custom-1: foo
           custom-2: bar
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    GroupSortBy:
+      description: ''
+      enum:
+      - groupId
+      - createdOn
+      - modifiedOn
+      type: string
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
     SearchedGroup:
       description: Models a single group from the result set returned when searching for groups.
       required:
@@ -436,35 +421,44 @@ components:
         createdOn: '2019-03-22T12:51:19Z'
         modifiedBy: user1
         modifiedOn: '2019-03-22T12:51:19Z'
-    GroupSortBy:
-      description: ''
-      enum:
-      - groupId
-      - createdOn
-      - modifiedOn
-      type: string
-    GroupSearchResults:
-      description: Describes the response received when searching for groups.
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
       required:
-      - count
-      - groups
+      - title
+      - status
       type: object
       properties:
-        groups:
-          description: The groups returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedGroup'
-        count:
-          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
           type: integer
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
     CreateGroup:
       title: Root Type for CreateGroupMetaData
       description: ''
@@ -487,23 +481,6 @@ components:
           custom-1: foo
           custom-2: bar
   responses:
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
     Unauthorized:
       content:
         application/json:
@@ -517,28 +494,6 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
     Forbidden:
       content:
         application/json:
@@ -563,6 +518,45 @@ components:
                 error_code: 405
                 message: Method is currently not supported or disabled.
       description: Common response for all operations that can fail due to method not allowed or disabled.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

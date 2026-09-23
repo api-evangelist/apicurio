@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Apicurio Registry Admin API
   version: 3.1.x
@@ -43,9 +43,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     post:
       requestBody:
         content:
@@ -80,9 +78,7 @@ paths:
 
         * The rule already exists (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     delete:
       tags:
       - Admin
@@ -103,9 +99,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/rules/{ruleType}:
     summary: Manage the configuration of a single global artifact rule.
     parameters:
@@ -145,9 +139,7 @@ paths:
 
         * No rule with name/type `rule` exists (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     put:
       requestBody:
         content:
@@ -184,9 +176,7 @@ paths:
 
         * No rule with name/type `rule` exists (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     delete:
       tags:
       - Admin
@@ -203,7 +193,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: deleteGlobalRule
       summary: Delete global rule
-      description: 'Deletes a single global rule.  If this is the only rule configured, this is the same
+      description: 'Deletes a single global rule. If this is the only rule configured, this is the same
 
         as deleting **all** rules.
 
@@ -217,9 +207,7 @@ paths:
 
         * Rule cannot be deleted (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/export:
     summary: Provides a way to export registry data.
     get:
@@ -256,7 +244,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: exportData
       summary: Export registry data
-      description: Exports registry data as a ZIP archive.  If a `groupId` query parameter is provided, only data belonging to the specified group will be exported and global rules will be excluded.
+      description: Exports registry data as a ZIP archive. If a `groupId` query parameter is provided, only data belonging to the specified group will be exported and global rules will be excluded.
   /admin/import:
     summary: Provides a way to import data into the registry.
     post:
@@ -340,9 +328,7 @@ paths:
 
         * No role mapping for the `principalId` exists (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     put:
       requestBody:
         content:
@@ -373,9 +359,7 @@ paths:
 
         * No role mapping for the principalId exists (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     delete:
       tags:
       - Admin
@@ -400,9 +384,7 @@ paths:
 
         * No role mapping for the principalId exists (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/config/properties:
     summary: Manage configuration properties.
     get:
@@ -425,15 +407,13 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: listConfigProperties
       summary: List all configuration properties
-      description: 'Returns a list of all configuration properties that have been set.  The list is not paged.
+      description: 'Returns a list of all configuration properties that have been set. The list is not paged.
 
 
         This operation may fail for one of the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/config/properties/{propertyName}:
     summary: Manage a single configuration property (by name).
     parameters:
@@ -471,9 +451,7 @@ paths:
 
         * Property not found or not configured (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     put:
       requestBody:
         content:
@@ -504,9 +482,7 @@ paths:
 
         * Property not found or not configured (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     delete:
       tags:
       - Admin
@@ -523,7 +499,7 @@ paths:
           $ref: '#/components/responses/Forbidden'
       operationId: resetConfigProperty
       summary: Reset a configuration property
-      description: 'Resets the value of a single configuration property.  This will return the property to
+      description: 'Resets the value of a single configuration property. This will return the property to
 
         its default value (see external documentation for supported properties and their default
 
@@ -535,9 +511,7 @@ paths:
 
         * Property not found or not configured (HTTP error `404`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/roleMappings:
     summary: Collection to manage role mappings for authenticated principals
     get:
@@ -575,9 +549,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
     post:
       requestBody:
         content:
@@ -604,10 +576,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/config/artifactTypes:
     summary: The list of artifact types supported by this instance of Registry.
     get:
@@ -636,9 +605,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/contracts/ruleset:
     summary: Manage the global contract ruleset.
     get:
@@ -714,9 +681,7 @@ paths:
         This operation can fail for the following reasons:
 
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/gitops/status:
     summary: Get the current GitOps synchronization status.
     get:
@@ -750,9 +715,7 @@ paths:
 
         * GitOps storage is not enabled (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/gitops/sync:
     summary: Trigger an immediate GitOps synchronization.
     post:
@@ -785,9 +748,7 @@ paths:
 
         * GitOps storage is not enabled (HTTP error `409`)
 
-        * A server error occurred (HTTP error `500`)
-
-        '
+        * A server error occurred (HTTP error `500`)'
   /admin/usage/summary:
     summary: Get global usage summary counts.
     get:
@@ -902,62 +863,91 @@ paths:
           $ref: '#/components/responses/ServerError'
 components:
   schemas:
-    GitOpsError:
-      title: Root Type for GitOpsError
-      description: Describes an error that occurred during a GitOps sync attempt.
+    UsageClassification:
+      description: Classification of schema usage based on last fetch time.
+      type: string
+      enum:
+      - ACTIVE
+      - STALE
+      - DEAD
+    RoleMappingSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - roleMappings
       type: object
       properties:
-        detail:
-          description: A human-readable description of the error.
-          type: string
-        source:
-          description: The source ID (e.g., repository ID) where the error occurred. Absent for global errors not tied to a specific source.
-          type: string
-        context:
-          description: The file path or location where the error occurred. Absent if the error is not file-specific.
-          type: string
+        roleMappings:
+          description: The role mappings returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleMapping'
+        count:
+          description: "The total number of role mappings that matched the query that produced the result set (may be \nmore than the number of role mappings in the result set)."
+          type: integer
+      example:
+      - principalId: user-1
+        principalName: user-1
+        role: ADMIN
+      - principalId: svc_account_84874587_123484
+        principalName: user-svc-account
+        role: READ_ONLY
+    RoleMapping:
+      description: The mapping between a user/principal and their role.
       required:
-      - detail
-    ConsumerVersionHeatmap:
-      title: ConsumerVersionHeatmap
-      required:
-      - groupId
-      - artifactId
-      - versions
-      - consumers
+      - principalId
+      - role
       type: object
       properties:
-        groupId:
+        principalId:
+          description: ''
           type: string
-        artifactId:
+        role:
+          $ref: '#/components/schemas/RoleType'
+          description: ''
+        principalName:
+          description: A friendly name for the principal.
           type: string
-        versions:
+      example:
+        principalId: svc_account_84874587_123484
+        principalName: famartin-svc-account
+        role: READ_ONLY
+    VersionUsageMetrics:
+      title: VersionUsageMetrics
+      description: Usage metrics for a specific artifact version.
+      required:
+      - version
+      - globalId
+      - totalFetches
+      - uniqueClients
+      - firstFetchedOn
+      - lastFetchedOn
+      - classification
+      type: object
+      properties:
+        version:
+          type: string
+        globalId:
+          type: integer
+          format: int64
+        totalFetches:
+          type: integer
+          format: int64
+        uniqueClients:
+          type: integer
+          format: int32
+        firstFetchedOn:
+          type: integer
+          format: int64
+        lastFetchedOn:
+          type: integer
+          format: int64
+        clients:
           type: array
           items:
             type: string
-        consumers:
-          type: array
-          items:
-            $ref: '#/components/schemas/ConsumerVersionEntry'
-    ContractRuleSet:
-      title: ContractRuleSet
-      description: A set of contract rules, divided into domain and migration categories.
-      type: object
-      properties:
-        domainRules:
-          description: Rules for domain validation.
-          type: array
-          items:
-            $ref: '#/components/schemas/ContractRule'
-        migrationRules:
-          description: Rules for version migration.
-          type: array
-          items:
-            $ref: '#/components/schemas/ContractRule'
-    FileContent:
-      format: binary
-      type: string
-      x-codegen-inline: true
+        classification:
+          $ref: '#/components/schemas/UsageClassification'
     DownloadRef:
       title: Root Type for Download
       description: Models a download "link".  Useful for browser use-cases.
@@ -972,6 +962,20 @@ components:
       example:
         downloadId: 247-4987490-297845
         href: https://54321.registry.examples.org/apis/registry/v3/downloads/247-4987490-297845
+    CreateRule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
     GitOpsStatus:
       title: Root Type for GitOpsStatus
       description: Describes the current synchronization status of the GitOps storage backend. This includes the current sync state, the Git commit marker, load statistics, and any errors from the last sync attempt.
@@ -1010,26 +1014,27 @@ components:
           type: object
           additionalProperties:
             type: string
-    RoleMapping:
-      description: The mapping between a user/principal and their role.
+    ConsumerVersionHeatmap:
+      title: ConsumerVersionHeatmap
       required:
-      - principalId
-      - role
+      - groupId
+      - artifactId
+      - versions
+      - consumers
       type: object
       properties:
-        principalId:
-          description: ''
+        groupId:
           type: string
-        role:
-          $ref: '#/components/schemas/RoleType'
-          description: ''
-        principalName:
-          description: A friendly name for the principal.
+        artifactId:
           type: string
-      example:
-        principalId: svc_account_84874587_123484
-        principalName: famartin-svc-account
-        role: READ_ONLY
+        versions:
+          type: array
+          items:
+            type: string
+        consumers:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConsumerVersionEntry'
     DeprecationReadiness:
       title: DeprecationReadiness
       required:
@@ -1093,6 +1098,92 @@ components:
         type: boolean
         label: Owner Only Authorization
         description: When enabled, the registry will allow only the artifact owner (creator) to modify an artifact.
+    FileContent:
+      format: binary
+      type: string
+      x-codegen-inline: true
+    UsageSummary:
+      title: UsageSummary
+      required:
+      - active
+      - stale
+      - dead
+      type: object
+      properties:
+        active:
+          type: integer
+          format: int32
+        stale:
+          type: integer
+          format: int32
+        dead:
+          type: integer
+          format: int32
+    ArtifactTypeInfo:
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: AVRO
+    UpdateRole:
+      title: Root Type for UpdateRole
+      description: ''
+      required:
+      - role
+      type: object
+      properties:
+        role:
+          $ref: '#/components/schemas/RoleType'
+      example:
+        role: READ_ONLY
+    SnapshotMetaData:
+      title: Root Type for SnapshotMetaData
+      description: ''
+      required:
+      - snapshotId
+      type: object
+      properties:
+        snapshotId:
+          description: ''
+          type: string
+      example:
+        snapshotId: snp-1137292771
+    ArtifactUsageMetrics:
+      title: ArtifactUsageMetrics
+      required:
+      - groupId
+      - artifactId
+      - versions
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/VersionUsageMetrics'
+    ConsumerVersionEntry:
+      title: ConsumerVersionEntry
+      required:
+      - clientId
+      type: object
+      properties:
+        clientId:
+          type: string
+        versions:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        versionsBehind:
+          type: integer
+          format: int32
+        driftAlert:
+          type: boolean
     RuleType:
       description: ''
       enum:
@@ -1102,6 +1193,22 @@ components:
       type: string
       example: VALIDITY
       x-codegen-package: io.apicurio.registry.types
+    GitOpsError:
+      title: Root Type for GitOpsError
+      description: Describes an error that occurred during a GitOps sync attempt.
+      type: object
+      properties:
+        detail:
+          description: A human-readable description of the error.
+          type: string
+        source:
+          description: The source ID (e.g., repository ID) where the error occurred. Absent for global errors not tied to a specific source.
+          type: string
+        context:
+          description: The file path or location where the error occurred. Absent if the error is not file-specific.
+          type: string
+      required:
+      - detail
     ContractRule:
       title: ContractRule
       description: A single contract rule definition.
@@ -1163,99 +1270,7 @@ components:
         disabled:
           description: Whether the rule is disabled.
           type: boolean
-    ConsumerVersionEntry:
-      title: ConsumerVersionEntry
-      required:
-      - clientId
-      type: object
-      properties:
-        clientId:
-          type: string
-        versions:
-          type: object
-          additionalProperties:
-            type: integer
-            format: int64
-        versionsBehind:
-          type: integer
-          format: int32
-        driftAlert:
-          type: boolean
-    ArtifactUsageMetrics:
-      title: ArtifactUsageMetrics
-      required:
-      - groupId
-      - artifactId
-      - versions
-      type: object
-      properties:
-        groupId:
-          type: string
-        artifactId:
-          type: string
-        versions:
-          type: array
-          items:
-            $ref: '#/components/schemas/VersionUsageMetrics'
-    VersionUsageMetrics:
-      title: VersionUsageMetrics
-      description: Usage metrics for a specific artifact version.
-      required:
-      - version
-      - globalId
-      - totalFetches
-      - uniqueClients
-      - firstFetchedOn
-      - lastFetchedOn
-      - classification
-      type: object
-      properties:
-        version:
-          type: string
-        globalId:
-          type: integer
-          format: int64
-        totalFetches:
-          type: integer
-          format: int64
-        uniqueClients:
-          type: integer
-          format: int32
-        firstFetchedOn:
-          type: integer
-          format: int64
-        lastFetchedOn:
-          type: integer
-          format: int64
-        clients:
-          type: array
-          items:
-            type: string
-        classification:
-          $ref: '#/components/schemas/UsageClassification'
-    RoleMappingSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - roleMappings
-      type: object
-      properties:
-        roleMappings:
-          description: The role mappings returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleMapping'
-        count:
-          description: "The total number of role mappings that matched the query that produced the result set (may be \nmore than the number of role mappings in the result set)."
-          type: integer
-      example:
-      - principalId: user-1
-        principalName: user-1
-        role: ADMIN
-      - principalId: svc_account_84874587_123484
-        principalName: user-svc-account
-        role: READ_ONLY
-    CreateRule:
+    Rule:
       title: Root Type for Rule
       description: ''
       required:
@@ -1269,31 +1284,32 @@ components:
       example:
         ruleType: VALIDITY
         config: FULL
-    UsageSummary:
-      title: UsageSummary
-      required:
-      - active
-      - stale
-      - dead
-      type: object
-      properties:
-        active:
-          type: integer
-          format: int32
-        stale:
-          type: integer
-          format: int32
-        dead:
-          type: integer
-          format: int32
-    ArtifactTypeInfo:
+    UpdateConfigurationProperty:
+      title: Root Type for UpdateConfigurationProperty
       description: ''
+      required:
+      - value
       type: object
       properties:
-        name:
+        value:
           type: string
       example:
-        name: AVRO
+        value: 'true'
+    ContractRuleSet:
+      title: ContractRuleSet
+      description: A set of contract rules, divided into domain and migration categories.
+      type: object
+      properties:
+        domainRules:
+          description: Rules for domain validation.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
+        migrationRules:
+          description: Rules for version migration.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -1327,61 +1343,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    Rule:
-      title: Root Type for Rule
-      description: ''
-      required:
-      - config
-      type: object
-      properties:
-        config:
-          type: string
-        ruleType:
-          $ref: '#/components/schemas/RuleType'
-      example:
-        ruleType: VALIDITY
-        config: FULL
-    UsageClassification:
-      description: Classification of schema usage based on last fetch time.
-      type: string
-      enum:
-      - ACTIVE
-      - STALE
-      - DEAD
-    UpdateRole:
-      title: Root Type for UpdateRole
-      description: ''
-      required:
-      - role
-      type: object
-      properties:
-        role:
-          $ref: '#/components/schemas/RoleType'
-      example:
-        role: READ_ONLY
-    SnapshotMetaData:
-      title: Root Type for SnapshotMetaData
-      description: ''
-      required:
-      - snapshotId
-      type: object
-      properties:
-        snapshotId:
-          description: ''
-          type: string
-      example:
-        snapshotId: snp-1137292771
-    UpdateConfigurationProperty:
-      title: Root Type for UpdateConfigurationProperty
-      description: ''
-      required:
-      - value
-      type: object
-      properties:
-        value:
-          type: string
-      example:
-        value: 'true'
     RoleType:
       description: ''
       enum:
@@ -1391,19 +1352,17 @@ components:
       type: string
       x-codegen-package: io.apicurio.registry.types
   responses:
-    Forbidden:
+    Conflict:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            ForbiddenExample:
+            ConflictExample:
               value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
     Unauthorized:
       content:
         application/json:
@@ -1417,17 +1376,25 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
-    Conflict:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            ConflictExample:
+            ForbiddenExample:
               value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     NotFound:
       content:
         application/json:
@@ -1439,12 +1406,6 @@ components:
                 error_code: 404
                 message: No artifact with id 'Topic-1/Inbound' could be found.
       description: Common response for all operations that can return a `404` error.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
     ServerError:
       content:
         application/json:

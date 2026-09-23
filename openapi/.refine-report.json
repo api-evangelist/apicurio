@@ -1,31 +1,13 @@
 {
   "provider": "apicurio",
   "sources": [
-    "apicurio-admin-api-openapi.yml",
-    "apicurio-ai-api-openapi.yml",
-    "apicurio-artifact-rules-api-openapi.yml",
-    "apicurio-artifact-type-api-openapi.yml",
-    "apicurio-artifacts-api-openapi.yml",
-    "apicurio-branches-api-openapi.yml",
-    "apicurio-content-api-openapi.yml",
-    "apicurio-contracts-api-openapi.yml",
-    "apicurio-gitops-api-openapi.yml",
-    "apicurio-global-rules-api-openapi.yml",
-    "apicurio-group-rules-api-openapi.yml",
-    "apicurio-groups-api-openapi.yml",
-    "apicurio-kafkasql-api-openapi.yml",
-    "apicurio-metadata-api-openapi.yml",
-    "apicurio-search-api-openapi.yml",
-    "apicurio-snapshot-api-openapi.yml",
-    "apicurio-system-api-openapi.yml",
-    "apicurio-users-api-openapi.yml",
-    "apicurio-versions-api-openapi.yml"
+    "_original/apicurio-openapi.yml"
   ],
   "outputs": [
-    "apicurio-admin-api-openapi.yml",
     "apicurio-ai-api-openapi.yml",
-    "apicurio-artifact-rules-api-openapi.yml",
+    "apicurio-admin-api-openapi.yml",
     "apicurio-artifact-type-api-openapi.yml",
+    "apicurio-artifact-rules-api-openapi.yml",
     "apicurio-artifacts-api-openapi.yml",
     "apicurio-branches-api-openapi.yml",
     "apicurio-content-api-openapi.yml",
@@ -42,9 +24,36 @@
     "apicurio-users-api-openapi.yml",
     "apicurio-versions-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "apicurio-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: apicurio-git-ops-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 23 total)"
+  ],
+  "skipped": [
+    "apicurio-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-ai-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-artifact-rules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-artifact-type-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-artifacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-branches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-content-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-contracts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-git-ops-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-global-rules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-group-rules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-kafkasql-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-metadata-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-snapshot-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-system-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apicurio-versions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
