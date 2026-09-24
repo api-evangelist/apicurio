@@ -38,7 +38,7 @@ tags:
 - Avro
 - AsyncAPI
 - Java
-- Open-Source
+- Open Source
 - OpenAPI
 - Red Hat
 - Schema Registry
@@ -53,6 +53,7 @@ tags_raw:
 - OpenAPI
 - Red Hat
 - Schema Registry
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/apicurio/refs/heads/main/apis.yml
 created: '2026-03-25'
 modified: '2026-09-16'
@@ -68,7 +69,7 @@ apis:
   tags:
   - Avro
   - AsyncAPI
-  - Open-Source
+  - Open Source
   - OpenAPI
   - Protobuf
   - Schema Registry
@@ -79,13 +80,12 @@ apis:
   - OpenAPI
   - Protobuf
   - Schema Registry
+  - Open-Source
   properties:
   - type: Documentation
     url: https://www.apicur.io/registry/docs/
   - type: GitHubRepository
     url: https://github.com/Apicurio/apicurio-registry
-  - url: graphql/apicurio-graphql.md
-    type: GraphQL
 - aid: apicurio:apicurio-studio
   name: Apicurio Studio
   description: >-

@@ -1,1 +1,0 @@
-# Apicurio GraphQL API
