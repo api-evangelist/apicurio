@@ -261,6 +261,20 @@ paths:
         * A server error occurred (HTTP error `500`)'
 components:
   schemas:
+    Rule:
+      title: Root Type for Rule
+      description: ''
+      required:
+      - config
+      type: object
+      properties:
+        config:
+          type: string
+        ruleType:
+          $ref: '#/components/schemas/RuleType'
+      example:
+        ruleType: VALIDITY
+        config: FULL
     RuleType:
       description: ''
       enum:
@@ -270,7 +284,12 @@ components:
       type: string
       example: VALIDITY
       x-codegen-package: io.apicurio.registry.types
-    Rule:
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+    CreateRule:
       title: Root Type for Rule
       description: ''
       required:
@@ -317,25 +336,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    CreateRule:
-      title: Root Type for Rule
-      description: ''
-      required:
-      - config
-      type: object
-      properties:
-        config:
-          type: string
-        ruleType:
-          $ref: '#/components/schemas/RuleType'
-      example:
-        ruleType: VALIDITY
-        config: FULL
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
   responses:
     Unauthorized:
       content:
@@ -350,19 +350,6 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     ServerError:
       content:
         application/json:
@@ -402,6 +389,19 @@ components:
                 error_code: 404
                 message: No artifact with id 'Topic-1/Inbound' could be found.
       description: Common response for all operations that can return a `404` error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
   securitySchemes:
     BasicAuth:
       type: http

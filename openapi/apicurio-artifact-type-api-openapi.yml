@@ -59,6 +59,17 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
     Forbidden:
       content:
         application/json:
@@ -72,17 +83,6 @@ components:
                 status: 403
                 name: ForbiddenException
       description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
   schemas:
     ArtifactTypeInfo:
       description: ''

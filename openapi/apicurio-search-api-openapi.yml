@@ -612,7 +612,89 @@ paths:
       summary: Search contracts
       description: Searches for artifacts that have contract metadata labels. Filters by status, owner team, and compatibility group.
 components:
+  responses:
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
   schemas:
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
+    ContractRuleSearchResult:
+      title: ContractRuleSearchResult
+      description: A contract rule with its artifact coordinates, returned by tag search.
+      type: object
+      properties:
+        groupId:
+          description: The group ID of the artifact containing the rule.
+          type: string
+        artifactId:
+          description: The artifact ID containing the rule.
+          type: string
+        globalId:
+          description: The global ID of the version (null for artifact-level rules).
+          type: integer
+          format: int64
+        ruleCategory:
+          description: The rule category (DOMAIN or MIGRATION).
+          type: string
+          enum:
+          - DOMAIN
+          - MIGRATION
+        rule:
+          $ref: '#/components/schemas/ContractRule'
     SearchedArtifact:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -667,215 +749,6 @@ components:
         createdOn: '2019-03-22T12:51:19Z'
         modifiedBy: user2
         modifiedOn: '2019-04-01T12:51:19Z'
-    VersionSortBy:
-      description: ''
-      enum:
-      - groupId
-      - artifactId
-      - version
-      - name
-      - createdOn
-      - modifiedOn
-      - globalId
-      type: string
-    GroupSearchResults:
-      description: Describes the response received when searching for groups.
-      required:
-      - count
-      - groups
-      type: object
-      properties:
-        groups:
-          description: The groups returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedGroup'
-        count:
-          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
-          type: integer
-    Version:
-      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
-
-        or it can be server-generated.  The value can be any string unique to the artifact, but it is
-
-        recommended to use a simple integer or a semver value.'
-      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
-      type: string
-      example: '"3.1.6"'
-    ArtifactSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - artifacts
-      type: object
-      properties:
-        artifacts:
-          description: The artifacts returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedArtifact'
-        count:
-          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
-          type: integer
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    GroupSortBy:
-      description: ''
-      enum:
-      - groupId
-      - createdOn
-      - modifiedOn
-      type: string
-    ArtifactType:
-      description: ''
-      type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    FileContent:
-      format: binary
-      type: string
-      x-codegen-inline: true
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
-      type: string
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"example-artifact"'
-    ContractRule:
-      title: ContractRule
-      description: A single contract rule definition.
-      required:
-      - name
-      - kind
-      - type
-      - mode
-      type: object
-      properties:
-        name:
-          description: The rule name.
-          type: string
-        kind:
-          description: The rule kind.
-          type: string
-          enum:
-          - CONDITION
-          - TRANSFORM
-        type:
-          description: Rule executor type (CEL, CEL_FIELD, ENCRYPT, etc.).
-          type: string
-        mode:
-          description: When the rule is applied.
-          type: string
-          enum:
-          - WRITE
-          - READ
-          - WRITEREAD
-          - UPGRADE
-          - DOWNGRADE
-        expr:
-          description: The rule expression.
-          type: string
-        params:
-          description: Rule parameters.
-          type: object
-          additionalProperties:
-            type: string
-        tags:
-          description: Tags for categorizing the rule.
-          type: array
-          items:
-            type: string
-        onSuccess:
-          description: Action on rule success.
-          type: string
-          enum:
-          - NONE
-          - ERROR
-          - DLQ
-        onFailure:
-          description: Action on rule failure.
-          type: string
-          enum:
-          - NONE
-          - ERROR
-          - DLQ
-        disabled:
-          description: Whether the rule is disabled.
-          type: boolean
-    ContractRuleSearchResult:
-      title: ContractRuleSearchResult
-      description: A contract rule with its artifact coordinates, returned by tag search.
-      type: object
-      properties:
-        groupId:
-          description: The group ID of the artifact containing the rule.
-          type: string
-        artifactId:
-          description: The artifact ID containing the rule.
-          type: string
-        globalId:
-          description: The global ID of the version (null for artifact-level rules).
-          type: integer
-          format: int64
-        ruleCategory:
-          description: The rule category (DOMAIN or MIGRATION).
-          type: string
-          enum:
-          - DOMAIN
-          - MIGRATION
-        rule:
-          $ref: '#/components/schemas/ContractRule'
-    SearchedGroup:
-      description: Models a single group from the result set returned when searching for groups.
-      required:
-      - owner
-      - createdOn
-      - groupId
-      - modifiedBy
-      - modifiedOn
-      type: object
-      properties:
-        description:
-          description: ''
-          type: string
-        createdOn:
-          format: date-time
-          description: ''
-          type: string
-        owner:
-          description: ''
-          type: string
-        modifiedOn:
-          format: date-time
-          description: ''
-          type: string
-        modifiedBy:
-          description: ''
-          type: string
-        groupId:
-          $ref: '#/components/schemas/GroupId'
-          description: ''
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-      example:
-        groupId: My-Group
-        name: Group Name
-        description: Description of the group
-        owner: user1
-        createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user1
-        modifiedOn: '2019-03-22T12:51:19Z'
     SearchedVersion:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -947,6 +820,209 @@ components:
         globalId: 37
         version: 1.0.7
         contentId: 62
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
+      type: string
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+    GroupSortBy:
+      description: ''
+      enum:
+      - groupId
+      - createdOn
+      - modifiedOn
+      type: string
+    VersionSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - versions
+      type: object
+      properties:
+        count:
+          description: 'The total number of versions that matched the query (may be more than the number of versions
+
+            returned in the result set).'
+          type: integer
+        versions:
+          description: The collection of artifact versions returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedVersion'
+    FileContent:
+      format: binary
+      type: string
+      x-codegen-inline: true
+    ArtifactSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - artifacts
+      type: object
+      properties:
+        artifacts:
+          description: The artifacts returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedArtifact'
+        count:
+          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
+          type: integer
+    ArtifactSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - createdOn
+      - modifiedOn
+      - artifactType
+      - name
+      type: string
+    SearchedGroup:
+      description: Models a single group from the result set returned when searching for groups.
+      required:
+      - owner
+      - createdOn
+      - groupId
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        name: Group Name
+        description: Description of the group
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user1
+        modifiedOn: '2019-03-22T12:51:19Z'
+    VersionSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - version
+      - name
+      - createdOn
+      - modifiedOn
+      - globalId
+      type: string
+    Version:
+      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
+
+        or it can be server-generated.  The value can be any string unique to the artifact, but it is
+
+        recommended to use a simple integer or a semver value.'
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"3.1.6"'
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    ContractRule:
+      title: ContractRule
+      description: A single contract rule definition.
+      required:
+      - name
+      - kind
+      - type
+      - mode
+      type: object
+      properties:
+        name:
+          description: The rule name.
+          type: string
+        kind:
+          description: The rule kind.
+          type: string
+          enum:
+          - CONDITION
+          - TRANSFORM
+        type:
+          description: Rule executor type (CEL, CEL_FIELD, ENCRYPT, etc.).
+          type: string
+        mode:
+          description: When the rule is applied.
+          type: string
+          enum:
+          - WRITE
+          - READ
+          - WRITEREAD
+          - UPGRADE
+          - DOWNGRADE
+        expr:
+          description: The rule expression.
+          type: string
+        params:
+          description: Rule parameters.
+          type: object
+          additionalProperties:
+            type: string
+        tags:
+          description: Tags for categorizing the rule.
+          type: array
+          items:
+            type: string
+        onSuccess:
+          description: Action on rule success.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        onFailure:
+          description: Action on rule failure.
+          type: string
+          enum:
+          - NONE
+          - ERROR
+          - DLQ
+        disabled:
+          description: Whether the rule is disabled.
+          type: boolean
     VersionState:
       description: 'Describes the state of an artifact or artifact version.
 
@@ -1003,82 +1079,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    VersionSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - versions
-      type: object
-      properties:
-        count:
-          description: 'The total number of versions that matched the query (may be more than the number of versions
-
-            returned in the result set).'
-          type: integer
-        versions:
-          description: The collection of artifact versions returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedVersion'
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    ArtifactSortBy:
-      description: ''
-      enum:
-      - groupId
-      - artifactId
-      - createdOn
-      - modifiedOn
-      - artifactType
-      - name
-      type: string
-  responses:
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
   securitySchemes:
     BasicAuth:
       type: http

@@ -57,6 +57,17 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
     Forbidden:
       content:
         application/json:
@@ -70,18 +81,19 @@ components:
                 status: 403
                 name: ForbiddenException
       description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
   schemas:
+    SnapshotMetaData:
+      title: Root Type for SnapshotMetaData
+      description: ''
+      required:
+      - snapshotId
+      type: object
+      properties:
+        snapshotId:
+          description: ''
+          type: string
+      example:
+        snapshotId: snp-1137292771
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -115,18 +127,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    SnapshotMetaData:
-      title: Root Type for SnapshotMetaData
-      description: ''
-      required:
-      - snapshotId
-      type: object
-      properties:
-        snapshotId:
-          description: ''
-          type: string
-      example:
-        snapshotId: snp-1137292771
   securitySchemes:
     BasicAuth:
       type: http
