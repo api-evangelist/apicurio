@@ -172,6 +172,17 @@ components:
         name: NullPointerException
         title: An error occurred somewhere.
   responses:
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
     Unauthorized:
       content:
         application/json:
@@ -196,17 +207,6 @@ components:
                 error_code: 500
                 message: Lost connection to the database.
       description: Common response for all operations that can fail with an unexpected server error.
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
     Forbidden:
       content:
         application/json:

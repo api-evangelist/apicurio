@@ -50,24 +50,6 @@ paths:
       summary: Detect references in content
       description: Analyzes the provided content and returns a list of external references found within it. The artifact type is used to determine the appropriate reference detection strategy. If no artifact type is provided, the system will attempt to auto-detect it from the content.
 components:
-  responses:
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
   schemas:
     VersionContent:
       description: ''
@@ -148,6 +130,24 @@ components:
         artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
         version: '2'
         name: foo.bar.Open
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
   securitySchemes:
     BasicAuth:
       type: http
