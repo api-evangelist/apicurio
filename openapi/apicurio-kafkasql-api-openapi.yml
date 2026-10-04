@@ -43,52 +43,6 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
-  schemas:
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    SnapshotMetaData:
-      title: Root Type for SnapshotMetaData
-      description: ''
-      required:
-      - snapshotId
-      type: object
-      properties:
-        snapshotId:
-          description: ''
-          type: string
-      example:
-        snapshotId: snp-1137292771
   responses:
     Unauthorized:
       content:
@@ -127,6 +81,52 @@ components:
                 status: 403
                 name: ForbiddenException
       description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+  schemas:
+    SnapshotMetaData:
+      title: Root Type for SnapshotMetaData
+      description: ''
+      required:
+      - snapshotId
+      type: object
+      properties:
+        snapshotId:
+          description: ''
+          type: string
+      example:
+        snapshotId: snp-1137292771
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
   securitySchemes:
     BasicAuth:
       type: http

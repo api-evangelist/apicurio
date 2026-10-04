@@ -83,7 +83,105 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
   schemas:
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    GitOpsError:
+      title: Root Type for GitOpsError
+      description: Describes an error that occurred during a GitOps sync attempt.
+      type: object
+      properties:
+        detail:
+          description: A human-readable description of the error.
+          type: string
+        source:
+          description: The source ID (e.g., repository ID) where the error occurred. Absent for global errors not tied to a specific source.
+          type: string
+        context:
+          description: The file path or location where the error occurred. Absent if the error is not file-specific.
+          type: string
+      required:
+      - detail
     GitOpsStatus:
       title: Root Type for GitOpsStatus
       description: Describes the current synchronization status of the GitOps storage backend. This includes the current sync state, the Git commit marker, load statistics, and any errors from the last sync attempt.
@@ -122,104 +220,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    GitOpsError:
-      title: Root Type for GitOpsError
-      description: Describes an error that occurred during a GitOps sync attempt.
-      type: object
-      properties:
-        detail:
-          description: A human-readable description of the error.
-          type: string
-        source:
-          description: The source ID (e.g., repository ID) where the error occurred. Absent for global errors not tied to a specific source.
-          type: string
-        context:
-          description: The file path or location where the error occurred. Absent if the error is not file-specific.
-          type: string
-      required:
-      - detail
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-  responses:
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
   securitySchemes:
     BasicAuth:
       type: http

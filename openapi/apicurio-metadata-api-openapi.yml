@@ -200,96 +200,61 @@ paths:
         * A server error occurred (HTTP error `500`)'
 components:
   schemas:
-    EditableArtifactMetaData:
-      title: Root Type for EditableArtifactMetaData
+    ArtifactMetaData:
+      title: Root Type for ArtifactMetaData
       description: ''
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-        owner:
-          description: ''
-          type: string
-      example:
-        name: Artifact Name
-        description: The description of the artifact.
-        owner: user-1
-        labels:
-          custom-1: foo
-          custom-2: bar
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"example-artifact"'
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
       required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    EditableVersionMetaData:
-      title: Root Type for EditableArtifactMetaData
-      description: ''
+      - artifactId
+      - owner
+      - createdOn
+      - modifiedBy
+      - modifiedOn
+      - artifactType
+      - groupId
       type: object
       properties:
         name:
           type: string
         description:
           type: string
+        owner:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        modifiedBy:
+          type: string
+        modifiedOn:
+          format: date-time
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
         labels:
           $ref: '#/components/schemas/Labels'
           description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+        artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        contractMetadata:
+          $ref: '#/components/schemas/ContractMetadata'
+          description: Contract metadata projected from the artifact labels. Only present when data contracts are enabled and contract labels exist.
       example:
+        groupId: My-Group
+        artifactId: Procurement-Invoice
         name: Artifact Name
-        description: The description of the artifact.
+        description: Description of the artifact
+        artifactType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-07-19T15:09:00Z'
         labels:
           custom-1: foo
           custom-2: bar
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
     ContractMetadata:
       title: ContractMetadata
       description: Contract metadata for an artifact.
@@ -338,29 +303,105 @@ components:
         compatibilityGroup:
           description: Compatibility group for schema evolution scoping.
           type: string
-    VersionState:
-      description: 'Describes the state of an artifact or artifact version.
-
-
-        * ENABLED
-
-        * DISABLED
-
-        * DEPRECATED
-
-        * DRAFT
-
-        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
-
-        '
-      enum:
-      - ENABLED
-      - DISABLED
-      - DEPRECATED
-      - DRAFT
-      - SUNSET
+    ArtifactType:
+      description: ''
       type: string
+      example: AVRO
       x-codegen-package: io.apicurio.registry.types
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    Version:
+      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
+
+        or it can be server-generated.  The value can be any string unique to the artifact, but it is
+
+        recommended to use a simple integer or a semver value.'
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"3.1.6"'
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    EditableArtifactMetaData:
+      title: Root Type for EditableArtifactMetaData
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        owner:
+          description: ''
+          type: string
+      example:
+        name: Artifact Name
+        description: The description of the artifact.
+        owner: user-1
+        labels:
+          custom-1: foo
+          custom-2: bar
+    EditableVersionMetaData:
+      title: Root Type for EditableArtifactMetaData
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        name: Artifact Name
+        description: The description of the artifact.
+        labels:
+          custom-1: foo
+          custom-2: bar
     VersionMetaData:
       title: Root Type for ArtifactVersionMetaData
       description: ''
@@ -429,89 +470,35 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    ArtifactType:
-      description: ''
+    VersionState:
+      description: 'Describes the state of an artifact or artifact version.
+
+
+        * ENABLED
+
+        * DISABLED
+
+        * DEPRECATED
+
+        * DRAFT
+
+        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
+
+        '
+      enum:
+      - ENABLED
+      - DISABLED
+      - DEPRECATED
+      - DRAFT
+      - SUNSET
       type: string
-      example: AVRO
       x-codegen-package: io.apicurio.registry.types
-    Version:
-      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
-
-        or it can be server-generated.  The value can be any string unique to the artifact, but it is
-
-        recommended to use a simple integer or a semver value.'
-      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
       type: string
-      example: '"3.1.6"'
-    ArtifactMetaData:
-      title: Root Type for ArtifactMetaData
-      description: ''
-      required:
-      - artifactId
-      - owner
-      - createdOn
-      - modifiedBy
-      - modifiedOn
-      - artifactType
-      - groupId
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        owner:
-          type: string
-        createdOn:
-          format: date-time
-          type: string
-        modifiedBy:
-          type: string
-        modifiedOn:
-          format: date-time
-          type: string
-        artifactType:
-          $ref: '#/components/schemas/ArtifactType'
-          description: ''
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-        groupId:
-          $ref: '#/components/schemas/GroupId'
-          description: ''
-        artifactId:
-          $ref: '#/components/schemas/ArtifactId'
-          description: ''
-        contractMetadata:
-          $ref: '#/components/schemas/ContractMetadata'
-          description: Contract metadata projected from the artifact labels. Only present when data contracts are enabled and contract labels exist.
-      example:
-        groupId: My-Group
-        artifactId: Procurement-Invoice
-        name: Artifact Name
-        description: Description of the artifact
-        artifactType: AVRO
-        owner: user1
-        createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user2
-        modifiedOn: '2019-07-19T15:09:00Z'
-        labels:
-          custom-1: foo
-          custom-2: bar
+      example: '"my-group"'
   responses:
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     Unauthorized:
       content:
         application/json:
@@ -525,12 +512,6 @@ components:
                 status: 401
                 name: UnauthorizedException
       description: Common response for all operations that can return a `401` error indicating authentication is required.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
     ServerError:
       content:
         application/json:
@@ -542,6 +523,19 @@ components:
                 error_code: 500
                 message: Lost connection to the database.
       description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
     NotFound:
       content:
         application/json:
@@ -553,6 +547,12 @@ components:
                 error_code: 404
                 message: No artifact with id 'Topic-1/Inbound' could be found.
       description: Common response for all operations that can return a `404` error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
   securitySchemes:
     BasicAuth:
       type: http

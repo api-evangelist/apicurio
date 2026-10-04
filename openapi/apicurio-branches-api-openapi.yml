@@ -363,82 +363,7 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
-  responses:
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
   schemas:
-    BranchSearchResults:
-      description: Describes the response received when searching for branches.
-      required:
-      - count
-      - branches
-      type: object
-      properties:
-        branches:
-          description: The branches returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedBranch'
-        count:
-          description: "The total number of branches that matched the query that produced the result set (may be \nmore than the number of branches in the result set)."
-          type: integer
     BranchMetaData:
       title: Root Type for BranchMetaData
       description: ''
@@ -489,6 +414,38 @@ components:
         modifiedBy: user1
         modifiedOn: 2020-02-10T09:30Z
         owner: user2
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    CreateBranch:
+      title: Root Type for CreateBranch
+      description: ''
+      required:
+      - branchId
+      type: object
+      properties:
+        description:
+          type: string
+        branchId:
+          $ref: '#/components/schemas/BranchId'
+          description: ''
+        versions:
+          description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+      example:
+        branchId: 1.0.x
+        description: The description of the branch.
     Version:
       description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
 
@@ -498,24 +455,6 @@ components:
       pattern: ^[a-zA-Z0-9._\-+]{1,256}$
       type: string
       example: '"3.1.6"'
-    ReplaceBranchVersions:
-      description: ''
-      required:
-      - versions
-      type: object
-      properties:
-        versions:
-          description: ''
-          type: array
-          items:
-            $ref: '#/components/schemas/Version'
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -549,20 +488,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    BranchId:
-      description: The ID of a single artifact branch.
-      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
-      type: string
-      example: '"latest"'
-    EditableBranchMetaData:
-      title: Root Type for EditableArtifactMetaData
-      description: ''
-      type: object
-      properties:
-        description:
-          type: string
-      example:
-        description: The description of the group.
     SearchedVersion:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -634,6 +559,40 @@ components:
         globalId: 37
         version: 1.0.7
         contentId: 62
+    BranchId:
+      description: The ID of a single artifact branch.
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"latest"'
+    AddVersionToBranch:
+      description: ''
+      required:
+      - version
+      type: object
+      properties:
+        version:
+          description: ''
+          type: string
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    BranchSearchResults:
+      description: Describes the response received when searching for branches.
+      required:
+      - count
+      - branches
+      type: object
+      properties:
+        branches:
+          description: The branches returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedBranch'
+        count:
+          description: "The total number of branches that matched the query that produced the result set (may be \nmore than the number of branches in the result set)."
+          type: integer
     SearchedBranch:
       title: Root Type for SearchedBranch
       description: ''
@@ -687,58 +646,6 @@ components:
         owner: user1
         modifiedOn: 2019-03-11T09:30Z
         modifiedBy: user2
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"example-artifact"'
-    ArtifactType:
-      description: ''
-      type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    VersionSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - versions
-      type: object
-      properties:
-        count:
-          description: 'The total number of versions that matched the query (may be more than the number of versions
-
-            returned in the result set).'
-          type: integer
-        versions:
-          description: The collection of artifact versions returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedVersion'
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    CreateBranch:
-      title: Root Type for CreateBranch
-      description: ''
-      required:
-      - branchId
-      type: object
-      properties:
-        description:
-          type: string
-        branchId:
-          $ref: '#/components/schemas/BranchId'
-          description: ''
-        versions:
-          description: ''
-          type: array
-          items:
-            $ref: '#/components/schemas/Version'
-      example:
-        branchId: 1.0.x
-        description: The description of the branch.
     VersionState:
       description: 'Describes the state of an artifact or artifact version.
 
@@ -762,15 +669,108 @@ components:
       - SUNSET
       type: string
       x-codegen-package: io.apicurio.registry.types
-    AddVersionToBranch:
+    ReplaceBranchVersions:
       description: ''
       required:
-      - version
+      - versions
       type: object
       properties:
-        version:
+        versions:
           description: ''
+          type: array
+          items:
+            $ref: '#/components/schemas/Version'
+    VersionSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - versions
+      type: object
+      properties:
+        count:
+          description: 'The total number of versions that matched the query (may be more than the number of versions
+
+            returned in the result set).'
+          type: integer
+        versions:
+          description: The collection of artifact versions returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedVersion'
+    EditableBranchMetaData:
+      title: Root Type for EditableArtifactMetaData
+      description: ''
+      type: object
+      properties:
+        description:
           type: string
+      example:
+        description: The description of the group.
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+  responses:
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

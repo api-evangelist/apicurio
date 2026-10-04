@@ -948,6 +948,18 @@ paths:
       description: Executes contract rules against a data record and returns the result.
 components:
   schemas:
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
     SearchedArtifact:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -1002,6 +1014,53 @@ components:
         createdOn: '2019-03-22T12:51:19Z'
         modifiedBy: user2
         modifiedOn: '2019-04-01T12:51:19Z'
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
+          type: string
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        name:
+          description: The name of the error (typically a server exception class name).
+          type: string
+      example:
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    ContractStatusTransition:
+      title: ContractStatusTransition
+      description: Request body for transitioning the contract lifecycle status.
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          description: 'The target lifecycle status. Valid transitions: DRAFT to STABLE, DRAFT to DEPRECATED, STABLE to DEPRECATED.'
+          type: string
+          enum:
+          - DRAFT
+          - STABLE
+          - DEPRECATED
     ContractMetadata:
       title: ContractMetadata
       description: Contract metadata for an artifact.
@@ -1050,130 +1109,6 @@ components:
         compatibilityGroup:
           description: Compatibility group for schema evolution scoping.
           type: string
-    OdcsProjectionSummary:
-      title: OdcsProjectionSummary
-      description: Summary of the projection performed when an ODCS contract is applied.
-      type: object
-      properties:
-        rulesApplied:
-          description: Number of CEL quality rules projected onto the schema artifact.
-          type: integer
-          format: int32
-        labelsApplied:
-          description: Number of contract.* labels set on the schema artifact.
-          type: integer
-          format: int32
-        tagsApplied:
-          description: Number of field-tag.* labels set on the schema artifact version.
-          type: integer
-          format: int32
-        warnings:
-          description: Any warnings encountered during projection.
-          type: array
-          items:
-            type: string
-    ContractRuleSearchResult:
-      title: ContractRuleSearchResult
-      description: A contract rule with its artifact coordinates, returned by tag search.
-      type: object
-      properties:
-        groupId:
-          description: The group ID of the artifact containing the rule.
-          type: string
-        artifactId:
-          description: The artifact ID containing the rule.
-          type: string
-        globalId:
-          description: The global ID of the version (null for artifact-level rules).
-          type: integer
-          format: int64
-        ruleCategory:
-          description: The rule category (DOMAIN or MIGRATION).
-          type: string
-          enum:
-          - DOMAIN
-          - MIGRATION
-        rule:
-          $ref: '#/components/schemas/ContractRule'
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    OdcsContractSummary:
-      title: OdcsContractSummary
-      description: Summary of an ODCS contract.
-      type: object
-      properties:
-        contractId:
-          description: The contract artifact ID.
-          type: string
-        name:
-          description: The contract display name.
-          type: string
-    ArtifactSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - artifacts
-      type: object
-      properties:
-        artifacts:
-          description: The artifacts returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedArtifact'
-        count:
-          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
-          type: integer
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    OdcsContractResult:
-      title: OdcsContractResult
-      description: Result of submitting or updating an ODCS contract.
-      type: object
-      properties:
-        contractId:
-          description: The contract artifact ID.
-          type: string
-        version:
-          description: The ODCS contract version.
-          type: string
-        projection:
-          $ref: '#/components/schemas/OdcsProjectionSummary'
     EditableContractMetadata:
       title: EditableContractMetadata
       description: Editable contract metadata fields.
@@ -1213,50 +1148,61 @@ components:
         compatibilityGroup:
           description: Compatibility group for schema evolution scoping.
           type: string
+    OdcsContractResult:
+      title: OdcsContractResult
+      description: Result of submitting or updating an ODCS contract.
+      type: object
+      properties:
+        contractId:
+          description: The contract artifact ID.
+          type: string
+        version:
+          description: The ODCS contract version.
+          type: string
+        projection:
+          $ref: '#/components/schemas/OdcsProjectionSummary'
+    OdcsProjectionSummary:
+      title: OdcsProjectionSummary
+      description: Summary of the projection performed when an ODCS contract is applied.
+      type: object
+      properties:
+        rulesApplied:
+          description: Number of CEL quality rules projected onto the schema artifact.
+          type: integer
+          format: int32
+        labelsApplied:
+          description: Number of contract.* labels set on the schema artifact.
+          type: integer
+          format: int32
+        tagsApplied:
+          description: Number of field-tag.* labels set on the schema artifact version.
+          type: integer
+          format: int32
+        warnings:
+          description: Any warnings encountered during projection.
+          type: array
+          items:
+            type: string
     ArtifactId:
       description: The ID of a single artifact.
       pattern: ^.{1,512}$
       type: string
       example: '"example-artifact"'
-    ArtifactType:
-      description: ''
-      type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    ContractRuleSet:
-      title: ContractRuleSet
-      description: A set of contract rules, divided into domain and migration categories.
-      type: object
-      properties:
-        domainRules:
-          description: Rules for domain validation.
-          type: array
-          items:
-            $ref: '#/components/schemas/ContractRule'
-        migrationRules:
-          description: Rules for version migration.
-          type: array
-          items:
-            $ref: '#/components/schemas/ContractRule'
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    ContractStatusTransition:
-      title: ContractStatusTransition
-      description: Request body for transitioning the contract lifecycle status.
+    ArtifactSearchResults:
+      description: Describes the response received when searching for artifacts.
       required:
-      - status
+      - count
+      - artifacts
       type: object
       properties:
-        status:
-          description: 'The target lifecycle status. Valid transitions: DRAFT to STABLE, DRAFT to DEPRECATED, STABLE to DEPRECATED.'
-          type: string
-          enum:
-          - DRAFT
-          - STABLE
-          - DEPRECATED
+        artifacts:
+          description: The artifacts returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedArtifact'
+        count:
+          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
+          type: integer
     ContractRule:
       title: ContractRule
       description: A single contract rule definition.
@@ -1318,35 +1264,61 @@ components:
         disabled:
           description: Whether the rule is disabled.
           type: boolean
+    ContractRuleSearchResult:
+      title: ContractRuleSearchResult
+      description: A contract rule with its artifact coordinates, returned by tag search.
+      type: object
+      properties:
+        groupId:
+          description: The group ID of the artifact containing the rule.
+          type: string
+        artifactId:
+          description: The artifact ID containing the rule.
+          type: string
+        globalId:
+          description: The global ID of the version (null for artifact-level rules).
+          type: integer
+          format: int64
+        ruleCategory:
+          description: The rule category (DOMAIN or MIGRATION).
+          type: string
+          enum:
+          - DOMAIN
+          - MIGRATION
+        rule:
+          $ref: '#/components/schemas/ContractRule'
+    OdcsContractSummary:
+      title: OdcsContractSummary
+      description: Summary of an ODCS contract.
+      type: object
+      properties:
+        contractId:
+          description: The contract artifact ID.
+          type: string
+        name:
+          description: The contract display name.
+          type: string
+    ContractRuleSet:
+      title: ContractRuleSet
+      description: A set of contract rules, divided into domain and migration categories.
+      type: object
+      properties:
+        domainRules:
+          description: Rules for domain validation.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
+        migrationRules:
+          description: Rules for version migration.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractRule'
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
   responses:
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
     Conflict:
       content:
         application/json:
@@ -1358,6 +1330,34 @@ components:
                 error_code: 409
                 message: The artifact content was invalid.
       description: Common response used when an input conflicts with existing data.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

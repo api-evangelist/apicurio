@@ -285,13 +285,91 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    MethodNotAllowed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            MethodNotAllowedExample:
+              value:
+                error_code: 405
+                message: Method is currently not supported or disabled.
+      description: Common response for all operations that can fail due to method not allowed or disabled.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
   schemas:
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
-      type: string
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -325,13 +403,6 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
     CreateGroup:
       title: Root Type for CreateGroupMetaData
       description: ''
@@ -353,66 +424,13 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    GroupSearchResults:
-      description: Describes the response received when searching for groups.
-      required:
-      - count
-      - groups
-      type: object
-      properties:
-        groups:
-          description: The groups returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedGroup'
-        count:
-          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
-          type: integer
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    GroupMetaData:
-      title: Root Type for GroupMetaData
+    GroupSortBy:
       description: ''
-      required:
+      enum:
       - groupId
-      - owner
       - createdOn
-      - modifiedBy
       - modifiedOn
-      type: object
-      properties:
-        description:
-          type: string
-        owner:
-          type: string
-        createdOn:
-          format: date-time
-          type: string
-        modifiedBy:
-          type: string
-        modifiedOn:
-          format: date-time
-          type: string
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-        groupId:
-          $ref: '#/components/schemas/GroupId'
-          description: ''
-      example:
-        groupId: group-identifier
-        description: Description of the group
-        artifactsType: AVRO
-        owner: user1
-        createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user2
-        modifiedOn: '2019-07-19T15:09:00Z'
-        properties:
-          custom-1: foo
-          custom-2: bar
+      type: string
     EditableGroupMetaData:
       title: Root Type for EditableGroupMetaData
       description: ''
@@ -432,6 +450,21 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
+    GroupSearchResults:
+      description: Describes the response received when searching for groups.
+      required:
+      - count
+      - groups
+      type: object
+      properties:
+        groups:
+          description: The groups returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedGroup'
+        count:
+          description: "The total number of groups that matched the query that produced the result set (may be \nmore than the number of groups in the result set)."
+          type: integer
     SearchedGroup:
       description: Models a single group from the result set returned when searching for groups.
       required:
@@ -473,90 +506,57 @@ components:
         createdOn: '2019-03-22T12:51:19Z'
         modifiedBy: user1
         modifiedOn: '2019-03-22T12:51:19Z'
-    GroupSortBy:
+    SortOrder:
       description: ''
       enum:
-      - groupId
-      - createdOn
-      - modifiedOn
+      - asc
+      - desc
       type: string
-  responses:
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    MethodNotAllowed:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            MethodNotAllowedExample:
-              value:
-                error_code: 405
-                message: Method is currently not supported or disabled.
-      description: Common response for all operations that can fail due to method not allowed or disabled.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    GroupMetaData:
+      title: Root Type for GroupMetaData
+      description: ''
+      required:
+      - groupId
+      - owner
+      - createdOn
+      - modifiedBy
+      - modifiedOn
+      type: object
+      properties:
+        description:
+          type: string
+        owner:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        modifiedBy:
+          type: string
+        modifiedOn:
+          format: date-time
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        groupId:
+          $ref: '#/components/schemas/GroupId'
+          description: ''
+      example:
+        groupId: group-identifier
+        description: Description of the group
+        artifactsType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-07-19T15:09:00Z'
+        properties:
+          custom-1: foo
+          custom-2: bar
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
   securitySchemes:
     BasicAuth:
       type: http

@@ -1136,136 +1136,19 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
-  responses:
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    ArtifactContent:
-      headers:
-        X-Registry-ArtifactType:
-          schema:
-            $ref: '#/components/schemas/ArtifactType'
-      content:
-        '*/*':
-          schema:
-            $ref: '#/components/schemas/FileContent'
-          examples:
-            OpenAPI:
-              value:
-                openapi: 3.0.2
-                info:
-                  title: Empty API
-                  version: 1.0.0
-                  description: An example API design using OpenAPI.
-      description: The content of one version of one artifact.
-    UnprocessableEntity:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnprocessableEntityExample:
-              value:
-                error_code: 422
-                message: 'The artifact content is invalid: Schema validation failed'
-                name: SchemaValidationException
-      description: 'The artifact content is not valid for one of the following reasons:
-
-        * Schema validation failed
-
-        * References could not be validated
-
-        * Required references are missing'
-    MethodNotAllowed:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            MethodNotAllowedExample:
-              value:
-                error_code: 405
-                message: Method is currently not supported or disabled.
-      description: Common response for all operations that can fail due to method not allowed or disabled.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    Conflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid.
-      description: Common response used when an input conflicts with existing data.
-    RuleViolationConflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RuleViolationProblemDetails'
-          examples:
-            RuleViolationConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid
-                causes:
-                - description: API is missing a title
-                  context: /info[title]
-                - description: Operation IDs must be unique
-                  context: /paths[/invoices]/put[operationId]
-      description: Common response used when an input conflicts with existing data.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
   schemas:
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
     Version:
       description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
 
@@ -1275,33 +1158,6 @@ components:
       pattern: ^[a-zA-Z0-9._\-+]{1,256}$
       type: string
       example: '"3.1.6"'
-    ReferenceGraphDirection:
-      description: The direction of references to include in the graph.
-      enum:
-      - OUTBOUND
-      - INBOUND
-      - BOTH
-      type: string
-      example: '"OUTBOUND"'
-      x-codegen-package: io.apicurio.registry.types
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    VersionSortBy:
-      description: ''
-      enum:
-      - groupId
-      - artifactId
-      - version
-      - name
-      - createdOn
-      - modifiedOn
-      - globalId
-      type: string
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -1388,35 +1244,85 @@ components:
           totalEdges: 1
           maxDepth: 1
           hasCycles: false
-    ReferenceGraphEdge:
-      title: Root Type for ReferenceGraphEdge
-      description: An edge in the reference graph representing a reference from one artifact to another.
-      required:
-      - sourceNodeId
-      - targetNodeId
-      type: object
-      properties:
-        sourceNodeId:
-          description: The ID of the source node (the artifact that has the reference).
-          type: string
-        targetNodeId:
-          description: The ID of the target node (the artifact being referenced).
-          type: string
-        name:
-          description: The name of the reference as defined in the source artifact.
-          type: string
-      example:
-        sourceNodeId: node-1
-        targetNodeId: node-2
-        name: sample.proto
-    ReferenceType:
+    SortOrder:
       description: ''
       enum:
-      - OUTBOUND
-      - INBOUND
+      - asc
+      - desc
       type: string
-      example: '"INBOUND"'
-      x-codegen-package: io.apicurio.registry.types
+    HandleReferencesType:
+      description: 'How to handle references when retrieving content.  References can either be
+
+        left unchanged (`PRESERVE`), re-written so they are valid in the context of the
+
+        registry (`REWRITE`), or fully dereferenced such that all externally referenced
+
+        content is internalized (`DEREFERENCE`).'
+      enum:
+      - PRESERVE
+      - DEREFERENCE
+      - REWRITE
+      type: string
+    RenderPromptResponse:
+      title: Root Type for RenderPromptResponse
+      description: Response from rendering a prompt template.
+      required:
+      - rendered
+      type: object
+      properties:
+        rendered:
+          description: The rendered prompt with all variables substituted.
+          type: string
+        groupId:
+          description: The group ID of the artifact.
+          type: string
+        artifactId:
+          description: The artifact ID.
+          type: string
+        version:
+          description: The version of the artifact that was rendered.
+          type: string
+        validationErrors:
+          description: Any validation errors encountered when validating variables against the template schema.
+          type: array
+          items:
+            $ref: '#/components/schemas/RenderValidationError'
+      example:
+        rendered: 'Style: concise
+
+          Maximum length: 100 words
+
+          Document: The quick brown fox jumps over the lazy dog.'
+        groupId: default
+        artifactId: summarization-v1
+        version: '1.2'
+        validationErrors: []
+    RuleViolationProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      type: object
+      allOf:
+      - required:
+        - causes
+        type: object
+        properties:
+          causes:
+            description: List of rule violation causes.
+            type: array
+            items:
+              $ref: '#/components/schemas/RuleViolationCause'
+      - $ref: '#/components/schemas/ProblemDetails'
+      example:
+        error_code: 409
+        message: Artifact failed validation
+        causes:
+        - description: API is missing a title
+          context: /info[title]
+        - description: Operation IDs must be unique
+          context: /paths[/invoices]/put[operationId]
+      x-codegen-extendsClass: io.apicurio.registry.rest.v3.beans.ProblemDetails
     SearchedVersion:
       description: Models a single artifact from the result set returned when searching for artifacts.
       required:
@@ -1488,157 +1394,6 @@ components:
         globalId: 37
         version: 1.0.7
         contentId: 62
-    ArtifactReference:
-      title: Root Type for ArtifactReference
-      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
-      required:
-      - artifactId
-      - groupId
-      - name
-      type: object
-      properties:
-        groupId:
-          type: string
-        artifactId:
-          type: string
-        version:
-          type: string
-        name:
-          type: string
-      example:
-        groupId: mygroup
-        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
-        version: '2'
-        name: foo.bar.Open
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"example-artifact"'
-    RuleViolationProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      type: object
-      allOf:
-      - required:
-        - causes
-        type: object
-        properties:
-          causes:
-            description: List of rule violation causes.
-            type: array
-            items:
-              $ref: '#/components/schemas/RuleViolationCause'
-      - $ref: '#/components/schemas/ProblemDetails'
-      example:
-        error_code: 409
-        message: Artifact failed validation
-        causes:
-        - description: API is missing a title
-          context: /info[title]
-        - description: Operation IDs must be unique
-          context: /paths[/invoices]/put[operationId]
-      x-codegen-extendsClass: io.apicurio.registry.rest.v3.beans.ProblemDetails
-    CreateVersion:
-      description: ''
-      required:
-      - content
-      type: object
-      properties:
-        version:
-          $ref: '#/components/schemas/Version'
-          description: ''
-        content:
-          $ref: '#/components/schemas/VersionContent'
-          description: ''
-        name:
-          description: ''
-          type: string
-        description:
-          description: ''
-          type: string
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-        branches:
-          description: ''
-          type: array
-          items:
-            type: string
-        isDraft:
-          description: ''
-          type: boolean
-      example:
-        version: 1.0.1
-        content:
-          content: '{"type":"record","name":"ExampleType","fields":[{"name":"foo","type":"string"}]}'
-          contentType: application/json
-        name: Version 1.0.1
-        description: The latest version of this artifact.
-        isDraft: false
-    RenderPromptResponse:
-      title: Root Type for RenderPromptResponse
-      description: Response from rendering a prompt template.
-      required:
-      - rendered
-      type: object
-      properties:
-        rendered:
-          description: The rendered prompt with all variables substituted.
-          type: string
-        groupId:
-          description: The group ID of the artifact.
-          type: string
-        artifactId:
-          description: The artifact ID.
-          type: string
-        version:
-          description: The version of the artifact that was rendered.
-          type: string
-        validationErrors:
-          description: Any validation errors encountered when validating variables against the template schema.
-          type: array
-          items:
-            $ref: '#/components/schemas/RenderValidationError'
-      example:
-        rendered: 'Style: concise
-
-          Maximum length: 100 words
-
-          Document: The quick brown fox jumps over the lazy dog.'
-        groupId: default
-        artifactId: summarization-v1
-        version: '1.2'
-        validationErrors: []
-    WrappedVersionState:
-      title: Root Type for WrappedVersionState
-      description: ''
-      required:
-      - state
-      type: object
-      properties:
-        state:
-          $ref: '#/components/schemas/VersionState'
-      example:
-        state: ENABLED
-    RenderPromptRequest:
-      title: Root Type for RenderPromptRequest
-      description: Request body for rendering a prompt template with variable substitution.
-      required:
-      - variables
-      type: object
-      properties:
-        variables:
-          description: A map of variable names to their values. These will be substituted into the prompt template.
-          type: object
-          additionalProperties: {}
-      example:
-        variables:
-          document: The quick brown fox jumps over the lazy dog.
-          max_words: 100
-          style: concise
     VersionMetaData:
       title: Root Type for ArtifactVersionMetaData
       description: ''
@@ -1707,81 +1462,96 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    ArtifactType:
+    WrappedVersionState:
+      title: Root Type for WrappedVersionState
       description: ''
-      type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    VersionSearchResults:
-      description: Describes the response received when searching for artifacts.
       required:
-      - count
-      - versions
+      - state
       type: object
       properties:
-        count:
-          description: 'The total number of versions that matched the query (may be more than the number of versions
-
-            returned in the result set).'
-          type: integer
-        versions:
-          description: The collection of artifact versions returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedVersion'
-    Comment:
-      title: Root Type for NewComment
-      description: ''
+        state:
+          $ref: '#/components/schemas/VersionState'
+      example:
+        state: ENABLED
+    ArtifactReference:
+      title: Root Type for ArtifactReference
+      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
       required:
-      - owner
+      - artifactId
+      - groupId
+      - name
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        version:
+          type: string
+        name:
+          type: string
+      example:
+        groupId: mygroup
+        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
+        version: '2'
+        name: foo.bar.Open
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"example-artifact"'
+    RenderPromptRequest:
+      title: Root Type for RenderPromptRequest
+      description: Request body for rendering a prompt template with variable substitution.
+      required:
+      - variables
+      type: object
+      properties:
+        variables:
+          description: A map of variable names to their values. These will be substituted into the prompt template.
+          type: object
+          additionalProperties: {}
+      example:
+        variables:
+          document: The quick brown fox jumps over the lazy dog.
+          max_words: 100
+          style: concise
+    RenderValidationError:
+      title: Root Type for RenderValidationError
+      description: A validation error encountered when validating template variables.
+      required:
+      - variableName
+      - message
+      type: object
+      properties:
+        variableName:
+          description: The name of the variable that failed validation.
+          type: string
+        message:
+          description: A description of the validation error.
+          type: string
+        expectedType:
+          description: The expected type of the variable.
+          type: string
+        actualType:
+          description: The actual type that was provided.
+          type: string
+      example:
+        variableName: max_words
+        message: Expected integer but got string
+        expectedType: integer
+        actualType: string
+    VersionSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - version
+      - name
       - createdOn
-      - value
-      - commentId
-      type: object
-      properties:
-        value:
-          maxLength: 1024
-          type: string
-        createdOn:
-          format: date-time
-          type: string
-        owner:
-          description: ''
-          type: string
-        commentId:
-          description: ''
-          type: string
-      example:
-        commentId: '12345'
-        value: This is a comment on an artifact version.
-        owner: bwayne
-        createdOn: '2023-07-01T15:22:01Z'
-    FileContent:
-      format: binary
+      - modifiedOn
+      - globalId
       type: string
-      x-codegen-inline: true
-    ReferenceGraphMetadata:
-      title: Root Type for ReferenceGraphMetadata
-      description: Metadata about the reference graph.
-      type: object
-      properties:
-        totalNodes:
-          description: The total number of nodes in the graph.
-          type: integer
-        totalEdges:
-          description: The total number of edges in the graph.
-          type: integer
-        maxDepth:
-          description: The maximum depth reached in the graph.
-          type: integer
-        hasCycles:
-          description: Whether the graph contains circular references.
-          type: boolean
-      example:
-        totalNodes: 5
-        totalEdges: 4
-        maxDepth: 3
-        hasCycles: false
     VersionContent:
       description: ''
       required:
@@ -1806,76 +1576,10 @@ components:
           type: string
           enum:
           - base64
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
+    FileContent:
+      format: binary
       type: string
-    HandleReferencesType:
-      description: 'How to handle references when retrieving content.  References can either be
-
-        left unchanged (`PRESERVE`), re-written so they are valid in the context of the
-
-        registry (`REWRITE`), or fully dereferenced such that all externally referenced
-
-        content is internalized (`DEREFERENCE`).'
-      enum:
-      - PRESERVE
-      - DEREFERENCE
-      - REWRITE
-      type: string
-    NewComment:
-      title: Root Type for NewComment
-      description: ''
-      required:
-      - value
-      type: object
-      properties:
-        value:
-          type: string
-      example:
-        value: This is a new comment on an existing artifact version.
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    VersionState:
-      description: 'Describes the state of an artifact or artifact version.
-
-
-        * ENABLED
-
-        * DISABLED
-
-        * DEPRECATED
-
-        * DRAFT
-
-        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
-
-        '
-      enum:
-      - ENABLED
-      - DISABLED
-      - DEPRECATED
-      - DRAFT
-      - SUNSET
-      type: string
-      x-codegen-package: io.apicurio.registry.types
-    RuleViolationCause:
-      title: Root Type for RuleViolationCause
-      description: ''
-      type: object
-      properties:
-        description:
-          type: string
-        context:
-          type: string
-      example:
-        description: External documentation URL is not valid (it must be formatted as a URL).
-        context: /info/externalDocs[url]
+      x-codegen-inline: true
     ReferenceGraphNode:
       title: Root Type for ReferenceGraphNode
       description: A node in the reference graph representing an artifact version.
@@ -1919,31 +1623,327 @@ components:
         name: My Artifact
         isRoot: false
         isCycleNode: false
-    RenderValidationError:
-      title: Root Type for RenderValidationError
-      description: A validation error encountered when validating template variables.
-      required:
-      - variableName
-      - message
+    ReferenceGraphDirection:
+      description: The direction of references to include in the graph.
+      enum:
+      - OUTBOUND
+      - INBOUND
+      - BOTH
+      type: string
+      example: '"OUTBOUND"'
+      x-codegen-package: io.apicurio.registry.types
+    VersionState:
+      description: 'Describes the state of an artifact or artifact version.
+
+
+        * ENABLED
+
+        * DISABLED
+
+        * DEPRECATED
+
+        * DRAFT
+
+        * SUNSET — Signals that a migration deadline has passed and the version will be removed. Requires transitioning through DEPRECATED first. Added in 3.3.0.
+
+        '
+      enum:
+      - ENABLED
+      - DISABLED
+      - DEPRECATED
+      - DRAFT
+      - SUNSET
+      type: string
+      x-codegen-package: io.apicurio.registry.types
+    RuleViolationCause:
+      title: Root Type for RuleViolationCause
+      description: ''
       type: object
       properties:
-        variableName:
-          description: The name of the variable that failed validation.
+        description:
           type: string
-        message:
-          description: A description of the validation error.
-          type: string
-        expectedType:
-          description: The expected type of the variable.
-          type: string
-        actualType:
-          description: The actual type that was provided.
+        context:
           type: string
       example:
-        variableName: max_words
-        message: Expected integer but got string
-        expectedType: integer
-        actualType: string
+        description: External documentation URL is not valid (it must be formatted as a URL).
+        context: /info/externalDocs[url]
+    ReferenceGraphEdge:
+      title: Root Type for ReferenceGraphEdge
+      description: An edge in the reference graph representing a reference from one artifact to another.
+      required:
+      - sourceNodeId
+      - targetNodeId
+      type: object
+      properties:
+        sourceNodeId:
+          description: The ID of the source node (the artifact that has the reference).
+          type: string
+        targetNodeId:
+          description: The ID of the target node (the artifact being referenced).
+          type: string
+        name:
+          description: The name of the reference as defined in the source artifact.
+          type: string
+      example:
+        sourceNodeId: node-1
+        targetNodeId: node-2
+        name: sample.proto
+    NewComment:
+      title: Root Type for NewComment
+      description: ''
+      required:
+      - value
+      type: object
+      properties:
+        value:
+          type: string
+      example:
+        value: This is a new comment on an existing artifact version.
+    Comment:
+      title: Root Type for NewComment
+      description: ''
+      required:
+      - owner
+      - createdOn
+      - value
+      - commentId
+      type: object
+      properties:
+        value:
+          maxLength: 1024
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        owner:
+          description: ''
+          type: string
+        commentId:
+          description: ''
+          type: string
+      example:
+        commentId: '12345'
+        value: This is a comment on an artifact version.
+        owner: bwayne
+        createdOn: '2023-07-01T15:22:01Z'
+    VersionSearchResults:
+      description: Describes the response received when searching for artifacts.
+      required:
+      - count
+      - versions
+      type: object
+      properties:
+        count:
+          description: 'The total number of versions that matched the query (may be more than the number of versions
+
+            returned in the result set).'
+          type: integer
+        versions:
+          description: The collection of artifact versions returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedVersion'
+    CreateVersion:
+      description: ''
+      required:
+      - content
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/Version'
+          description: ''
+        content:
+          $ref: '#/components/schemas/VersionContent'
+          description: ''
+        name:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        branches:
+          description: ''
+          type: array
+          items:
+            type: string
+        isDraft:
+          description: ''
+          type: boolean
+      example:
+        version: 1.0.1
+        content:
+          content: '{"type":"record","name":"ExampleType","fields":[{"name":"foo","type":"string"}]}'
+          contentType: application/json
+        name: Version 1.0.1
+        description: The latest version of this artifact.
+        isDraft: false
+    ReferenceType:
+      description: ''
+      enum:
+      - OUTBOUND
+      - INBOUND
+      type: string
+      example: '"INBOUND"'
+      x-codegen-package: io.apicurio.registry.types
+    ReferenceGraphMetadata:
+      title: Root Type for ReferenceGraphMetadata
+      description: Metadata about the reference graph.
+      type: object
+      properties:
+        totalNodes:
+          description: The total number of nodes in the graph.
+          type: integer
+        totalEdges:
+          description: The total number of edges in the graph.
+          type: integer
+        maxDepth:
+          description: The maximum depth reached in the graph.
+          type: integer
+        hasCycles:
+          description: Whether the graph contains circular references.
+          type: boolean
+      example:
+        totalNodes: 5
+        totalEdges: 4
+        maxDepth: 3
+        hasCycles: false
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
+  responses:
+    ArtifactContent:
+      headers:
+        X-Registry-ArtifactType:
+          schema:
+            $ref: '#/components/schemas/ArtifactType'
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/FileContent'
+          examples:
+            OpenAPI:
+              value:
+                openapi: 3.0.2
+                info:
+                  title: Empty API
+                  version: 1.0.0
+                  description: An example API design using OpenAPI.
+      description: The content of one version of one artifact.
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid.
+      description: Common response used when an input conflicts with existing data.
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    RuleViolationConflict:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RuleViolationProblemDetails'
+          examples:
+            RuleViolationConflictExample:
+              value:
+                error_code: 409
+                message: The artifact content was invalid
+                causes:
+                - description: API is missing a title
+                  context: /info[title]
+                - description: Operation IDs must be unique
+                  context: /paths[/invoices]/put[operationId]
+      description: Common response used when an input conflicts with existing data.
+    MethodNotAllowed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            MethodNotAllowedExample:
+              value:
+                error_code: 405
+                message: Method is currently not supported or disabled.
+      description: Common response for all operations that can fail due to method not allowed or disabled.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
+    UnprocessableEntity:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnprocessableEntityExample:
+              value:
+                error_code: 422
+                message: 'The artifact content is invalid: Schema validation failed'
+                name: SchemaValidationException
+      description: 'The artifact content is not valid for one of the following reasons:
+
+        * Schema validation failed
+
+        * References could not be validated
+
+        * Required references are missing'
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

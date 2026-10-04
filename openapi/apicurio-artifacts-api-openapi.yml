@@ -701,190 +701,6 @@ paths:
         * A server error occurred (HTTP error `500`)'
 components:
   schemas:
-    SearchedArtifact:
-      description: Models a single artifact from the result set returned when searching for artifacts.
-      required:
-      - owner
-      - createdOn
-      - artifactId
-      - artifactType
-      - groupId
-      - modifiedBy
-      - modifiedOn
-      type: object
-      properties:
-        name:
-          description: ''
-          type: string
-        description:
-          description: ''
-          type: string
-        createdOn:
-          format: date-time
-          description: ''
-          type: string
-        owner:
-          description: ''
-          type: string
-        artifactType:
-          $ref: '#/components/schemas/ArtifactType'
-          description: ''
-        modifiedOn:
-          format: date-time
-          description: ''
-          type: string
-        modifiedBy:
-          description: ''
-          type: string
-        groupId:
-          $ref: '#/components/schemas/GroupId'
-          description: ''
-        artifactId:
-          $ref: '#/components/schemas/ArtifactId'
-          description: ''
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-      example:
-        groupId: My-Group
-        artifactId: Procurement-Invoice
-        name: Artifact Name
-        description: Description of the artifact
-        artifactType: AVRO
-        owner: user1
-        createdOn: '2019-03-22T12:51:19Z'
-        modifiedBy: user2
-        modifiedOn: '2019-04-01T12:51:19Z'
-    ArtifactSortBy:
-      description: ''
-      enum:
-      - groupId
-      - artifactId
-      - createdOn
-      - modifiedOn
-      - artifactType
-      - name
-      type: string
-    ContractMetadata:
-      title: ContractMetadata
-      description: Contract metadata for an artifact.
-      type: object
-      properties:
-        status:
-          description: The contract lifecycle status.
-          type: string
-          enum:
-          - DRAFT
-          - STABLE
-          - DEPRECATED
-        ownerTeam:
-          description: The team that owns the contract.
-          type: string
-        ownerDomain:
-          description: The domain the contract belongs to.
-          type: string
-        supportContact:
-          description: Support contact email.
-          type: string
-        classification:
-          description: Data classification level.
-          type: string
-          enum:
-          - PUBLIC
-          - INTERNAL
-          - CONFIDENTIAL
-          - RESTRICTED
-        stage:
-          description: Promotion stage.
-          type: string
-          enum:
-          - DEV
-          - STAGE
-          - PROD
-        stableDate:
-          description: ISO-8601 date when contract became stable.
-          type: string
-        deprecatedDate:
-          description: ISO-8601 date when contract was deprecated.
-          type: string
-        deprecationReason:
-          description: Reason for deprecation.
-          type: string
-        compatibilityGroup:
-          description: Compatibility group for schema evolution scoping.
-          type: string
-    Version:
-      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
-
-        or it can be server-generated.  The value can be any string unique to the artifact, but it is
-
-        recommended to use a simple integer or a semver value.'
-      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
-      type: string
-      example: '"3.1.6"'
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
-    ArtifactSearchResults:
-      description: Describes the response received when searching for artifacts.
-      required:
-      - count
-      - artifacts
-      type: object
-      properties:
-        artifacts:
-          description: The artifacts returned in the result set.
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchedArtifact'
-        count:
-          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
-          type: integer
-    ProblemDetails:
-      title: Root Type for Error
-      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
-
-        body.'
-      required:
-      - title
-      - status
-      type: object
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem.
-          type: string
-        type:
-          description: A URI reference [RFC3986] that identifies the problem type.
-          type: string
-        title:
-          description: A short, human-readable summary of the problem type.
-          type: string
-        status:
-          format: int32
-          description: The HTTP status code.
-          type: integer
-        instance:
-          description: A URI reference that identifies the specific occurrence of the problem.
-          type: string
-        name:
-          description: The name of the error (typically a server exception class name).
-          type: string
-      example:
-        status: 500
-        name: NullPointerException
-        title: An error occurred somewhere.
-    ReferenceType:
-      description: ''
-      enum:
-      - OUTBOUND
-      - INBOUND
-      type: string
-      example: '"INBOUND"'
-      x-codegen-package: io.apicurio.registry.types
     ArtifactMetaData:
       title: Root Type for ArtifactMetaData
       description: ''
@@ -940,33 +756,140 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    ArtifactReference:
-      title: Root Type for ArtifactReference
-      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
+    ArtifactType:
+      description: ''
+      type: string
+      example: AVRO
+      x-codegen-package: io.apicurio.registry.types
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
+    Version:
+      description: 'A single version of an artifact.  Can be provided by the client when creating a new version,
+
+        or it can be server-generated.  The value can be any string unique to the artifact, but it is
+
+        recommended to use a simple integer or a semver value.'
+      pattern: ^[a-zA-Z0-9._\-+]{1,256}$
+      type: string
+      example: '"3.1.6"'
+    SearchedArtifact:
+      description: Models a single artifact from the result set returned when searching for artifacts.
       required:
+      - owner
+      - createdOn
       - artifactId
+      - artifactType
       - groupId
-      - name
+      - modifiedBy
+      - modifiedOn
       type: object
       properties:
+        name:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+        createdOn:
+          format: date-time
+          description: ''
+          type: string
+        owner:
+          description: ''
+          type: string
+        artifactType:
+          $ref: '#/components/schemas/ArtifactType'
+          description: ''
+        modifiedOn:
+          format: date-time
+          description: ''
+          type: string
+        modifiedBy:
+          description: ''
+          type: string
         groupId:
-          type: string
+          $ref: '#/components/schemas/GroupId'
+          description: ''
         artifactId:
+          $ref: '#/components/schemas/ArtifactId'
+          description: ''
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+      example:
+        groupId: My-Group
+        artifactId: Procurement-Invoice
+        name: Artifact Name
+        description: Description of the artifact
+        artifactType: AVRO
+        owner: user1
+        createdOn: '2019-03-22T12:51:19Z'
+        modifiedBy: user2
+        modifiedOn: '2019-04-01T12:51:19Z'
+    ProblemDetails:
+      title: Root Type for Error
+      description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
+
+        body.'
+      required:
+      - title
+      - status
+      type: object
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.
           type: string
-        version:
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type.
+          type: string
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        status:
+          format: int32
+          description: The HTTP status code.
+          type: integer
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
           type: string
         name:
+          description: The name of the error (typically a server exception class name).
           type: string
       example:
-        groupId: mygroup
-        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
-        version: '2'
-        name: foo.bar.Open
-    ArtifactId:
-      description: The ID of a single artifact.
-      pattern: ^.{1,512}$
+        status: 500
+        name: NullPointerException
+        title: An error occurred somewhere.
+    IfArtifactExists:
+      description: ''
+      enum:
+      - FAIL
+      - CREATE_VERSION
+      - FIND_OR_CREATE_VERSION
       type: string
-      example: '"example-artifact"'
+    SortOrder:
+      description: ''
+      enum:
+      - asc
+      - desc
+      type: string
+    HandleReferencesType:
+      description: 'How to handle references when retrieving content.  References can either be
+
+        left unchanged (`PRESERVE`), re-written so they are valid in the context of the
+
+        registry (`REWRITE`), or fully dereferenced such that all externally referenced
+
+        content is internalized (`DEREFERENCE`).'
+      enum:
+      - PRESERVE
+      - DEREFERENCE
+      - REWRITE
+      type: string
     RuleViolationProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -993,6 +916,54 @@ components:
         - description: Operation IDs must be unique
           context: /paths[/invoices]/put[operationId]
       x-codegen-extendsClass: io.apicurio.registry.rest.v3.beans.ProblemDetails
+    ContractMetadata:
+      title: ContractMetadata
+      description: Contract metadata for an artifact.
+      type: object
+      properties:
+        status:
+          description: The contract lifecycle status.
+          type: string
+          enum:
+          - DRAFT
+          - STABLE
+          - DEPRECATED
+        ownerTeam:
+          description: The team that owns the contract.
+          type: string
+        ownerDomain:
+          description: The domain the contract belongs to.
+          type: string
+        supportContact:
+          description: Support contact email.
+          type: string
+        classification:
+          description: Data classification level.
+          type: string
+          enum:
+          - PUBLIC
+          - INTERNAL
+          - CONFIDENTIAL
+          - RESTRICTED
+        stage:
+          description: Promotion stage.
+          type: string
+          enum:
+          - DEV
+          - STAGE
+          - PROD
+        stableDate:
+          description: ISO-8601 date when contract became stable.
+          type: string
+        deprecatedDate:
+          description: ISO-8601 date when contract was deprecated.
+          type: string
+        deprecationReason:
+          description: Reason for deprecation.
+          type: string
+        compatibilityGroup:
+          description: Compatibility group for schema evolution scoping.
+          type: string
     CreateArtifact:
       description: Data sent when creating a new artifact.
       required:
@@ -1034,43 +1005,18 @@ components:
           name: ExampleType
           description: A simple example of an Avro type.
           labels: {}
-    CreateVersion:
+    CreateArtifactResponse:
       description: ''
       required:
-      - content
+      - artifact
       type: object
       properties:
+        artifact:
+          $ref: '#/components/schemas/ArtifactMetaData'
+          description: ''
         version:
-          $ref: '#/components/schemas/Version'
+          $ref: '#/components/schemas/VersionMetaData'
           description: ''
-        content:
-          $ref: '#/components/schemas/VersionContent'
-          description: ''
-        name:
-          description: ''
-          type: string
-        description:
-          description: ''
-          type: string
-        labels:
-          $ref: '#/components/schemas/Labels'
-          description: ''
-        branches:
-          description: ''
-          type: array
-          items:
-            type: string
-        isDraft:
-          description: ''
-          type: boolean
-      example:
-        version: 1.0.1
-        content:
-          content: '{"type":"record","name":"ExampleType","fields":[{"name":"foo","type":"string"}]}'
-          contentType: application/json
-        name: Version 1.0.1
-        description: The latest version of this artifact.
-        isDraft: false
     VersionMetaData:
       title: Root Type for ArtifactVersionMetaData
       description: ''
@@ -1139,21 +1085,33 @@ components:
         labels:
           custom-1: foo
           custom-2: bar
-    ArtifactType:
-      description: ''
+    ArtifactReference:
+      title: Root Type for ArtifactReference
+      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
+      required:
+      - artifactId
+      - groupId
+      - name
+      type: object
+      properties:
+        groupId:
+          type: string
+        artifactId:
+          type: string
+        version:
+          type: string
+        name:
+          type: string
+      example:
+        groupId: mygroup
+        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
+        version: '2'
+        name: foo.bar.Open
+    ArtifactId:
+      description: The ID of a single artifact.
+      pattern: ^.{1,512}$
       type: string
-      example: AVRO
-      x-codegen-package: io.apicurio.registry.types
-    FileContent:
-      format: binary
-      type: string
-      x-codegen-inline: true
-    SortOrder:
-      description: ''
-      enum:
-      - asc
-      - desc
-      type: string
+      example: '"example-artifact"'
     VersionContent:
       description: ''
       required:
@@ -1178,36 +1136,25 @@ components:
           type: string
           enum:
           - base64
-    HandleReferencesType:
-      description: 'How to handle references when retrieving content.  References can either be
-
-        left unchanged (`PRESERVE`), re-written so they are valid in the context of the
-
-        registry (`REWRITE`), or fully dereferenced such that all externally referenced
-
-        content is internalized (`DEREFERENCE`).'
-      enum:
-      - PRESERVE
-      - DEREFERENCE
-      - REWRITE
+    FileContent:
+      format: binary
       type: string
-    GroupId:
-      description: An ID of a single artifact group.
-      pattern: ^.{1,512}$
-      type: string
-      example: '"my-group"'
-    CreateArtifactResponse:
-      description: ''
+      x-codegen-inline: true
+    ArtifactSearchResults:
+      description: Describes the response received when searching for artifacts.
       required:
-      - artifact
+      - count
+      - artifacts
       type: object
       properties:
-        artifact:
-          $ref: '#/components/schemas/ArtifactMetaData'
-          description: ''
-        version:
-          $ref: '#/components/schemas/VersionMetaData'
-          description: ''
+        artifacts:
+          description: The artifacts returned in the result set.
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchedArtifact'
+        count:
+          description: "The total number of artifacts that matched the query that produced the result set (may be \nmore than the number of artifacts in the result set)."
+          type: integer
     VersionState:
       description: 'Describes the state of an artifact or artifact version.
 
@@ -1243,14 +1190,85 @@ components:
       example:
         description: External documentation URL is not valid (it must be formatted as a URL).
         context: /info/externalDocs[url]
-    IfArtifactExists:
+    CreateVersion:
+      description: ''
+      required:
+      - content
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/Version'
+          description: ''
+        content:
+          $ref: '#/components/schemas/VersionContent'
+          description: ''
+        name:
+          description: ''
+          type: string
+        description:
+          description: ''
+          type: string
+        labels:
+          $ref: '#/components/schemas/Labels'
+          description: ''
+        branches:
+          description: ''
+          type: array
+          items:
+            type: string
+        isDraft:
+          description: ''
+          type: boolean
+      example:
+        version: 1.0.1
+        content:
+          content: '{"type":"record","name":"ExampleType","fields":[{"name":"foo","type":"string"}]}'
+          contentType: application/json
+        name: Version 1.0.1
+        description: The latest version of this artifact.
+        isDraft: false
+    ReferenceType:
       description: ''
       enum:
-      - FAIL
-      - CREATE_VERSION
-      - FIND_OR_CREATE_VERSION
+      - OUTBOUND
+      - INBOUND
       type: string
+      example: '"INBOUND"'
+      x-codegen-package: io.apicurio.registry.types
+    ArtifactSortBy:
+      description: ''
+      enum:
+      - groupId
+      - artifactId
+      - createdOn
+      - modifiedOn
+      - artifactType
+      - name
+      type: string
+    GroupId:
+      description: An ID of a single artifact group.
+      pattern: ^.{1,512}$
+      type: string
+      example: '"my-group"'
   responses:
+    ArtifactContent:
+      headers:
+        X-Registry-ArtifactType:
+          schema:
+            $ref: '#/components/schemas/ArtifactType'
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/FileContent'
+          examples:
+            OpenAPI:
+              value:
+                openapi: 3.0.2
+                info:
+                  title: Empty API
+                  version: 1.0.0
+                  description: An example API design using OpenAPI.
+      description: The content of one version of one artifact.
     Unauthorized:
       content:
         application/json:
@@ -1275,35 +1293,52 @@ components:
                 error_code: 500
                 message: Lost connection to the database.
       description: Common response for all operations that can fail with an unexpected server error.
-    NotFound:
+    Forbidden:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            NotFoundExample:
+            ForbiddenExample:
               value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
-    ArtifactContent:
-      headers:
-        X-Registry-ArtifactType:
-          schema:
-            $ref: '#/components/schemas/ArtifactType'
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    RuleViolationConflict:
       content:
-        '*/*':
+        application/json:
           schema:
-            $ref: '#/components/schemas/FileContent'
+            $ref: '#/components/schemas/RuleViolationProblemDetails'
           examples:
-            OpenAPI:
+            RuleViolationConflictExample:
               value:
-                openapi: 3.0.2
-                info:
-                  title: Empty API
-                  version: 1.0.0
-                  description: An example API design using OpenAPI.
-      description: The content of one version of one artifact.
+                error_code: 409
+                message: The artifact content was invalid
+                causes:
+                - description: API is missing a title
+                  context: /info[title]
+                - description: Operation IDs must be unique
+                  context: /paths[/invoices]/put[operationId]
+      description: Common response used when an input conflicts with existing data.
+    MethodNotAllowed:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            MethodNotAllowedExample:
+              value:
+                error_code: 405
+                message: Method is currently not supported or disabled.
+      description: Common response for all operations that can fail due to method not allowed or disabled.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
     UnprocessableEntity:
       content:
         application/json:
@@ -1322,52 +1357,17 @@ components:
         * References could not be validated
 
         * Required references are missing'
-    MethodNotAllowed:
+    NotFound:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ProblemDetails'
           examples:
-            MethodNotAllowedExample:
+            NotFoundExample:
               value:
-                error_code: 405
-                message: Method is currently not supported or disabled.
-      description: Common response for all operations that can fail due to method not allowed or disabled.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    RuleViolationConflict:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RuleViolationProblemDetails'
-          examples:
-            RuleViolationConflictExample:
-              value:
-                error_code: 409
-                message: The artifact content was invalid
-                causes:
-                - description: API is missing a title
-                  context: /info[title]
-                - description: Operation IDs must be unique
-                  context: /paths[/invoices]/put[operationId]
-      description: Common response used when an input conflicts with existing data.
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

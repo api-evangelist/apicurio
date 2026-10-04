@@ -85,6 +85,61 @@ paths:
 
         * A server error occurred (HTTP error `500`)'
 components:
+  responses:
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            UnauthorizedExample:
+              value:
+                detail: 'UnauthorizedException: User is not authenticated.'
+                title: User is not authenticated.
+                status: 401
+                name: UnauthorizedException
+      description: Common response for all operations that can return a `401` error indicating authentication is required.
+    ServerError:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ErrorExample:
+              value:
+                error_code: 500
+                message: Lost connection to the database.
+      description: Common response for all operations that can fail with an unexpected server error.
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            ForbiddenExample:
+              value:
+                detail: 'ForbiddenException: User is not authorized to perform this operation.'
+                title: User is not authorized to perform this operation.
+                status: 403
+                name: ForbiddenException
+      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+          examples:
+            NotFoundExample:
+              value:
+                error_code: 404
+                message: No artifact with id 'Topic-1/Inbound' could be found.
+      description: Common response for all operations that can return a `404` error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
   schemas:
     ArtifactId:
       description: The ID of a single artifact.
@@ -124,6 +179,47 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
+    RenderValidationError:
+      title: Root Type for RenderValidationError
+      description: A validation error encountered when validating template variables.
+      required:
+      - variableName
+      - message
+      type: object
+      properties:
+        variableName:
+          description: The name of the variable that failed validation.
+          type: string
+        message:
+          description: A description of the validation error.
+          type: string
+        expectedType:
+          description: The expected type of the variable.
+          type: string
+        actualType:
+          description: The actual type that was provided.
+          type: string
+      example:
+        variableName: max_words
+        message: Expected integer but got string
+        expectedType: integer
+        actualType: string
+    RenderPromptRequest:
+      title: Root Type for RenderPromptRequest
+      description: Request body for rendering a prompt template with variable substitution.
+      required:
+      - variables
+      type: object
+      properties:
+        variables:
+          description: A map of variable names to their values. These will be substituted into the prompt template.
+          type: object
+          additionalProperties: {}
+      example:
+        variables:
+          document: The quick brown fox jumps over the lazy dog.
+          max_words: 100
+          style: concise
     RenderPromptResponse:
       title: Root Type for RenderPromptResponse
       description: Response from rendering a prompt template.
@@ -163,102 +259,6 @@ components:
       pattern: ^.{1,512}$
       type: string
       example: '"my-group"'
-    RenderPromptRequest:
-      title: Root Type for RenderPromptRequest
-      description: Request body for rendering a prompt template with variable substitution.
-      required:
-      - variables
-      type: object
-      properties:
-        variables:
-          description: A map of variable names to their values. These will be substituted into the prompt template.
-          type: object
-          additionalProperties: {}
-      example:
-        variables:
-          document: The quick brown fox jumps over the lazy dog.
-          max_words: 100
-          style: concise
-    RenderValidationError:
-      title: Root Type for RenderValidationError
-      description: A validation error encountered when validating template variables.
-      required:
-      - variableName
-      - message
-      type: object
-      properties:
-        variableName:
-          description: The name of the variable that failed validation.
-          type: string
-        message:
-          description: A description of the validation error.
-          type: string
-        expectedType:
-          description: The expected type of the variable.
-          type: string
-        actualType:
-          description: The actual type that was provided.
-          type: string
-      example:
-        variableName: max_words
-        message: Expected integer but got string
-        expectedType: integer
-        actualType: string
-  responses:
-    Forbidden:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ForbiddenExample:
-              value:
-                detail: 'ForbiddenException: User is not authorized to perform this operation.'
-                title: User is not authorized to perform this operation.
-                status: 403
-                name: ForbiddenException
-      description: Common response for all operations that can return a `403` error indicating the user is authenticated but not authorized.
-    Unauthorized:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            UnauthorizedExample:
-              value:
-                detail: 'UnauthorizedException: User is not authenticated.'
-                title: User is not authenticated.
-                status: 401
-                name: UnauthorizedException
-      description: Common response for all operations that can return a `401` error indicating authentication is required.
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
-    ServerError:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            ErrorExample:
-              value:
-                error_code: 500
-                message: Lost connection to the database.
-      description: Common response for all operations that can fail with an unexpected server error.
-    NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-          examples:
-            NotFoundExample:
-              value:
-                error_code: 404
-                message: No artifact with id 'Topic-1/Inbound' could be found.
-      description: Common response for all operations that can return a `404` error.
   securitySchemes:
     BasicAuth:
       type: http

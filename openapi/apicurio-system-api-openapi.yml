@@ -66,34 +66,72 @@ paths:
         * A server error occurred (HTTP error `500`)'
 components:
   schemas:
-    UserInterfaceConfigAuth:
-      title: Root Type for UserInterfaceConfigAuth
-      description: ''
+    UserInterfaceConfig:
+      title: Root Type for UserInterfaceConfig
+      description: Defines the user interface configuration data type.
       required:
-      - obacEnabled
-      - rbacEnabled
+      - auth
       type: object
       properties:
-        type:
-          enum:
-          - none
-          - basic
-          - oidc
-          type: string
-        rbacEnabled:
-          type: boolean
-        obacEnabled:
-          type: boolean
-        options:
-          $ref: '#/components/schemas/Labels'
+        ui:
+          $ref: '#/components/schemas/UserInterfaceConfigUi'
+          properties:
+            contextPath:
+              type: string
+            navPrefixPath:
+              type: string
+            oaiDocsUrl:
+              type: string
+            editorsUrl:
+              type: string
+        auth:
+          $ref: '#/components/schemas/UserInterfaceConfigAuth'
+          properties:
+            type:
+              type: string
+            rbacEnabled:
+              type: boolean
+            obacEnabled:
+              type: boolean
+            options:
+              type: object
+              properties:
+                url:
+                  type: string
+                redirectUri:
+                  type: string
+                clientId:
+                  type: string
+        features:
+          $ref: '#/components/schemas/UserInterfaceConfigFeatures'
+          properties:
+            readOnly:
+              type: boolean
+            breadcrumbs:
+              type: boolean
+            roleManagement:
+              type: boolean
+            settings:
+              type: boolean
       example:
-        type: oidc
-        rbacEnabled: true
-        obacEnabled: false
-        options:
-          url: https://auth.apicur.io/realms/apicurio
-          redirectUri: https://registry.apicur.io
-          clientId: registry-ui
+        ui:
+          contextPath: /
+          navPrefixPath: /
+          oaiDocsUrl: https://registry.apicur.io/docs
+          editorsUrl: https://registry.apicur.io/editors
+        auth:
+          type: oidc
+          rbacEnabled: true
+          obacEnabled: false
+          options:
+            url: https://auth.apicur.io/realms/apicurio
+            redirectUri: http://registry.apicur.io
+            clientId: apicurio-registry-ui
+        features:
+          readOnly: false
+          breadcrumbs: true
+          roleManagement: false
+          settings: true
     SystemInfo:
       title: Root Type for SystemInfo
       description: ''
@@ -113,6 +151,13 @@ components:
         description: The Apicurio Registry application.
         version: 2.0.0.Final
         builtOn: '2021-03-19T12:55:00Z'
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
+      type: object
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -200,79 +245,34 @@ components:
         breadcrumbs: true
         roleManagement: false
         settings: true
-    UserInterfaceConfig:
-      title: Root Type for UserInterfaceConfig
-      description: Defines the user interface configuration data type.
+    UserInterfaceConfigAuth:
+      title: Root Type for UserInterfaceConfigAuth
+      description: ''
       required:
-      - auth
+      - obacEnabled
+      - rbacEnabled
       type: object
       properties:
-        ui:
-          $ref: '#/components/schemas/UserInterfaceConfigUi'
-          properties:
-            contextPath:
-              type: string
-            navPrefixPath:
-              type: string
-            oaiDocsUrl:
-              type: string
-            editorsUrl:
-              type: string
-        auth:
-          $ref: '#/components/schemas/UserInterfaceConfigAuth'
-          properties:
-            type:
-              type: string
-            rbacEnabled:
-              type: boolean
-            obacEnabled:
-              type: boolean
-            options:
-              type: object
-              properties:
-                url:
-                  type: string
-                redirectUri:
-                  type: string
-                clientId:
-                  type: string
-        features:
-          $ref: '#/components/schemas/UserInterfaceConfigFeatures'
-          properties:
-            readOnly:
-              type: boolean
-            breadcrumbs:
-              type: boolean
-            roleManagement:
-              type: boolean
-            settings:
-              type: boolean
+        type:
+          enum:
+          - none
+          - basic
+          - oidc
+          type: string
+        rbacEnabled:
+          type: boolean
+        obacEnabled:
+          type: boolean
+        options:
+          $ref: '#/components/schemas/Labels'
       example:
-        ui:
-          contextPath: /
-          navPrefixPath: /
-          oaiDocsUrl: https://registry.apicur.io/docs
-          editorsUrl: https://registry.apicur.io/editors
-        auth:
-          type: oidc
-          rbacEnabled: true
-          obacEnabled: false
-          options:
-            url: https://auth.apicur.io/realms/apicurio
-            redirectUri: http://registry.apicur.io
-            clientId: apicurio-registry-ui
-        features:
-          readOnly: false
-          breadcrumbs: true
-          roleManagement: false
-          settings: true
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
+        type: oidc
+        rbacEnabled: true
+        obacEnabled: false
+        options:
+          url: https://auth.apicur.io/realms/apicurio
+          redirectUri: https://registry.apicur.io
+          clientId: registry-ui
   responses:
     ServerError:
       content:

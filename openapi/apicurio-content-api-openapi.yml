@@ -51,30 +51,28 @@ paths:
       description: Analyzes the provided content and returns a list of external references found within it. The artifact type is used to determine the appropriate reference detection strategy. If no artifact type is provided, the system will attempt to auto-detect it from the content.
 components:
   schemas:
-    VersionContent:
-      description: ''
+    ArtifactReference:
+      title: Root Type for ArtifactReference
+      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
       required:
-      - content
-      - contentType
+      - artifactId
+      - groupId
+      - name
       type: object
       properties:
-        content:
-          description: Raw content of the artifact version or a valid (and accessible) URL where the content can be found.
+        groupId:
           type: string
-          example: ''
-        references:
-          description: Collection of references to other artifacts.
-          type: array
-          items:
-            $ref: '#/components/schemas/ArtifactReference'
-        contentType:
-          description: The content-type, such as `application/json` or `text/xml`.
+        artifactId:
           type: string
-        encoding:
-          description: Optional encoding for the content property. When set to 'base64', the content value will be base64-decoded by the server before processing.
+        version:
           type: string
-          enum:
-          - base64
+        name:
+          type: string
+      example:
+        groupId: mygroup
+        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
+        version: '2'
+        name: foo.bar.Open
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -108,35 +106,31 @@ components:
         status: 500
         name: NullPointerException
         title: An error occurred somewhere.
-    ArtifactReference:
-      title: Root Type for ArtifactReference
-      description: A reference to a different artifact. Typically used with artifact types that can have dependencies like Protobuf.
+    VersionContent:
+      description: ''
       required:
-      - artifactId
-      - groupId
-      - name
+      - content
+      - contentType
       type: object
       properties:
-        groupId:
+        content:
+          description: Raw content of the artifact version or a valid (and accessible) URL where the content can be found.
           type: string
-        artifactId:
+          example: ''
+        references:
+          description: Collection of references to other artifacts.
+          type: array
+          items:
+            $ref: '#/components/schemas/ArtifactReference'
+        contentType:
+          description: The content-type, such as `application/json` or `text/xml`.
           type: string
-        version:
+        encoding:
+          description: Optional encoding for the content property. When set to 'base64', the content value will be base64-decoded by the server before processing.
           type: string
-        name:
-          type: string
-      example:
-        groupId: mygroup
-        artifactId: 13842090-2ce3-11ec-8d3d-0242ac130003
-        version: '2'
-        name: foo.bar.Open
+          enum:
+          - base64
   responses:
-    BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ProblemDetails'
-      description: Common response for all operations that can return a `400` error.
     ServerError:
       content:
         application/json:
@@ -148,6 +142,12 @@ components:
                 error_code: 500
                 message: Lost connection to the database.
       description: Common response for all operations that can fail with an unexpected server error.
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProblemDetails'
+      description: Common response for all operations that can return a `400` error.
   securitySchemes:
     BasicAuth:
       type: http
