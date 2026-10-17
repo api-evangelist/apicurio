@@ -66,6 +66,89 @@ paths:
         * A server error occurred (HTTP error `500`)'
 components:
   schemas:
+    SystemInfo:
+      title: Root Type for SystemInfo
+      description: ''
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        builtOn:
+          format: date-time
+          type: string
+      example:
+        name: Apicurio Registry (SQL)
+        description: The Apicurio Registry application.
+        version: 2.0.0.Final
+        builtOn: '2021-03-19T12:55:00Z'
+    UserInterfaceConfigAuth:
+      title: Root Type for UserInterfaceConfigAuth
+      description: ''
+      required:
+      - obacEnabled
+      - rbacEnabled
+      type: object
+      properties:
+        type:
+          enum:
+          - none
+          - basic
+          - oidc
+          type: string
+        rbacEnabled:
+          type: boolean
+        obacEnabled:
+          type: boolean
+        options:
+          $ref: '#/components/schemas/Labels'
+      example:
+        type: oidc
+        rbacEnabled: true
+        obacEnabled: false
+        options:
+          url: https://auth.apicur.io/realms/apicurio
+          redirectUri: https://registry.apicur.io
+          clientId: registry-ui
+    UserInterfaceConfigFeatures:
+      title: Root Type for UserInterfaceConfigFeatures
+      description: ''
+      type: object
+      properties:
+        readOnly:
+          type: boolean
+        breadcrumbs:
+          type: boolean
+        roleManagement:
+          type: boolean
+        settings:
+          type: boolean
+        deleteGroup:
+          description: ''
+          type: boolean
+        deleteArtifact:
+          description: ''
+          type: boolean
+        deleteVersion:
+          description: ''
+          type: boolean
+        draftMutability:
+          description: ''
+          type: boolean
+        agents:
+          description: ''
+          type: boolean
+        searchIndex:
+          description: ''
+          type: boolean
+      example:
+        readOnly: false
+        breadcrumbs: true
+        roleManagement: false
+        settings: true
     UserInterfaceConfig:
       title: Root Type for UserInterfaceConfig
       description: Defines the user interface configuration data type.
@@ -132,32 +215,6 @@ components:
           breadcrumbs: true
           roleManagement: false
           settings: true
-    SystemInfo:
-      title: Root Type for SystemInfo
-      description: ''
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        version:
-          type: string
-        builtOn:
-          format: date-time
-          type: string
-      example:
-        name: Apicurio Registry (SQL)
-        description: The Apicurio Registry application.
-        version: 2.0.0.Final
-        builtOn: '2021-03-19T12:55:00Z'
-    Labels:
-      description: User-defined name-value pairs. Name and value must be strings.
-      type: object
-      additionalProperties:
-        type: string
-      x-codegen-inline: true
-      x-codegen-type: StringMap
     ProblemDetails:
       title: Root Type for Error
       description: 'All error responses, whether `4xx` or `5xx` will include one of these as the response
@@ -209,70 +266,13 @@ components:
         navPrefixPath: /
         oaiDocsUrl: https://registry.apicur.io/docs
         editorsUrl: https://registry.apicur.io/editors
-    UserInterfaceConfigFeatures:
-      title: Root Type for UserInterfaceConfigFeatures
-      description: ''
+    Labels:
+      description: User-defined name-value pairs. Name and value must be strings.
       type: object
-      properties:
-        readOnly:
-          type: boolean
-        breadcrumbs:
-          type: boolean
-        roleManagement:
-          type: boolean
-        settings:
-          type: boolean
-        deleteGroup:
-          description: ''
-          type: boolean
-        deleteArtifact:
-          description: ''
-          type: boolean
-        deleteVersion:
-          description: ''
-          type: boolean
-        draftMutability:
-          description: ''
-          type: boolean
-        agents:
-          description: ''
-          type: boolean
-        searchIndex:
-          description: ''
-          type: boolean
-      example:
-        readOnly: false
-        breadcrumbs: true
-        roleManagement: false
-        settings: true
-    UserInterfaceConfigAuth:
-      title: Root Type for UserInterfaceConfigAuth
-      description: ''
-      required:
-      - obacEnabled
-      - rbacEnabled
-      type: object
-      properties:
-        type:
-          enum:
-          - none
-          - basic
-          - oidc
-          type: string
-        rbacEnabled:
-          type: boolean
-        obacEnabled:
-          type: boolean
-        options:
-          $ref: '#/components/schemas/Labels'
-      example:
-        type: oidc
-        rbacEnabled: true
-        obacEnabled: false
-        options:
-          url: https://auth.apicur.io/realms/apicurio
-          redirectUri: https://registry.apicur.io
-          clientId: registry-ui
+      additionalProperties:
+        type: string
+      x-codegen-inline: true
+      x-codegen-type: StringMap
   responses:
     ServerError:
       content:
