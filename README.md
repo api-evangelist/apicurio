@@ -1,4 +1,4 @@
-# Apicurio (apicurio)
+# Apicurio
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,126 +66,166 @@
 
 Apicurio is an open source API and schema tooling platform maintained by Red Hat under the Apache 2.0 license. It includes Apicurio Registry (a high-performance schema and API design registry), Apicurio Studio (a visual API designer for OpenAPI and AsyncAPI), Apicurio Data Models (a data modeling library), Apicurio Codegen (Java code generation from OpenAPI), and Apicurito (an embedded API editor).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/apicurio/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/apicurio/refs/heads/main/apis.yml)
+**Areas:** Apache License · API Design · API Registry · Avro · AsyncAPI · Java · Open Source · OpenAPI · Red Hat · Schema Registry
 
-## Scope
+## Apicurio on APIs.io
 
-- **Type:** Index
+Everything profiled for Apicurio is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/apicurio/](https://apis.io/providers/apicurio/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (23)
 
-- Apache License
-- API Design
-- API Registry
-- Avro
-- AsyncAPI
-- Java
-- Open Source
-- OpenAPI
-- Red Hat
-- Schema Registry
+- [Apicurio Registry](https://apis.io/apis/apicurio/apicurio-registry/) — Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf,…
+- [Apicurio Studio](https://apis.io/apis/apicurio/apicurio-studio/) — Apicurio Studio is a visual, zero-code API design tool for creating and editing OpenAPI and AsyncAPI specifications. Note: Apicurio Studio is deprecated in…
+- [Apicurio Data Models](https://apis.io/apis/apicurio/apicurio-data-models/) — Apicurio Data Models is a Java and TypeScript library for parsing, validating, and manipulating OpenAPI and AsyncAPI specification documents programmatically.
+- [Apicurio Codegen](https://apis.io/apis/apicurio/apicurio-codegen/) — Apicurio Codegen generates Java JAX-RS server stubs and client code from OpenAPI specifications, enabling design-first API development workflows.
+- [Apicurio Admin API](https://apis.io/apis/apicurio/apicurio-admin-api/) — The Admin API from Apicurio — 17 operation(s) for admin.
+- [Apicurio AI API](https://apis.io/apis/apicurio/apicurio-ai-api/) — The AI API from Apicurio — 1 operation(s) for ai.
+- [Apicurio Artifact rules API](https://apis.io/apis/apicurio/apicurio-artifact-rules-api/) — The Artifact rules API from Apicurio — 2 operation(s) for artifact rules.
+- [Apicurio Artifact Type API](https://apis.io/apis/apicurio/apicurio-artifact-type-api/) — The Artifact Type API from Apicurio — 1 operation(s) for artifact type.
+- [Apicurio Artifacts API](https://apis.io/apis/apicurio/apicurio-artifacts-api/) — The Artifacts API from Apicurio — 9 operation(s) for artifacts.
+- [Apicurio Branches API](https://apis.io/apis/apicurio/apicurio-branches-api/) — The Branches API from Apicurio — 3 operation(s) for branches.
+- [Apicurio Content API](https://apis.io/apis/apicurio/apicurio-content-api/) — The Content API from Apicurio — 1 operation(s) for content.
+- [Apicurio Contracts API](https://apis.io/apis/apicurio/apicurio-contracts-api/) — The Contracts API from Apicurio — 16 operation(s) for contracts.
+- [Apicurio Global rules API](https://apis.io/apis/apicurio/apicurio-global-rules-api/) — The Global rules API from Apicurio — 2 operation(s) for global rules.
+- [Apicurio Group rules API](https://apis.io/apis/apicurio/apicurio-group-rules-api/) — The Group rules API from Apicurio — 2 operation(s) for group rules.
+- [Apicurio Groups API](https://apis.io/apis/apicurio/apicurio-groups-api/) — The Groups API from Apicurio — 3 operation(s) for groups.
+- [Apicurio KafkaSQL API](https://apis.io/apis/apicurio/apicurio-kafkasql-api/) — The KafkaSQL API from Apicurio — 1 operation(s) for kafkasql.
+- [Apicurio Metadata API](https://apis.io/apis/apicurio/apicurio-metadata-api/) — The Metadata API from Apicurio — 2 operation(s) for metadata.
+- [Apicurio Search API](https://apis.io/apis/apicurio/apicurio-search-api/) — The Search API from Apicurio — 5 operation(s) for search.
+- [Apicurio Snapshot API](https://apis.io/apis/apicurio/apicurio-snapshot-api/) — The Snapshot API from Apicurio — 1 operation(s) for snapshot.
+- [Apicurio System API](https://apis.io/apis/apicurio/apicurio-system-api/) — The System API from Apicurio — 2 operation(s) for system.
+- [Apicurio Users API](https://apis.io/apis/apicurio/apicurio-users-api/) — The Users API from Apicurio — 1 operation(s) for users.
+- [Apicurio Versions API](https://apis.io/apis/apicurio/apicurio-versions-api/) — The Versions API from Apicurio — 11 operation(s) for versions.
+- [Apicurio Git Ops API](https://apis.io/apis/apicurio/apicurio-git-ops-api/) — The Git Ops API from Apicurio — 2 operation(s) for git ops.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-25
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### GraphQL (1)
 
-### Apicurio Registry
+GraphQL schemas.
 
-Apicurio Registry is a high-performance, runtime registry for schemas and API designs. It stores and manages OpenAPI, AsyncAPI, Avro, JSON Schema, Protobuf, and other artifact types, providing a REST API for schema management with compatibility checking and content versioning.
+- [Moved to /providers/apicurio/](https://apis.io/graphqls/apicurio/apicurio-graphql/)
 
-- **Human URL:** [https://www.apicur.io/registry/](https://www.apicur.io/registry/)
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Avro
-- AsyncAPI
-- Open Source
-- OpenAPI
-- Protobuf
-- Schema Registry
+- [Apicurio Agentic Access](https://apis.io/agentic-access/apicurio/apicurio-agentic-access/)
 
-#### Properties
+#### Collections (20)
 
-- [Documentation](https://www.apicur.io/registry/docs/)
-- [GitHub Repository](https://github.com/Apicurio/apicurio-registry)
-- [Postman Collection](collections/apicurio.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/apicurio.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-### Apicurio Studio
+- [Apicurio Registry API](https://apis.io/collections/apicurio/open-apicurio/)
+- [Apicurio Registry Admin API](https://apis.io/collections/apicurio/open-apicurio-admin-api/)
+- [Apicurio Registry Admin AI API](https://apis.io/collections/apicurio/open-apicurio-ai-api/)
+- [Apicurio Registry Admin Artifact rules API](https://apis.io/collections/apicurio/open-apicurio-artifact-rules-api/)
+- [Apicurio Registry Admin Artifact Type API](https://apis.io/collections/apicurio/open-apicurio-artifact-type-api/)
+- [Apicurio Registry Admin Artifacts API](https://apis.io/collections/apicurio/open-apicurio-artifacts-api/)
+- [Apicurio Registry Admin Branches API](https://apis.io/collections/apicurio/open-apicurio-branches-api/)
+- [Apicurio Registry Admin Content API](https://apis.io/collections/apicurio/open-apicurio-content-api/)
+- [Apicurio Registry Admin Contracts API](https://apis.io/collections/apicurio/open-apicurio-contracts-api/)
+- [Apicurio Registry Admin GitOps API](https://apis.io/collections/apicurio/open-apicurio-gitops-api/)
+- [Apicurio Registry Admin Global rules API](https://apis.io/collections/apicurio/open-apicurio-global-rules-api/)
+- [Apicurio Registry Admin Group rules API](https://apis.io/collections/apicurio/open-apicurio-group-rules-api/)
+- [Apicurio Registry Admin Groups API](https://apis.io/collections/apicurio/open-apicurio-groups-api/)
+- [Apicurio Registry Admin KafkaSQL API](https://apis.io/collections/apicurio/open-apicurio-kafkasql-api/)
+- [Apicurio Registry Admin Metadata API](https://apis.io/collections/apicurio/open-apicurio-metadata-api/)
+- [Apicurio Registry Admin Search API](https://apis.io/collections/apicurio/open-apicurio-search-api/)
+- [Apicurio Registry Admin Snapshot API](https://apis.io/collections/apicurio/open-apicurio-snapshot-api/)
+- [Apicurio Registry Admin System API](https://apis.io/collections/apicurio/open-apicurio-system-api/)
+- [Apicurio Registry Admin Users API](https://apis.io/collections/apicurio/open-apicurio-users-api/)
+- [Apicurio Registry Admin Versions API](https://apis.io/collections/apicurio/open-apicurio-versions-api/)
 
-Apicurio Studio is a visual, zero-code API design tool for creating and editing OpenAPI and AsyncAPI specifications. Note: Apicurio Studio is deprecated in favor of the integrated design capabilities in Apicurio Registry.
+#### Security (2)
 
-- **Human URL:** [https://www.apicur.io/studio/](https://www.apicur.io/studio/)
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Apicurio Authentication](https://apis.io/security/apicurio/apicurio-authentication/)
+- [Apicurio Domain Security](https://apis.io/security/apicurio/apicurio-domain-security/)
 
-- API Design
-- AsyncAPI
-- Deprecated
-- OpenAPI
-- Visual Designer
+#### OAuth scopes (1)
 
-#### Properties
+The permissions the API asks for.
 
-- [Documentation](https://www.apicur.io/studio/docs/)
-- [GitHub Repository](https://github.com/Apicurio/apicurio-studio)
-- [Postman Collection](collections/apicurio.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/apicurio.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Apicurio Scopes](https://apis.io/scopes/apicurio/apicurio-scopes/)
 
-### Apicurio Data Models
+#### Plans and pricing (1)
 
-Apicurio Data Models is a Java and TypeScript library for parsing, validating, and manipulating OpenAPI and AsyncAPI specification documents programmatically.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://github.com/Apicurio/apicurio-data-models](https://github.com/Apicurio/apicurio-data-models)
+- [Apicurio Plans Pricing](https://apis.io/plans/apicurio/apicurio-plans-pricing/)
 
-#### Tags
+#### Rate limits (1)
 
-- AsyncAPI
-- Data Modeling
-- Java
-- Library
-- OpenAPI
-- TypeScript
+Published request limits.
 
-#### Properties
+- [Apicurio Rate Limits](https://apis.io/rate-limits/apicurio/apicurio-rate-limits/)
 
-- [GitHub Repository](https://github.com/Apicurio/apicurio-data-models)
-- [Postman Collection](collections/apicurio.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/apicurio.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### FinOps (1)
 
-### Apicurio Codegen
+What the API costs to run, by operation.
 
-Apicurio Codegen generates Java JAX-RS server stubs and client code from OpenAPI specifications, enabling design-first API development workflows.
+- [Apicurio Finops](https://apis.io/finops/apicurio/apicurio-finops/)
 
-- **Human URL:** [https://github.com/Apicurio/apicurio-codegen](https://github.com/Apicurio/apicurio-codegen)
+## Where to find this API
 
-#### Tags
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- Code Generation
-- JAX-RS
-- Java
-- OpenAPI
+- [Website](https://apicur.io)
+- [Blog](https://www.apicur.io/blog/feed.xml)
 
-#### Properties
+## API Evangelist rating
 
-- [GitHub Repository](https://github.com/Apicurio/apicurio-codegen)
-- [Postman Collection](collections/apicurio.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/apicurio.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+**Kin Score 30.8** — thin · rubric 0.24.0 · scored 2026-10-17
 
-## Common Properties
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 49.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
 
-- [Website](https://www.apicur.io)
-- [Documentation](https://www.apicur.io/registry/docs/)
-- [GitHub Organization](https://github.com/Apicurio)
-- [License](https://github.com/Apicurio/apicurio-registry/blob/main/LICENSE)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [M C P Server](https://github.com/Apicurio/apicurio-data-models-mcp)
+**Agent readiness 23.7** — agent-aware
 
-## Maintainers
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Regulatory alignment 21.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/apicurio/](https://apis.io/providers/apicurio/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Apicurio: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/apicurio/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
